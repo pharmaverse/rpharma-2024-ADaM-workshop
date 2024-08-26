@@ -1,9 +1,9 @@
 ---
-title: "pharmaverse champion\b R/pharma pharmaverse Friday Workshop"
+title: "R/pharma ADaM Workshop"
 # date: "Oct 20 2023"
 author: 
-  - Ari Siggaard Knoph
-  - Ross Farrugia
+  - Fanny Gautier
+  - Ben Straub
 format: 
   revealjs:
     # chalkboard: true
