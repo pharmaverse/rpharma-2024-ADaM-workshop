@@ -8,7 +8,16 @@ library(pharmaversesdtm) # Contains example datasets from the CDISC pilot projec
 library(dplyr)
 library(lubridate)
 library(stringr)
+library(metacore)
 library(metatools)
+library(xportr)
+
+# ---- Load Specs for Metacore ----
+
+metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
+                             where_sep_sheet = FALSE) %>%
+  select_dataset("ADSL")
+
 
 # Load source datasets ----
 
@@ -42,10 +51,14 @@ suppdm <- convert_blanks_to_na(suppdm)
 # Combine Parent and Supp - very handy!
 dm_suppdm <- combine_supp(dm, suppdm)
 
+
 # User defined functions ----
 
 # Here are some examples of how you can create your own functions that
 #  operates on vectors, which can be used in `mutate`.
+
+
+
 
 # Grouping
 format_racegr1 <- function(x) {
@@ -234,7 +247,7 @@ adsl <- adsl %>%
 ## DTC variables are converted to numeric dates imputing missing day and month
 ## to the first
 
-adsl <- adsl %>%
+adsl_lkad <- adsl %>%
   derive_vars_extreme_event(
     by_vars = exprs(STUDYID, USUBJID),
     events = list(
@@ -292,16 +305,41 @@ mutate(
   DTH30FL = if_else(LDDTHGR1 == "<= 30", "Y", NA_character_),
   DTHA30FL = if_else(LDDTHGR1 == "> 30", "Y", NA_character_),
   DTHB30FL = if_else(DTHDT <= TRTSDT + 30, "Y", NA_character_),
-  DOMAIN = NULL
+  DOMAIN = NULL,
+  REGION1N = "",
+  AAGE = "",
+  AAGEU = "",
+  AGEGRP1 = "",
+  AGEGRP1N = "",
+  RACEN = "",
+  ARACE = "",
+  ARACEN = "",
+  RACEGR1N = "",
+  ITTFL = "",
+  RANDFL = "",
+  RANDNUM = "",
+  TRT01PN = "",
+  TRT01AN = "",
+  TRTSTM = "",
+  TRTDUR = "",
+  OLEFL = "",
+  BRTHDTC = "",
+  BRTHDT = "",
+  BRTHDTF = "",
+  HEIGHTBL = "", 
+  WEIGHTBL = "",
+  BMIBL = ""
 )
 
-
-# Save output ----
-
-# Change to whichever directory you want to save the dataset in
-dir <- tools::R_user_dir("admiral_templates_data", which = "cache")
-if (!file.exists(dir)) {
-  # Create the folder
-  dir.create(dir, recursive = TRUE, showWarnings = FALSE)
-}
-save(adsl, file = file.path(dir, "adsl.rda"), compress = "bzip2")
+adsl_final <- adsl_lkad %>%
+  drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
+  check_variables(metacore) %>% # Check all variables specified are present and no more
+  order_cols(metacore) %>% # Orders the columns according to the spec
+  sort_by_key(metacore) %>%  # Sorts the rows by the sort keys
+  xportr_type(metacore) %>% 
+  xportr_length(metacore) %>% 
+  xportr_label(metacore) %>% 
+  #xportr_format(metacore, domain = "adsl")
+  xportr_df_label(metacore, domain = "adsl") %>% 
+  xportr_write("adsl.xpt", metacore, domain = "adsl")
+  
