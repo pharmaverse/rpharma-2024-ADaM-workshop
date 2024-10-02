@@ -333,13 +333,13 @@ mutate(
 
 adsl_final <- adsl_lkad %>%
   drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
-  check_variables(metacore) %>% # Check all variables specified are present and no more
+  check_variables(metacore, dataset_name = "ADSL") %>% # Check all variables specified are present and no more
   order_cols(metacore) %>% # Orders the columns according to the spec
   sort_by_key(metacore) %>%  # Sorts the rows by the sort keys
   xportr_type(metacore) %>% 
   xportr_length(metacore) %>% 
   xportr_label(metacore) %>% 
-  #xportr_format(metacore, domain = "adsl")
-  xportr_df_label(metacore, domain = "adsl") %>% 
-  xportr_write("adsl.xpt", metacore, domain = "adsl")
+  #xportr_format(metacore, domain = "ADSL") %>% 
+  xportr_df_label(metacore, domain = "ADSL") %>% 
+  xportr_write("datasets/adsl.xpt", metacore, domain = "ADSL")
   
