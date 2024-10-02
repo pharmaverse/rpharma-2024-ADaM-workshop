@@ -8,6 +8,15 @@ library(pharmaversesdtm) # Contains example datasets from the CDISC pilot projec
 library(dplyr)
 library(lubridate)
 library(stringr)
+library(metacore)
+library(metatools)
+library(xportr)
+
+# ---- Load Specs for Metacore ----
+
+metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
+                             where_sep_sheet = FALSE) %>%
+  select_dataset("ADVS")
 
 # Load source datasets ----
 
@@ -101,11 +110,10 @@ advs_1 <- advs_0 %>%
     # Below arguments are default values and not necessary to add in our case
     print_not_mapped = TRUE # Printing whether some parameters are not mapped
   ) %>%
-  ## Calculate AVAL and AVALC ----
-  # AVALC should only be mapped if it contains non-redundant information.
+  ## Calculate AVAL and AVALU ----
   mutate(
-    # AVALC = VSSTRESC,
-    AVAL = VSSTRESN
+    AVAL = VSSTRESN,
+    AVALU = VSSTRESU
   ) %>%
   ## Derive new parameters based on existing records ----
   ## using wrapper functions for the more generic derive_param_computed()
@@ -319,15 +327,25 @@ advs_10 <- advs_9 %>%
 
 
 # Add all ADSL variables
-advs <- advs_10 %>%
+advs_final <- advs_10 %>%
   derive_vars_merged(
     dataset_add = select(adsl, !!!negate_vars(adsl_vars)),
     by_vars = exprs(STUDYID, USUBJID)
   )
 
 # Final Steps, Select final variables and Add labels
-# This process will be based on your metadata, no example given for this reason
-# ...
+advs <- advs_final %>%
+  drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
+  check_variables(metacore) %>% # Check all variables specified are present and no more
+  order_cols(metacore) %>% # Orders the columns according to the spec
+  sort_by_key(metacore) %>%  # Sorts the rows by the sort keys
+  xportr_type(metacore) %>% 
+  xportr_length(metacore) %>% 
+  xportr_label(metacore) %>% 
+  #xportr_format(metacore, domain = "advs")
+  xportr_df_label(metacore, domain = "advs") %>% 
+  xportr_write("advs.xpt", metacore, domain = "advs")
+
 
 # Save output ----
 
@@ -338,4 +356,3 @@ if (!file.exists(dir)) {
   dir.create(dir, recursive = TRUE, showWarnings = FALSE)
 }
 save(advs, file = file.path(dir, "advs.rda"), compress = "bzip2")
-
