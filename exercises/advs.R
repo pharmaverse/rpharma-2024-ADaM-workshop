@@ -25,7 +25,8 @@ metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
 # For illustration purposes read in admiral test data
 
 vs <- pharmaversesdtm::vs
-adsl <- pharmaverseadam::adsl
+#If you missed previous ADSL ADaM development, just load the XPT file
+adsl <- haven::read_xpt("datasets/adsl.xpt")
 
 # When SAS datasets are imported into R using haven::read_sas(), missing
 # character values from SAS appear as "" characters in R, instead of appearing
@@ -133,6 +134,8 @@ advs_1 <- advs_0 %>%
     hr_code = NULL
   ) %>%
   # Derive Body Surface Area
+  ## Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ## Which function could be used to derive "BSA" parameter ?
   derive_param_bsa(
     by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM),
     method = "Mosteller",
@@ -145,6 +148,8 @@ advs_1 <- advs_0 %>%
     weight_code = "WEIGHT"
   ) %>%
   # Derive Body Mass Index
+  ## Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ## Which function could be used to derive "BMI" parameter ?
   derive_param_bmi(
     by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM),
     set_values_to = exprs(PARAMCD = "BMI"),
@@ -193,6 +198,8 @@ advs_3 <- advs_2 %>%
 
 advs_4 <- advs_3 %>%
   ## Calculate ONTRTFL ----
+  ## With the help of {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ## Which function could be used to derive ONTRTFL variable ?
   derive_var_ontrtfl(
     start_date = ADT,
     ref_start_date = TRTSDT,
@@ -249,13 +256,6 @@ advs_7 <- advs_6 %>%
     # Below arguments are default values and not necessary to add in our case
     filter = ABLFL == "Y"
   ) %>%
-  # Calculate BASEC
-  # only if AVALC is mapped
-  # derive_var_base(
-  #   by_vars = exprs(STUDYID, USUBJID, PARAMCD, BASETYPE),
-  #   source_var = AVALC,
-  #   new_var = BASEC
-  # ) %>%
   # Calculate BNRIND
   derive_var_base(
     by_vars = exprs(STUDYID, USUBJID, PARAMCD, BASETYPE),
@@ -312,6 +312,8 @@ advs_9 <- advs_8 %>%
 ## Get ASEQ and AVALCATx and add PARAM/PARAMN ----
 advs_10 <- advs_9 %>%
   # Calculate ASEQ
+  ## With the help of {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ## Which function could be used to derive ASEQ variable ?
   derive_var_obs_number(
     new_var = ASEQ,
     by_vars = exprs(STUDYID, USUBJID),
