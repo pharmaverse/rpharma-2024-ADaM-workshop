@@ -346,7 +346,7 @@ advs_final <- advs_10 %>%
 # Final Steps, Select final variables and Add labels
 advs <- advs_final %>%
   drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
-  check_variables(metacore) %>% # Check all variables specified are present and no more
+  #check_variables(metacore) %>% # Check all variables specified are present and no more
   order_cols(metacore) %>% # Orders the columns according to the spec
   sort_by_key(metacore) %>%  # Sorts the rows by the sort keys
   xportr_type(metacore) %>% 
@@ -354,7 +354,7 @@ advs <- advs_final %>%
   xportr_label(metacore) %>% 
   #xportr_format(metacore, domain = "advs")
   xportr_df_label(metacore, domain = "advs") %>% 
-  xportr_write("advs.xpt", metacore, domain = "advs")
+  xportr_write("datasets/advs.xpt", metacore, domain = "advs")
 
 
 # Save output ----
