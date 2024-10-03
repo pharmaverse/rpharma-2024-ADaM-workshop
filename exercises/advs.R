@@ -15,7 +15,9 @@ library(xportr)
 # ---- Load Specs for Metacore ----
 
 metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
-                             where_sep_sheet = FALSE) %>%
+                             where_sep_sheet = FALSE,
+                             quiet = TRUE #To suppress warnings messages
+                             ) %>%
   select_dataset("ADVS")
 
 # Load source datasets ----
@@ -325,7 +327,13 @@ advs_10 <- advs_9 %>%
   derive_vars_merged(dataset_add = avalcat_lookup,
                      by_vars = exprs(PARAMCD, AVALCA1N)) %>%
   # Derive PARAM and PARAMN
-  derive_vars_merged(dataset_add = select(param_lookup, -VSTESTCD), by_vars = exprs(PARAMCD))
+  #derive_vars_merged(dataset_add = select(param_lookup, -VSTESTCD), by_vars = exprs(PARAMCD))
+  # Note that PARAMN could also be derived using the metatools package, as seen during ADSL development
+  # with the function create_var_from_codelist()
+  # (https://pharmaverse.github.io/metatools/reference/create_var_from_codelist.html)
+  create_var_from_codelist(metacore,
+                           input_var = PARAMCD,
+                           out_var = PARAMN)
 
 
 # Add all ADSL variables
