@@ -57,9 +57,6 @@ dm_suppdm <- combine_supp(dm, suppdm)
 # Here are some examples of how you can create your own functions that
 #  operates on vectors, which can be used in `mutate`.
 
-
-
-
 # Grouping
 format_racegr1 <- function(x) {
   case_when(
@@ -305,16 +302,8 @@ mutate(
   DTH30FL = if_else(LDDTHGR1 == "<= 30", "Y", NA_character_),
   DTHA30FL = if_else(LDDTHGR1 == "> 30", "Y", NA_character_),
   DTHB30FL = if_else(DTHDT <= TRTSDT + 30, "Y", NA_character_),
-  DOMAIN = NULL,
-  REGION1N = "",
   AAGE = "",
   AAGEU = "",
-  AGEGRP1 = "",
-  AGEGRP1N = "",
-  RACEN = "",
-  ARACE = "",
-  ARACEN = "",
-  RACEGR1N = "",
   ITTFL = "",
   RANDFL = "",
   RANDNUM = "",
@@ -329,7 +318,13 @@ mutate(
   HEIGHTBL = "", 
   WEIGHTBL = "",
   BMIBL = ""
-)
+) %>% 
+  create_var_from_codelist(metacore, input_var = RACEGR1, out_var = RACEGR1N) %>% 
+  create_var_from_codelist(metacore, input_var = AGEGR1, out_var = AGEGR1N) %>% 
+  create_var_from_codelist(metacore, input_var = RACE, out_var = RACEN) %>% 
+  create_var_from_codelist(metacore, input_var = REGION1, out_var = REGION1N)
+
+
 
 adsl_final <- adsl_lkad %>%
   drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
