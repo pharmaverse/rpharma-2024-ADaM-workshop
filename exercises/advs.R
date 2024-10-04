@@ -15,8 +15,8 @@ library(xportr)
 # ---- Load Specs for Metacore ----
 
 metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
-                             where_sep_sheet = FALSE,
-                             quiet = TRUE #To suppress warnings messages
+                             where_sep_sheet = FALSE
+                             #, quiet = TRUE #To suppress warnings messages
                              ) %>%
   select_dataset("ADVS")
 
@@ -66,8 +66,8 @@ range_lookup <- tibble::tribble(
 # ASSIGN AVALCAT1
 avalcat_lookup <- tibble::tribble(
   ~PARAMCD, ~AVALCA1N, ~AVALCAT1,
-  "HEIGHT", 1, ">100 cm",
-  "HEIGHT", 2, "<= 100 cm"
+  "HEIGHT", 1, ">140 cm",
+  "HEIGHT", 2, "<= 140 cm"
 )
 
 # User defined functions ----
