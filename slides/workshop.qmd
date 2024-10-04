@@ -1,18 +1,10 @@
 ---
-title: "R/pharma ADaM Workshop"
-# date: "Oct 20 2023"
+title: "R/Pharma ADaM Workshop"
 author: 
   - Fanny Gautier
   - Ben Straub
-format: 
-  revealjs:
-    # chalkboard: true
-    code-link: true
-    background-image: https://raw.githubusercontent.com/pharmaverse/rpharma-phriday-workshop/master/slides/figures/pharmaverse-bkgr.png
-    background-size: contain
-    theme: pharmaverse.scss
-    footer: "[Source on github](https://github.com/pharmaverse/rpharma-phriday-workshop)"
-    embed-resources: true
+  - Edoardo Mancini  
+format: revealjs
 ---
 
 ```{r}
@@ -35,92 +27,73 @@ img_center_size <- 300
 ```
 
 
-## Intro
+## Objective
 
-- 2 pharmaverse council reps from Novo Nordisk & Roche
-- Apologies we are not Kangjie Zhang from Bayer (as advertised)
+- By the end of this workshop you will have developed an `ADSL` and `ADVS`
+dataset using pharmaverse packages and dataset specs???
 
+## What's covered in the Workshop
 
-
-## Agenda
-
->
->> - pharmaverse overview
->> - Select packages walkthrough and examples
->> - `admiral` exercises `r glue("<img src={admiral_img} height='{img_bullet_size}'/>")`
->> - Closing thoughts
->>
+- How to use metacore/metatools and ADaM Specs for `ADSL` and `ADVS` 
+- How to use admiral and other packages to code `ADSL` and `ADVS`
+- Using Specs to create numeric variables and order and finalize dataset
+- Write out final datasets as xpts (lengths, types, labels) using specs using `xportr`
+- ???
   
 
-## pharmaverse overview
+## Helpful Resources
 
-<center>
-<br>
-[`r glue("<img src={pharmaverse_img} height='{img_center_size}'/>")`](https://pharmaverse.org){.external target="_blank"}  
-</center>
+- admiraldiscovery
+- pgkdown sites for xportr, metatools, metacore and admiral
+- ?? TODO: link these out
 
-## pharmaverse overview
-
-Help at your fingertips!
-
-```{r}
-#| eval: false
-#| echo: true
-
-install.packages("pharmaverse")
-```
-
-## pharmaverse overview
-
-Explore!
-
-```{r}
-#| eval: false
-#| echo: true
-
-pharmaverse::explore()
-
-```
-
-## pharmaverse overview
-
-Join communities!
-
-```{r}
-#| eval: false
-#| echo: true
-
-pharmaverse::join("slack")
-pharmaverse::join("linkedin")
-pharmaverse::join("github")
-
-```
-
-## pharmaverse overview
-
-See pharmaverse examples!
-
-```{r}
-#| eval: false
-#| echo: true
-
-pharmaverse::examples()
-
-```
-
-
-## Packages Walkthrough - intro
+## Packages Walkthrough - brief intro!
 
 >> - `metacore` `r glue("<img src={metacore_img} height='{img_bullet_size}'/>")`
 >> - `metatools` `r glue("<img src={metatools_img} height='{img_bullet_size}'/>")`
 >> - `xportr` `r glue("<img src={xportr_img} height='{img_bullet_size}'/>")`
 >> - `admiral` `r glue("<img src={admiral_img} height='{img_bullet_size}'/>")`
 
+## Packages Walkthrough - metacore
+
+## Packages Walkthrough - metatools
+
+## Packages Walkthrough - xportr
+
+## Packages Walkthrough - admiral
 
 ## Packages Walkthrough - example usage
 
-- Roche implementation share
-- [R Consortium R Submission WG Pilot 3](https://github.com/RConsortium/submissions-pilot3-adam) ([Example Code](https://github.com/RConsortium/submissions-pilot3-adam/blob/main/submission/programs/adsl.r))
+
+## ADSL Walkthrough
+
+- We are going to code ADSL 
+- Parts of the code are blank out and will require some quick research
+- Don't worry if you get lost we will get you back on track
+
+
+```{r}
+countdown(minutes = 50, seconds = 00, 
+          top = NULL, bottom = 0,
+          left = NULL, right = 0,
+          margin = "10%",
+          font_size = "2.5em")
+``` 
+
+## ADVS Walkthrough
+
+- We are going to code ADVS 
+- Parts of the code are blank out and will require some quick research
+- Don't worry if you get lost we will get you back on track
+
+```{r}
+countdown(minutes = 50, seconds = 00, 
+          top = NULL, bottom = 0,
+          left = NULL, right = 0,
+          margin = "10%",
+          font_size = "2.5em")
+``` 
+
 
 ## `admiral` exercises `r glue("<img src={admiral_img} align='right' height='{img_right_size - 20}'/>")`
 
