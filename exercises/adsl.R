@@ -119,7 +119,7 @@ adsl <- dm %>%
 # See also the "Visit and Period Variables" vignette
 # (https://pharmaverse.github.io/admiral/articles/visits_periods.html#treatment_adsl)
 mutate(TRT01P = ARM, TRT01A = ACTARM) %>%
-  ## derive treatment start date (TRTSDTM) ----
+  ## Derive treatment start date (TRTSDTM) ----
 derive_vars_merged(
   dataset_add = ex_ext,
   filter_add = (EXDOSE > 0 |
@@ -131,7 +131,7 @@ derive_vars_merged(
   mode = "first",
   by_vars = exprs(STUDYID, USUBJID)
 ) %>%
-  ## derive treatment end date (TRTEDTM) ----
+  ## Derive treatment end date (TRTEDTM) ----
 derive_vars_merged(
   dataset_add = ex_ext,
   filter_add = (EXDOSE > 0 |
@@ -144,7 +144,7 @@ derive_vars_merged(
 ) %>%
   ## Derive treatment end/start date TRTSDT/TRTEDT ----
 derive_vars_dtm_to_dt(source_vars = exprs(TRTSDTM, TRTEDTM)) %>%
-  ## derive treatment duration (TRTDURD) ----
+  ## Derive treatment duration (TRTDURD) ----
 derive_var_trtdurd()
 
 ## Disposition dates, status ----
@@ -243,7 +243,6 @@ adsl <- adsl %>%
 ## Last known alive date ----
 ## DTC variables are converted to numeric dates imputing missing day and month
 ## to the first
-
 adsl_lkad <- adsl %>%
   derive_vars_extreme_event(
     by_vars = exprs(STUDYID, USUBJID),
@@ -311,7 +310,6 @@ mutate(
   TRT01AN = "",
   TRTSTM = "",
   TRTDUR = "",
-  OLEFL = "",
   BRTHDTC = "",
   BRTHDT = "",
   BRTHDTF = "",
