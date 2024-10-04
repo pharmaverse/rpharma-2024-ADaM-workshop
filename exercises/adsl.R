@@ -103,15 +103,19 @@ format_eosstt <- function(x) {
 
 # Derivations ----
 # impute start and end time of exposure to first and last respectively, do not impute date
+# TODO: Add Flag Variable
 ex_ext <- ex %>%
   derive_vars_dtm(
     dtc = EXSTDTC,
-    new_vars_prefix = "EXST"
+    new_vars_prefix = "EXST",
+    time_imputation = "last",
+    flag_imputation = "time"
   ) %>%
   derive_vars_dtm(
     dtc = EXENDTC,
     new_vars_prefix = "EXEN",
-    time_imputation = "last"
+    time_imputation = "last",
+    flag_imputation = "time"
   )
 
 adsl <- dm %>%
