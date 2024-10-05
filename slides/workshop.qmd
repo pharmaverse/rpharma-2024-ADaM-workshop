@@ -47,6 +47,12 @@ dataset using pharmaverse packages and dataset specs???
 - pgkdown sites for xportr, metatools, metacore and admiral
 - ?? TODO: link these out
 
+## Some things to ponder...
+
+* Blanks
+* Default Arguments and `NULL` Arguments
+* 
+
 ## Packages Walkthrough - brief intro!
 
 >> - `metacore` `r glue("<img src={metacore_img} height='{img_bullet_size}'/>")`

@@ -2,7 +2,7 @@
 #
 # Label: Subject Level Analysis Dataset
 #
-# Input: dm, ds, ex, ae, lb
+# Input: dm, ds, ex, ae, lb, suppdm, rphrama_specs.xlsx
 library(admiral)
 library(pharmaversesdtm) # Contains example datasets from the CDISC pilot project
 library(dplyr)
@@ -13,14 +13,17 @@ library(metatools)
 library(xportr)
 
 # ---- Load Specs for Metacore ----
-
-metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
-                             where_sep_sheet = FALSE) %>%
+metacore <- spec_to_metacore(
+  path = "metadata/rpharma_specs.xlsx",
+  where_sep_sheet = FALSE
+) %>%
   select_dataset("ADSL")
+
+#  ---- Load User-defined function ----
+source("exercises/formatters.R")
 
 
 # Load source datasets ----
-
 # Use e.g. haven::read_sas to read in .sas7bdat, or other suitable functions
 # as needed and assign to the variables below.
 # For illustration purposes read in admiral test data
@@ -51,56 +54,6 @@ suppdm <- convert_blanks_to_na(suppdm)
 # Combine Parent and Supp - very handy!
 dm_suppdm <- combine_supp(dm, suppdm)
 
-
-# User defined functions ----
-
-# Here are some examples of how you can create your own functions that
-#  operates on vectors, which can be used in `mutate`.
-
-# Grouping
-format_racegr1 <- function(x) {
-  case_when(
-    x == "WHITE" ~ "White",
-    x != "WHITE" ~ "Non-white",
-    TRUE ~ "Missing"
-  )
-}
-
-format_agegr1 <- function(x) {
-  case_when(
-    x < 18 ~ "<18",
-    between(x, 18, 64) ~ "18-64",
-    x > 64 ~ ">64",
-    TRUE ~ "Missing"
-  )
-}
-
-format_region1 <- function(x) {
-  case_when(
-    x %in% c("CAN", "USA") ~ "NA",
-    !is.na(x) ~ "RoW",
-    TRUE ~ "Missing"
-  )
-}
-
-format_lddthgr1 <- function(x) {
-  case_when(
-    x <= 30 ~ "<= 30",
-    x > 30 ~ "> 30",
-    TRUE ~ NA_character_
-  )
-}
-
-# EOSSTT mapping
-format_eosstt <- function(x) {
-  case_when(
-    x %in% c("COMPLETED") ~ "COMPLETED",
-    x %in% c("SCREEN FAILURE") ~ NA_character_,
-    !is.na(x) ~ "DISCONTINUED",
-    TRUE ~ "ONGOING"
-  )
-}
-
 # Derivations ----
 # impute start and end time of exposure to first and last respectively, do not impute date
 # TODO: Add Flag Variable
@@ -118,38 +71,45 @@ ex_ext <- ex %>%
     flag_imputation = "time"
   )
 
-adsl <- dm %>%
-  ## derive treatment variables (TRT01P, TRT01A) ----
-# See also the "Visit and Period Variables" vignette
-# (https://pharmaverse.github.io/admiral/articles/visits_periods.html#treatment_adsl)
-mutate(TRT01P = ARM, TRT01A = ACTARM) %>%
-  ## Derive treatment start date (TRTSDTM) ----
-derive_vars_merged(
-  dataset_add = ex_ext,
-  filter_add = (EXDOSE > 0 |
-                  (EXDOSE == 0 &
-                     str_detect(EXTRT, "PLACEBO"))) &
-    !is.na(EXSTDTM),
-  new_vars = exprs(TRTSDTM = EXSTDTM, TRTSTMF = EXSTTMF),
-  order = exprs(EXSTDTM, EXSEQ),
-  mode = "first",
-  by_vars = exprs(STUDYID, USUBJID)
-) %>%
+## Derive treatment start date (TRTSDTM) ----
+adsl01 <- dm %>%
+  mutate(TRT01P = ARM, TRT01A = ACTARM) %>%
+  derive_vars_merged(
+    dataset_add = ex_ext,
+    filter_add = (EXDOSE > 0 |
+      (EXDOSE == 0 &
+        str_detect(EXTRT, "PLACEBO"))) &
+      !is.na(EXSTDTM),
+    new_vars = exprs(TRTSDTM = EXSTDTM, TRTSTMF = EXSTTMF),
+    order = exprs(EXSTDTM, EXSEQ),
+    mode = "first",
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+
+adsl02 <- adsl01 %>%
   ## Derive treatment end date (TRTEDTM) ----
-derive_vars_merged(
-  dataset_add = ex_ext,
-  filter_add = (EXDOSE > 0 |
-                  (EXDOSE == 0 &
-                     str_detect(EXTRT, "PLACEBO"))) & !is.na(EXENDTM),
-  new_vars = exprs(TRTEDTM = EXENDTM, TRTETMF = EXENTMF),
-  order = exprs(EXENDTM, EXSEQ),
-  mode = "last",
-  by_vars = exprs(STUDYID, USUBJID)
-) %>%
-  ## Derive treatment end/start date TRTSDT/TRTEDT ----
-derive_vars_dtm_to_dt(source_vars = exprs(TRTSDTM, TRTEDTM)) %>%
-  ## Derive treatment duration (TRTDURD) ----
-derive_var_trtdurd()
+  derive_vars_merged(
+    dataset_add = ex_ext,
+    filter_add = (EXDOSE > 0 |
+      (EXDOSE == 0 &
+        str_detect(EXTRT, "PLACEBO"))) & !is.na(EXENDTM),
+    new_vars = exprs(TRTEDTM = EXENDTM, TRTETMF = EXENTMF),
+    order = exprs(EXENDTM, EXSEQ),
+    mode = "last",
+    by_vars = exprs(STUDYID, USUBJID)
+  )
+## Derive treatment end/start date TRTSDT/TRTEDT ----
+adsl03 <- adsl02 %>%
+  derive_vars_dtm_to_dt(
+    source_vars = exprs(TRTSDTM, TRTEDTM)
+  )
+
+## Derive treatment duration (TRTDURD) ----
+adsl04 <- adsl03 %>%
+  derive_var_trtdurd(
+    start_date = TRTSDT,
+    end_date = TRTEDT
+  )
 
 ## Disposition dates, status ----
 # convert character date to numeric date without imputation
@@ -159,63 +119,80 @@ ds_ext <- derive_vars_dt(
   new_vars_prefix = "DSST"
 )
 
-# Screen fail date
-adsl <- adsl %>%
+# Screen fail date ----
+adsl05 <- adsl04 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
     new_vars = exprs(SCRFDT = DSSTDT),
     filter_add = DSCAT == "DISPOSITION EVENT" & DSDECOD == "SCREEN FAILURE"
-  ) %>%
+  )
+
+# End of Study Date ----
+adsl06 <- adsl05 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
     new_vars = exprs(EOSDT = DSSTDT),
     filter_add = DSCAT == "DISPOSITION EVENT" & DSDECOD != "SCREEN FAILURE"
-  ) %>%
-  # EOS status
+  )
+
+# End of Study Status ----
+adsl07 <- adsl06 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
     filter_add = DSCAT == "DISPOSITION EVENT",
     new_vars = exprs(EOSSTT = format_eosstt(DSDECOD)),
     missing_values = exprs(EOSSTT = "ONGOING")
-  ) %>%
-  # Last retrieval date
+  )
+
+# Last Retrieval Date ----
+adsl08 <- adsl07 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
     new_vars = exprs(FRVDT = DSSTDT),
     filter_add = DSCAT == "OTHER EVENT" & DSDECOD == "FINAL RETRIEVAL VISIT"
-  ) %>%
-  # Derive Randomization Date
+  )
+
+# Derive Randomization Date ----
+adsl09 <- adsl08 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     filter_add = DSDECOD == "RANDOMIZED",
     by_vars = exprs(STUDYID, USUBJID),
     new_vars = exprs(RANDDT = DSSTDT)
-  ) %>%
-  # Death date - impute partial date to first day/month
+  )
+
+# Death date - impute partial date to first day/month ----
+adsl10 <- adsl09 %>%
   derive_vars_dt(
     new_vars_prefix = "DTH",
     dtc = DTHDTC,
     highest_imputation = "M",
     date_imputation = "first"
-  ) %>%
-  # Relative Day of Death
+  )
+
+# Relative Day of Death ----
+adsl11 <- adsl10 %>%
   derive_vars_duration(
     new_var = DTHADY,
     start_date = TRTSDT,
     end_date = DTHDT
-  ) %>%
-  # Elapsed Days from Last Dose to Death
+  )
+
+# Elapsed Days from Last Dose to Death ----
+adsl12 <- adsl11 %>%
   derive_vars_duration(
     new_var = LDDTHELD,
     start_date = TRTEDT,
     end_date = DTHDT,
     add_one = FALSE
-  ) %>%
-  # Cause of Death and Traceability Variables
+  )
+
+# Cause of Death and Traceability Variables ----
+adsl13 <- adsl12 %>%
   derive_vars_extreme_event(
     by_vars = exprs(STUDYID, USUBJID),
     events = list(
@@ -235,8 +212,10 @@ adsl <- adsl %>%
     order = exprs(event_nr),
     mode = "first",
     new_vars = exprs(DTHCAUS = DTHCAUS, DTHDOM = DTHDOM)
-  ) %>%
-  # Death Cause Category
+  )
+
+# Death Cause Category ----
+adsl14 <- adsl13 %>%
   mutate(DTHCGR1 = case_when(
     is.na(DTHDOM) ~ NA_character_,
     DTHDOM == "AE" ~ "ADVERSE EVENT",
@@ -244,99 +223,38 @@ adsl <- adsl %>%
     TRUE ~ "OTHER"
   ))
 
-## Last known alive date ----
-## DTC variables are converted to numeric dates imputing missing day and month
-## to the first
-adsl_lkad <- adsl %>%
-  derive_vars_extreme_event(
-    by_vars = exprs(STUDYID, USUBJID),
-    events = list(
-      event(
-        dataset_name = "ae",
-        order = exprs(AESTDTC, AESEQ),
-        condition = !is.na(AESTDTC),
-        set_values_to = exprs(
-          LSTALVDT = convert_dtc_to_dt(AESTDTC, highest_imputation = "M"),
-          seq = AESEQ
-        ),
-      ),
-      event(
-        dataset_name = "ae",
-        order = exprs(AEENDTC, AESEQ),
-        condition = !is.na(AEENDTC),
-        set_values_to = exprs(
-          LSTALVDT = convert_dtc_to_dt(AEENDTC, highest_imputation = "M"),
-          seq = AESEQ
-        ),
-      ),
-      event(
-        dataset_name = "lb",
-        order = exprs(LBDTC, LBSEQ),
-        condition = !is.na(LBDTC),
-        set_values_to = exprs(
-          LSTALVDT = convert_dtc_to_dt(LBDTC, highest_imputation = "M"),
-          seq = LBSEQ
-        ),
-      ),
-      event(
-        dataset_name = "adsl",
-        condition = !is.na(TRTEDT),
-        set_values_to = exprs(LSTALVDT = TRTEDT, seq = NA_integer_),
-      )
-    ),
-    source_datasets = list(ae = ae, lb = lb, adsl = adsl),
-    tmp_event_nr_var = event_nr,
-    order = exprs(LSTALVDT, seq, event_nr),
-    mode = "last",
-    new_vars = exprs(LSTALVDT)
+## Groupings and Numeric variables ----
+### Format functions are from source("exercises/formatters.R") ----
+### Numeric Variables are from Spec File ----
+adsl15 <- adsl14 %>%
+  mutate(
+    RACEGR1 = format_racegr1(RACE),
+    AGEGR1 = format_agegr1(AGE),
+    REGION1 = format_region1(COUNTRY),
+    SAFFL = "",
+    ITTFL = "",
+    RANDFL = "",
+    TRTSTM = "",
+    HEIGHTBL = "",
+    WEIGHTBL = "",
+    BMIBL = ""
   ) %>%
-  derive_var_merged_exist_flag(
-    dataset_add = ex,
-    by_vars = exprs(STUDYID, USUBJID),
-    new_var = SAFFL,
-    condition = (EXDOSE > 0 | (EXDOSE == 0 & str_detect(EXTRT, "PLACEBO")))
-  ) %>%
-  ## Groupings and others variables ----
-mutate(
-  RACEGR1 = format_racegr1(RACE),
-  AGEGR1 = format_agegr1(AGE),
-  REGION1 = format_region1(COUNTRY),
-  LDDTHGR1 = format_lddthgr1(LDDTHELD),
-  DTH30FL = if_else(LDDTHGR1 == "<= 30", "Y", NA_character_),
-  DTHA30FL = if_else(LDDTHGR1 == "> 30", "Y", NA_character_),
-  DTHB30FL = if_else(DTHDT <= TRTSDT + 30, "Y", NA_character_),
-  AAGE = "",
-  AAGEU = "",
-  ITTFL = "",
-  RANDFL = "",
-  RANDNUM = "",
-  TRT01PN = "",
-  TRT01AN = "",
-  TRTSTM = "",
-  TRTDUR = "",
-  BRTHDTC = "",
-  BRTHDT = "",
-  BRTHDTF = "",
-  HEIGHTBL = "", 
-  WEIGHTBL = "",
-  BMIBL = ""
-) %>% 
-  create_var_from_codelist(metacore, input_var = RACEGR1, out_var = RACEGR1N) %>% 
-  create_var_from_codelist(metacore, input_var = AGEGR1, out_var = AGEGR1N) %>% 
-  create_var_from_codelist(metacore, input_var = RACE, out_var = RACEN) %>% 
-  create_var_from_codelist(metacore, input_var = REGION1, out_var = REGION1N)
+  create_var_from_codelist(metacore, input_var = AGEGR1, out_var = AGEGR1N) %>%
+  create_var_from_codelist(metacore, input_var = RACE, out_var = RACEN) %>%
+  create_var_from_codelist(metacore, input_var = RACEGR1, out_var = RACEGR1N) %>%
+  create_var_from_codelist(metacore, input_var = REGION1, out_var = REGION1N) %>% 
+  create_var_from_codelist(metacore, input_var = TRT01P, out_var = TRT01PN) %>% 
+  create_var_from_codelist(metacore, input_var = TRT01A, out_var = TRT01AN) 
 
 
-
-adsl_final <- adsl_lkad %>%
+adsl_final <- adsl15 %>%
   drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
   check_variables(metacore, dataset_name = "ADSL") %>% # Check all variables specified are present and no more
   order_cols(metacore) %>% # Orders the columns according to the spec
-  sort_by_key(metacore) %>%  # Sorts the rows by the sort keys
-  xportr_type(metacore) %>% 
-  xportr_length(metacore) %>% 
-  xportr_label(metacore) %>% 
-  #xportr_format(metacore, domain = "ADSL") %>% 
-  xportr_df_label(metacore, domain = "ADSL") %>% 
+  sort_by_key(metacore) %>% # Sorts the rows by the sort keys
+  xportr_type(metacore) %>%
+  xportr_length(metacore) %>%
+  xportr_label(metacore) %>%
+  # xportr_format(metacore, domain = "ADSL") %>%
+  xportr_df_label(metacore, domain = "ADSL") %>%
   xportr_write("datasets/adsl.xpt", metacore, domain = "ADSL")
-  
