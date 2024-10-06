@@ -2,7 +2,7 @@
 # Here are some examples of how you can create your own functions that
 #  operates on vectors, which can be used in `mutate`.
 
-# Grouping
+# Race Grouping ----
 format_racegr1 <- function(x) {
   case_when(
     x == "WHITE" ~ "White",
@@ -11,6 +11,7 @@ format_racegr1 <- function(x) {
   )
 }
 
+# Age Grouping ----
 format_agegr1 <- function(x) {
   case_when(
     x < 18 ~ "<18",
@@ -20,6 +21,7 @@ format_agegr1 <- function(x) {
   )
 }
 
+# Region Grouping ----
 format_region1 <- function(x) {
   case_when(
     x %in% c("CAN", "USA") ~ "NA",
@@ -28,15 +30,7 @@ format_region1 <- function(x) {
   )
 }
 
-format_lddthgr1 <- function(x) {
-  case_when(
-    x <= 30 ~ "<= 30",
-    x > 30 ~ "> 30",
-    TRUE ~ NA_character_
-  )
-}
-
-# EOSSTT mapping
+# EOSSTT mapping ----
 format_eosstt <- function(x) {
   case_when(
     x %in% c("COMPLETED") ~ "COMPLETED",
@@ -45,3 +39,17 @@ format_eosstt <- function(x) {
     TRUE ~ "ONGOING"
   )
 }
+
+# Assign Randomization Flag
+
+assign_randfl <- function(x) {
+  if_else(!is.na(x), "Y", NA_character_)
+}
+  
+  
+  
+  
+  
+  
+  
+  

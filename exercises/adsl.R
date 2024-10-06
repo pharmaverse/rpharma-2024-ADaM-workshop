@@ -19,15 +19,13 @@ metacore <- spec_to_metacore(
 ) %>%
   select_dataset("ADSL")
 
-#  ---- Load User-defined function ----
+# ---- Load User-defined function ----
 source("exercises/formatters.R")
 
-
-# Load source datasets ----
+# ---- Load source datasets ----
 # Use e.g. haven::read_sas to read in .sas7bdat, or other suitable functions
 # as needed and assign to the variables below.
-# For illustration purposes read in admiral test data
-
+# For illustration purposes read in sdtm test data
 dm <- pharmaversesdtm::dm
 ds <- pharmaversesdtm::ds
 ex <- pharmaversesdtm::ex
@@ -36,13 +34,10 @@ lb <- pharmaversesdtm::lb
 vs <- pharmaversesdtm::vs
 suppdm <- pharmaversesdtm::suppdm
 
-
-
 # When SAS datasets are imported into R using haven::read_sas(), missing
 # character values from SAS appear as "" characters in R, instead of appearing
 # as NA values. Further details can be obtained via the following link:
-# https://pharmaverse.github.io/admiral/articles/admiral.html#handling-of-missing-values # nolint
-
+# https://pharmaverse.github.io/admiral/articles/admiral.html#handling-of-missing-values
 dm <- convert_blanks_to_na(dm)
 ds <- convert_blanks_to_na(ds)
 ex <- convert_blanks_to_na(ex)
@@ -51,12 +46,11 @@ lb <- convert_blanks_to_na(lb)
 vs <- convert_blanks_to_na(vs)
 suppdm <- convert_blanks_to_na(suppdm)
 
-# Combine Parent and Supp - very handy!
+# Combine Parent and Supp - very handy! ----
 dm_suppdm <- combine_supp(dm, suppdm)
 
 # Derivations ----
 # impute start and end time of exposure to first and last respectively, do not impute date
-# TODO: Add Flag Variable
 ex_ext <- ex %>%
   derive_vars_dtm(
     dtc = EXSTDTC,
@@ -71,8 +65,8 @@ ex_ext <- ex %>%
     flag_imputation = "time"
   )
 
-## Derive treatment start date (TRTSDTM) ----
-adsl01 <- dm %>%
+# Derive treatment start date (TRTSDTM, TRT01P, TRT01A) ----
+adsl01 <- dm_suppdm %>%
   mutate(TRT01P = ARM, TRT01A = ACTARM) %>%
   derive_vars_merged(
     dataset_add = ex_ext,
@@ -86,8 +80,8 @@ adsl01 <- dm %>%
     by_vars = exprs(STUDYID, USUBJID)
   )
 
+# Derive treatment end date (TRTEDTM) ----
 adsl02 <- adsl01 %>%
-  ## Derive treatment end date (TRTEDTM) ----
   derive_vars_merged(
     dataset_add = ex_ext,
     filter_add = (EXDOSE > 0 |
@@ -98,20 +92,27 @@ adsl02 <- adsl01 %>%
     mode = "last",
     by_vars = exprs(STUDYID, USUBJID)
   )
-## Derive treatment end/start date TRTSDT/TRTEDT ----
+
+# Derive treatment end/start date (TRTSDT/TRTEDT) ----
 adsl03 <- adsl02 %>%
   derive_vars_dtm_to_dt(
     source_vars = exprs(TRTSDTM, TRTEDTM)
   )
 
-## Derive treatment duration (TRTDURD) ----
+# Derive treatment start time (TRTSDTM) ----
 adsl04 <- adsl03 %>%
+  derive_vars_dtm_to_tm(
+    source_vars = exprs(TRTSDTM)
+  )
+
+# Derive treatment duration (TRTDURD) ----
+adsl05 <- adsl04 %>%
   derive_var_trtdurd(
     start_date = TRTSDT,
     end_date = TRTEDT
   )
 
-## Disposition dates, status ----
+# Disposition dates, status ----
 # convert character date to numeric date without imputation
 ds_ext <- derive_vars_dt(
   ds,
@@ -119,8 +120,8 @@ ds_ext <- derive_vars_dt(
   new_vars_prefix = "DSST"
 )
 
-# Screen fail date ----
-adsl05 <- adsl04 %>%
+# Screen fail date (SCRFDT) ----
+adsl06 <- adsl05 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
@@ -128,8 +129,8 @@ adsl05 <- adsl04 %>%
     filter_add = DSCAT == "DISPOSITION EVENT" & DSDECOD == "SCREEN FAILURE"
   )
 
-# End of Study Date ----
-adsl06 <- adsl05 %>%
+# End of Study Date (EOSDT) ----
+adsl07 <- adsl06 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
@@ -137,8 +138,8 @@ adsl06 <- adsl05 %>%
     filter_add = DSCAT == "DISPOSITION EVENT" & DSDECOD != "SCREEN FAILURE"
   )
 
-# End of Study Status ----
-adsl07 <- adsl06 %>%
+# End of Study Status (EOSSTT) ----
+adsl08 <- adsl07 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
@@ -147,8 +148,8 @@ adsl07 <- adsl06 %>%
     missing_values = exprs(EOSSTT = "ONGOING")
   )
 
-# Last Retrieval Date ----
-adsl08 <- adsl07 %>%
+# Last Retrieval Date (FRVDT) ----
+adsl09 <- adsl08 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
@@ -156,8 +157,8 @@ adsl08 <- adsl07 %>%
     filter_add = DSCAT == "OTHER EVENT" & DSDECOD == "FINAL RETRIEVAL VISIT"
   )
 
-# Derive Randomization Date ----
-adsl09 <- adsl08 %>%
+# Derive Randomization Date (RANDDT) ----
+adsl10 <- adsl09 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     filter_add = DSDECOD == "RANDOMIZED",
@@ -165,8 +166,8 @@ adsl09 <- adsl08 %>%
     new_vars = exprs(RANDDT = DSSTDT)
   )
 
-# Death date - impute partial date to first day/month ----
-adsl10 <- adsl09 %>%
+# Death date - impute partial date to first day/month (DTHDT) ----
+adsl11 <- adsl10 %>%
   derive_vars_dt(
     new_vars_prefix = "DTH",
     dtc = DTHDTC,
@@ -174,16 +175,16 @@ adsl10 <- adsl09 %>%
     date_imputation = "first"
   )
 
-# Relative Day of Death ----
-adsl11 <- adsl10 %>%
+# Relative Day of Death (DTHADY) ----
+adsl12 <- adsl11 %>%
   derive_vars_duration(
     new_var = DTHADY,
     start_date = TRTSDT,
     end_date = DTHDT
   )
 
-# Elapsed Days from Last Dose to Death ----
-adsl12 <- adsl11 %>%
+# Elapsed Days from Last Dose to Death (LDDTHELD) ----
+adsl13 <- adsl12 %>%
   derive_vars_duration(
     new_var = LDDTHELD,
     start_date = TRTEDT,
@@ -191,8 +192,8 @@ adsl12 <- adsl11 %>%
     add_one = FALSE
   )
 
-# Cause of Death and Traceability Variables ----
-adsl13 <- adsl12 %>%
+# Cause of Death and Traceability Variables (DTHCAUS, DTHDOM) ----
+adsl14 <- adsl13 %>%
   derive_vars_extreme_event(
     by_vars = exprs(STUDYID, USUBJID),
     events = list(
@@ -214,8 +215,8 @@ adsl13 <- adsl12 %>%
     new_vars = exprs(DTHCAUS = DTHCAUS, DTHDOM = DTHDOM)
   )
 
-# Death Cause Category ----
-adsl14 <- adsl13 %>%
+# Death Cause Category (DTHCGR1) ----
+adsl15 <- adsl14 %>%
   mutate(DTHCGR1 = case_when(
     is.na(DTHDOM) ~ NA_character_,
     DTHDOM == "AE" ~ "ADVERSE EVENT",
@@ -223,31 +224,57 @@ adsl14 <- adsl13 %>%
     TRUE ~ "OTHER"
   ))
 
-## Groupings and Numeric variables ----
-### Format functions are from source("exercises/formatters.R") ----
-### Numeric Variables are from Spec File ----
-adsl15 <- adsl14 %>%
+# Groupings variables (RACEGR1, AGEGR1, REGION1) ----
+## Using Format functions are from source("exercises/formatters.R") ----
+adsl16 <- adsl15 %>%
   mutate(
     RACEGR1 = format_racegr1(RACE),
     AGEGR1 = format_agegr1(AGE),
     REGION1 = format_region1(COUNTRY),
-    SAFFL = "",
-    ITTFL = "",
-    RANDFL = "",
-    TRTSTM = "",
     HEIGHTBL = "",
     WEIGHTBL = "",
     BMIBL = ""
+  )
+
+# Flagging variables (RANDFL, ITTFL, SAFFL) ----
+## Using assign functions from source("exercises/formatters.R") ----
+adsl17 <- adsl16 %>%
+  mutate(
+    RANDFL = assign_randfl(RANDDT)
   ) %>%
+  rename(
+    ITTFL = ITT,
+    SAFFL = SAFETY
+  )
+
+# vs_ <- vs %>% 
+#   rename(
+#   PARAMCD = VSTESTCD,
+#   AVAL = VSSTRESN,
+#   ABLFL = VSBLFL
+# )
+# 
+# derive_vars_computed(
+#   dataset = adsl17,
+#   dataset_add = vs_,
+#   by_vars = exprs(STUDYID, USUBJID),
+#   parameters = c("WEIGHT", "HEIGHT"),
+#   new_vars = exprs(BMIBL = compute_bmi(height = AVAL.HEIGHT, weight = AVAL.WEIGHT)),
+#   filter_add = ABLFL == "Y"
+# )
+
+# Numeric Variables are from Spec File ----
+## (AGEGR1N, RACEN, RACEGR1N, REGION1N, TRT01PN, TRT01AN)
+adsl18 <- adsl17 %>%
   create_var_from_codelist(metacore, input_var = AGEGR1, out_var = AGEGR1N) %>%
   create_var_from_codelist(metacore, input_var = RACE, out_var = RACEN) %>%
   create_var_from_codelist(metacore, input_var = RACEGR1, out_var = RACEGR1N) %>%
-  create_var_from_codelist(metacore, input_var = REGION1, out_var = REGION1N) %>% 
-  create_var_from_codelist(metacore, input_var = TRT01P, out_var = TRT01PN) %>% 
-  create_var_from_codelist(metacore, input_var = TRT01A, out_var = TRT01AN) 
+  create_var_from_codelist(metacore, input_var = REGION1, out_var = REGION1N) %>%
+  create_var_from_codelist(metacore, input_var = TRT01P, out_var = TRT01PN) %>%
+  create_var_from_codelist(metacore, input_var = TRT01A, out_var = TRT01AN)
 
 
-adsl_final <- adsl15 %>%
+adsl <- adsl17 %>%
   drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
   check_variables(metacore, dataset_name = "ADSL") %>% # Check all variables specified are present and no more
   order_cols(metacore) %>% # Orders the columns according to the spec
