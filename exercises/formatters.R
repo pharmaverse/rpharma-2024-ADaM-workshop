@@ -46,10 +46,12 @@ assign_randfl <- function(x) {
   if_else(!is.na(x), "Y", NA_character_)
 }
   
-  
-  
-  
-  
-  
-  
+# AVALCAT1N mapping ----  
+format_avalcat1n <- function(param, aval) {
+  case_when(
+    param == "HEIGHT" & aval > 140 ~ 1,
+    param == "HEIGHT" & aval <= 140 ~ 2,
+    TRUE ~ NA
+  )
+} 
   
