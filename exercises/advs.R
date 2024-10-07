@@ -15,10 +15,15 @@ library(xportr)
 # ---- Load Specs for Metacore ----
 
 metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
-                             where_sep_sheet = FALSE
-                             #, quiet = TRUE #To suppress warnings messages
-                             ) %>%
+  where_sep_sheet = FALSE
+  # , quiet = TRUE #To suppress warnings messages
+) %>%
   select_dataset("ADVS")
+
+
+# ---- Load User-defined function ----
+
+source("exercises/formatters.R")
 
 # Load source datasets ----
 
@@ -70,17 +75,6 @@ avalcat_lookup <- tibble::tribble(
   "HEIGHT", 2, "<= 140 cm"
 )
 
-# User defined functions ----
-
-# Here are some examples of how you can create your own functions that
-#  operates on vectors, which can be used in `mutate()`.
-format_avalcat1n <- function(param, aval) {
-  case_when(
-    param == "HEIGHT" & aval > 140 ~ 1,
-    param == "HEIGHT" & aval <= 140 ~ 2
-  )
-}
-
 # Derivations ----
 
 # Get list of ADSL vars required for derivations
@@ -98,11 +92,13 @@ advs_0 <- vs %>%
     new_vars_prefix = "A",
     dtc = VSDTC,
     # Below arguments are default values and not necessary to add in our case
-    highest_imputation = "n", #means no imputation is performed on partial/missing dates
+    highest_imputation = "n", # means no imputation is performed on partial/missing dates
     flag_imputation = "auto", # To automatically create ADTF variable when highest_imputation is "Y", "M" or "D"
   ) %>%
-  derive_vars_dy(reference_date = TRTSDT,
-                 source_vars = exprs(ADT))
+  derive_vars_dy(
+    reference_date = TRTSDT,
+    source_vars = exprs(ADT)
+  )
 
 advs_1 <- advs_0 %>%
   ## Add PARAMCD only - add PARAM etc later ----
@@ -126,7 +122,7 @@ advs_1 <- advs_0 %>%
 
   # Derive Mean Arterial Pressure
   derive_param_map(
-    by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM), # Other variables than the defined ones here won't be populated
+    by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM, AVALU), # Other variables than the defined ones here won't be populated
     set_values_to = exprs(PARAMCD = "MAP"),
     get_unit_expr = VSSTRESU,
     filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
@@ -134,34 +130,34 @@ advs_1 <- advs_0 %>%
     sysbp_code = "SYSBP",
     diabp_code = "DIABP",
     hr_code = NULL
-  ) %>%
+  )
   # Derive Body Surface Area
   ## Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
   ## Which function could be used to derive "BSA" parameter ?
-  derive_param_bsa(
-    by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM),
-    method = "Mosteller",
-    set_values_to = exprs(PARAMCD = "BSA"),
-    get_unit_expr = VSSTRESU,
-    filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
-    constant_by_vars = exprs(USUBJID),
-    # Below arguments are default values and not necessary to add in our case
-    height_code = "HEIGHT",
-    weight_code = "WEIGHT"
-  ) %>%
+  # derive_param_bsa(
+  #   by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM, AVALU),
+  #   method = "Mosteller",
+  #   set_values_to = exprs(PARAMCD = "BSA"),
+  #   get_unit_expr = VSSTRESU,
+  #   filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
+  #   constant_by_vars = exprs(USUBJID),
+  #   # Below arguments are default values and not necessary to add in our case
+  #   height_code = "HEIGHT",
+  #   weight_code = "WEIGHT"
+  # ) %>%
   # Derive Body Mass Index
   ## Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
   ## Which function could be used to derive "BMI" parameter ?
-  derive_param_bmi(
-    by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM),
-    set_values_to = exprs(PARAMCD = "BMI"),
-    get_unit_expr = VSSTRESU,
-    filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
-    constant_by_vars = exprs(USUBJID),
-    # Below arguments are default values and not necessary to add in our case
-    height_code = "HEIGHT",
-    weight_code = "WEIGHT"
-  )
+  # derive_param_bmi(
+  #   by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM, AVALU),
+  #   set_values_to = exprs(PARAMCD = "BMI"),
+  #   get_unit_expr = VSSTRESU,
+  #   filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
+  #   constant_by_vars = exprs(USUBJID),
+  #   # Below arguments are default values and not necessary to add in our case
+  #   height_code = "HEIGHT",
+  #   weight_code = "WEIGHT"
+  # )
 
 
 ## Get visit info ----
@@ -186,7 +182,7 @@ advs_2 <- advs_1 %>%
 
 
 ## Derive a new record as a summary record (e.g. mean of the triplicates at each time point) ----
-#e.g. subject ="01-701-1015", PARAMCD ="DIABP", AVISIT = "Baseline", ADT="2014-01-02" -> Mean = 56
+# e.g. subject ="01-701-1015", PARAMCD ="DIABP", AVISIT = "Baseline", ADT="2014-01-02" -> Mean = 56
 advs_3 <- advs_2 %>%
   derive_summary_records(
     dataset_add = advs_2, # Observations from the specified dataset are going to be used to calculate and added as new records to the input dataset.
@@ -212,13 +208,15 @@ advs_4 <- advs_3 %>%
 ## Calculate ANRIND : requires the reference ranges ANRLO, ANRHI ----
 # Also accommodates the ranges A1LO, A1HI
 advs_5 <- advs_4 %>%
-  derive_vars_merged(dataset_add = range_lookup, # derive_vars_merged() already used in previous steps
-                     by_vars = exprs(PARAMCD)) %>%
+  derive_vars_merged(
+    dataset_add = range_lookup, # derive_vars_merged() already used in previous steps
+    by_vars = exprs(PARAMCD)
+  ) %>%
   # Calculate ANRIND
   derive_var_anrind(
     # Below arguments are default values and not necessary to add in our case
-    #signif_dig = get_admiral_option("signif_digits"),
-    #use_a1hia1lo = FALSE
+    # signif_dig = get_admiral_option("signif_digits"),
+    # use_a1hia1lo = FALSE
   )
 
 
@@ -323,17 +321,25 @@ advs_10 <- advs_9 %>%
     check_type = "error" # The specified message is issued if the observations of the input dataset are not unique with respect to the by variables and the order
   ) %>%
   # Derive AVALCA1N and AVALCAT1
+  ## Using Format functions from source("exercises/formatters.R")
   mutate(AVALCA1N = format_avalcat1n(param = PARAMCD, aval = AVAL)) %>%
-  derive_vars_merged(dataset_add = avalcat_lookup,
-                     by_vars = exprs(PARAMCD, AVALCA1N)) %>%
+  derive_vars_merged(
+    dataset_add = avalcat_lookup,
+    by_vars = exprs(PARAMCD, AVALCA1N)
+  ) %>%
   # Derive PARAM and PARAMN
-  #derive_vars_merged(dataset_add = select(param_lookup, -VSTESTCD), by_vars = exprs(PARAMCD))
-  # Note that PARAMN could also be derived using the metatools package, as seen during ADSL development
+  # derive_vars_merged(dataset_add = select(param_lookup, -VSTESTCD), by_vars = exprs(PARAMCD))
+  # Note that PARAM/PARAMN could also be derived using the metatools package, as seen during ADSL development
   # with the function create_var_from_codelist()
   # (https://pharmaverse.github.io/metatools/reference/create_var_from_codelist.html)
   create_var_from_codelist(metacore,
-                           input_var = PARAMCD,
-                           out_var = PARAMN)
+    input_var = PARAMCD,
+    out_var = PARAM
+  ) %>%
+  create_var_from_codelist(metacore,
+    input_var = PARAMCD,
+    out_var = PARAMN
+  )
 
 
 # Add all ADSL variables
@@ -346,15 +352,15 @@ advs_final <- advs_10 %>%
 # Final Steps, Select final variables and Add labels
 advs <- advs_final %>%
   drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
-  #check_variables(metacore) %>% # Check all variables specified are present and no more
+  check_variables(metacore, dataset_name = "ADVS") %>% # Check all variables specified are present and no more
   order_cols(metacore) %>% # Orders the columns according to the spec
-  sort_by_key(metacore) %>%  # Sorts the rows by the sort keys
-  xportr_type(metacore) %>% 
-  xportr_length(metacore) %>% 
-  xportr_label(metacore) %>% 
-  #xportr_format(metacore, domain = "advs")
-  xportr_df_label(metacore, domain = "advs") %>% 
-  xportr_write("datasets/advs.xpt", metacore, domain = "advs")
+  sort_by_key(metacore) %>% # Sorts the rows by the sort keys
+  xportr_type(metacore) %>%
+  xportr_length(metacore) %>%
+  xportr_label(metacore) %>%
+  xportr_format(metacore, domain = "ADVS") %>%
+  xportr_df_label(metacore, domain = "ADVS") %>%
+  xportr_write("datasets/advs.xpt", metacore, domain = "ADVS")
 
 
 # Save output ----
