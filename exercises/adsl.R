@@ -247,22 +247,6 @@ adsl17 <- adsl16 %>%
     SAFFL = SAFETY
   )
 
-# vs_ <- vs %>% 
-#   rename(
-#   PARAMCD = VSTESTCD,
-#   AVAL = VSSTRESN,
-#   ABLFL = VSBLFL
-# )
-# 
-# derive_vars_computed(
-#   dataset = adsl17,
-#   dataset_add = vs_,
-#   by_vars = exprs(STUDYID, USUBJID),
-#   parameters = c("WEIGHT", "HEIGHT"),
-#   new_vars = exprs(BMIBL = compute_bmi(height = AVAL.HEIGHT, weight = AVAL.WEIGHT)),
-#   filter_add = ABLFL == "Y"
-# )
-
 # Numeric Variables are from Spec File ----
 ## (AGEGR1N, RACEN, RACEGR1N, REGION1N, TRT01PN, TRT01AN)
 adsl18 <- adsl17 %>%
@@ -274,7 +258,7 @@ adsl18 <- adsl17 %>%
   create_var_from_codelist(metacore, input_var = TRT01A, out_var = TRT01AN)
 
 
-adsl <- adsl17 %>%
+adsl <- adsl18 %>%
   drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
   check_variables(metacore, dataset_name = "ADSL") %>% # Check all variables specified are present and no more
   order_cols(metacore) %>% # Orders the columns according to the spec
@@ -282,6 +266,6 @@ adsl <- adsl17 %>%
   xportr_type(metacore) %>%
   xportr_length(metacore) %>%
   xportr_label(metacore) %>%
-  # xportr_format(metacore, domain = "ADSL") %>%
+  xportr_format(metacore, domain = "ADSL") %>%
   xportr_df_label(metacore, domain = "ADSL") %>%
   xportr_write("datasets/adsl.xpt", metacore, domain = "ADSL")
