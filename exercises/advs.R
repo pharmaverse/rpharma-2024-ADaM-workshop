@@ -68,6 +68,7 @@ range_lookup <- tibble::tribble(
   "PULSE", 60, 100, 40, 110,
   "TEMP", 36.5, 37.5, 35, 38
 )
+
 # ASSIGN AVALCAT1
 avalcat_lookup <- tibble::tribble(
   ~PARAMCD, ~AVALCA1N, ~AVALCAT1,
@@ -99,6 +100,8 @@ advs_0 <- vs %>%
     reference_date = TRTSDT,
     source_vars = exprs(ADT)
   )
+
+#View(advs_0 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSDTC, !!!adsl_vars, ADT, ADY))
 
 advs_1 <- advs_0 %>%
   ## Add PARAMCD only - add PARAM etc later ----
@@ -159,6 +162,7 @@ advs_1 <- advs_0 %>%
   #   weight_code = "WEIGHT"
   # )
 
+#View(advs_1 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY,  PARAMCD, AVAL, AVALU))
 
 ## Get visit info ----
 # See also the "Visit and Period Variables" vignette
@@ -180,19 +184,23 @@ advs_2 <- advs_1 %>%
     ))
   )
 
+#View(advs_2 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN))
 
 ## Derive a new record as a summary record (e.g. mean of the triplicates at each time point) ----
 # e.g. subject ="01-701-1015", PARAMCD ="DIABP", AVISIT = "Baseline", ADT="2014-01-02" -> Mean = 56
 advs_3 <- advs_2 %>%
   derive_summary_records(
     dataset_add = advs_2, # Observations from the specified dataset are going to be used to calculate and added as new records to the input dataset.
-    by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, PARAMCD, AVISITN, AVISIT, ADT, ADY),
+    by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, PARAMCD, AVISITN, AVISIT, ADT, ADY, AVALU),
     filter_add = !is.na(AVAL),
     set_values_to = exprs(
       AVAL = mean(AVAL),
       DTYPE = "AVERAGE"
     )
   )
+
+#View(advs_3 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE))
+
 
 advs_4 <- advs_3 %>%
   ## Calculate ONTRTFL ----
@@ -262,9 +270,9 @@ advs_7 <- advs_6 %>%
     source_var = ANRIND,
     new_var = BNRIND
   ) %>%
-  # Calculate CHG - Note that it is populated for both Baseline & Post-Baseline records
+  # Calculate CHG - Note that CHG is populated for both Baseline & Post-Baseline records
   derive_var_chg() %>%
-  # Calculate PCHG
+  # Calculate PCHG - only for Post-Baseline records
   restrict_derivation(
     derivation = derive_var_pchg,
     filter = (ADT > TRTSDT)
@@ -277,9 +285,9 @@ advs_8 <- advs_7 %>%
     derivation = derive_var_extreme_flag,
     args = params(
       new_var = ANL01FL,
-      by_vars = exprs(USUBJID, PARAMCD, AVISIT, ATPT, DTYPE),
+      by_vars = exprs(STUDYID, USUBJID, PARAMCD, AVISIT, ATPT, DTYPE),
       order = exprs(ADT, AVAL),
-      mode = "last", # Determines of the first or last observation is flagged - As seem while deriving ABLFL
+      mode = "last", # Determines of the first or last observation is flagged - As seen while deriving ABLFL
       # Below arguments are default values and not necessary to add in our case
       true_value = "Y"
     ),
