@@ -213,6 +213,8 @@ advs_4 <- advs_3 %>%
     filter_pre_timepoint = AVISIT == "Baseline" # Observations as not on-treatment
   )
 
+#View(advs_4 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE, ONTRTFL))
+
 ## Calculate ANRIND : requires the reference ranges ANRLO, ANRHI ----
 # Also accommodates the ranges A1LO, A1HI
 advs_5 <- advs_4 %>%
@@ -227,6 +229,7 @@ advs_5 <- advs_4 %>%
     # use_a1hia1lo = FALSE
   )
 
+#View(advs_5 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE, ANRLO, ANRHI, A1LO, A1HI, ANRIND))
 
 ## Derive baseline flags ----
 advs_6 <- advs_5 %>%
@@ -254,6 +257,8 @@ advs_6 <- advs_5 %>%
       ADT <= TRTSDT & !is.na(BASETYPE) & is.na(DTYPE))
   )
 
+#View(advs_6 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL))
+
 ## Derive baseline information ----
 advs_7 <- advs_6 %>%
   # Calculate BASE
@@ -277,7 +282,8 @@ advs_7 <- advs_6 %>%
     derivation = derive_var_pchg,
     filter = (ADT > TRTSDT)
   )
-  
+
+#View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))  
 
 ## ANL01FL: Flag last result within an AVISIT and ATPT for post-baseline records ----
 advs_8 <- advs_7 %>%
@@ -293,6 +299,8 @@ advs_8 <- advs_7 %>%
     ),
     filter = !is.na(AVISITN) & ONTRTFL == "Y"
   )
+
+#View(advs_8 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL))  
 
 ## Get treatment information ----
 # See also the "Visit and Period Variables" vignette
@@ -316,6 +324,8 @@ advs_9 <- advs_8 %>%
     TRTP = TRT01P,
     TRTA = TRT01A
   )
+
+#View(advs_9 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL, TRTP, TRTA))  
 
 ## Get ASEQ and AVALCATx and add PARAM/PARAMN ----
 advs_10 <- advs_9 %>%
@@ -342,13 +352,15 @@ advs_10 <- advs_9 %>%
   # (https://pharmaverse.github.io/metatools/reference/create_var_from_codelist.html)
   create_var_from_codelist(metacore,
     input_var = PARAMCD,
-    out_var = PARAM
+    out_var = PARAM,
+    decode_to_code = FALSE #input_var is the code column of the codelist
   ) %>%
   create_var_from_codelist(metacore,
     input_var = PARAMCD,
     out_var = PARAMN
   )
 
+#View(advs_10 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL, TRTP, TRTA, AVALCAT1, AVALCA1N, PARAMCD, PARAM, PARAMN, ASEQ))  
 
 # Add all ADSL variables
 advs_final <- advs_10 %>%
