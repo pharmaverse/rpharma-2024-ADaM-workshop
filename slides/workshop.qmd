@@ -32,6 +32,18 @@ img_center_size <- 300
 - By the end of this workshop you will have developed an `ADSL` and `ADVS`
 dataset using pharmaverse packages and dataset specs???
 
+## Play by Play
+
+10:00 - 10:10 Introductions and Setup
+10:10 - 10:20 Overview of different packages and functions - table?
+10:20 - 11:20 ADSL
+11:20 - 11:30 Break
+11:30 - 12:30 ADVS
+12:30 - 1:00 Questions/Wiggle Room/Resources
+
+* Questions pushed into the Chat for Edoardo - (Edoardo can come off mute to address)
+* Feedback on Workshop versus Feedback on Packages
+
 ## What's covered in the Workshop
 
 - How to use metacore/metatools and ADaM Specs for `ADSL` and `ADVS` 
@@ -46,11 +58,21 @@ dataset using pharmaverse packages and dataset specs???
 - admiraldiscovery
 - pgkdown sites for xportr, metatools, metacore and admiral
 - ?? TODO: link these out
+- pharmaverse slack
+- pharmaverse examples
+- Extension packages for admiral
 
 ## Some things to ponder...
 
-* Blanks
+* Blanks versus NAs
 * Default Arguments and `NULL` Arguments
+* Viewing mini-datasets
+* How to find the functions (discovery versus package documentation)
+* Outline in the Code
+
+## Blanks in the code!
+
+* What to expect?
 * 
 
 ## Packages Walkthrough - brief intro!

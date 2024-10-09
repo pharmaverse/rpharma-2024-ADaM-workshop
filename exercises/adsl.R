@@ -80,6 +80,8 @@ adsl01 <- dm_suppdm %>%
     by_vars = exprs(STUDYID, USUBJID)
   )
 
+#View(advs_0 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSDTC, !!!adsl_vars, ADT, ADY))
+
 # Derive treatment end date (TRTEDTM) ----
 adsl02 <- adsl01 %>%
   derive_vars_merged(
