@@ -21,7 +21,7 @@ metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
   select_dataset("ADVS")
 
 
-# ---- Load User-defined function ----
+# ---- Load User-defined function & Lookup tables----
 
 source("exercises/formatters.R")
 
@@ -41,40 +41,6 @@ adsl <- haven::read_xpt("datasets/adsl.xpt")
 # https://pharmaverse.github.io/admiral/articles/admiral.html#handling-of-missing-values # nolint
 
 vs <- convert_blanks_to_na(vs)
-
-# Lookup tables ----
-
-# Assign PARAMCD, PARAM, and PARAMN
-param_lookup <- tibble::tribble(
-  ~VSTESTCD, ~PARAMCD, ~PARAM, ~PARAMN,
-  "SYSBP", "SYSBP", "Systolic Blood Pressure (mmHg)", 1,
-  "DIABP", "DIABP", "Diastolic Blood Pressure (mmHg)", 2,
-  "PULSE", "PULSE", "Pulse Rate (beats/min)", 3,
-  "WEIGHT", "WEIGHT", "Weight (kg)", 4,
-  "HEIGHT", "HEIGHT", "Height (cm)", 5,
-  "TEMP", "TEMP", "Temperature (C)", 6,
-  "MAP", "MAP", "Mean Arterial Pressure (mmHg)", 7,
-  "BMI", "BMI", "Body Mass Index(kg/m^2)", 8,
-  "BSA", "BSA", "Body Surface Area(m^2)", 9
-)
-attr(param_lookup$VSTESTCD, "label") <- "Vital Signs Test Short Name"
-
-
-# Assign ANRLO/HI, A1LO/HI
-range_lookup <- tibble::tribble(
-  ~PARAMCD, ~ANRLO, ~ANRHI, ~A1LO, ~A1HI,
-  "SYSBP", 90, 130, 70, 140,
-  "DIABP", 60, 80, 40, 90,
-  "PULSE", 60, 100, 40, 110,
-  "TEMP", 36.5, 37.5, 35, 38
-)
-
-# ASSIGN AVALCAT1
-avalcat_lookup <- tibble::tribble(
-  ~PARAMCD, ~AVALCA1N, ~AVALCAT1,
-  "HEIGHT", 1, ">140 cm",
-  "HEIGHT", 2, "<= 140 cm"
-)
 
 # Derivations ----
 
@@ -134,34 +100,17 @@ advs_1 <- advs_0 %>%
     diabp_code = "DIABP",
     hr_code = NULL
   )
+  ## Exercise ----
   # Derive Body Surface Area
   ## Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
   ## Which function could be used to derive "BSA" parameter ?
-  # derive_param_bsa(
-  #   by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM, AVALU),
-  #   method = "Mosteller",
-  #   set_values_to = exprs(PARAMCD = "BSA"),
-  #   get_unit_expr = VSSTRESU,
-  #   filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
-  #   constant_by_vars = exprs(USUBJID),
-  #   # Below arguments are default values and not necessary to add in our case
-  #   height_code = "HEIGHT",
-  #   weight_code = "WEIGHT"
-  # ) %>%
+  # ---- ??? ---- #
+
   # Derive Body Mass Index
   ## Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
   ## Which function could be used to derive "BMI" parameter ?
-  # derive_param_bmi(
-  #   by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM, AVALU),
-  #   set_values_to = exprs(PARAMCD = "BMI"),
-  #   get_unit_expr = VSSTRESU,
-  #   filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
-  #   constant_by_vars = exprs(USUBJID),
-  #   # Below arguments are default values and not necessary to add in our case
-  #   height_code = "HEIGHT",
-  #   weight_code = "WEIGHT"
-  # )
-
+  # ---- ??? ---- #
+ 
 #View(advs_1 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY,  PARAMCD, AVAL, AVALU))
 
 ## Get visit info ----
@@ -277,11 +226,9 @@ advs_7 <- advs_6 %>%
   ) %>%
   # Calculate CHG - Note that CHG is populated for both Baseline & Post-Baseline records
   derive_var_chg() %>%
-  # Calculate PCHG - only for Post-Baseline records
-  restrict_derivation(
-    derivation = derive_var_pchg,
-    filter = (ADT > TRTSDT)
-  )
+  ## Exercise ----
+  # Calculate PCHG - only for Post-Baseline records: which functions to use?
+  # ---- ??? ---- #
 
 #View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))  
 
@@ -329,15 +276,12 @@ advs_9 <- advs_8 %>%
 
 ## Get ASEQ and AVALCATx and add PARAM/PARAMN ----
 advs_10 <- advs_9 %>%
+  ## Exercise ----
   # Calculate ASEQ
   ## With the help of {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
   ## Which function could be used to derive ASEQ variable ?
-  derive_var_obs_number(
-    new_var = ASEQ,
-    by_vars = exprs(STUDYID, USUBJID),
-    order = exprs(PARAMCD, ADT, AVISITN, VISITNUM, ATPTN, DTYPE),
-    check_type = "error" # The specified message is issued if the observations of the input dataset are not unique with respect to the by variables and the order
-  ) %>%
+  # ---- ??? ---- # %>%
+
   # Derive AVALCA1N and AVALCAT1
   ## Using Format functions from source("exercises/formatters.R")
   mutate(AVALCA1N = format_avalcat1n(param = PARAMCD, aval = AVAL)) %>%
