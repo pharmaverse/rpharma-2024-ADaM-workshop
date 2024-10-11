@@ -4,7 +4,12 @@ author:
   - Fanny Gautier
   - Ben Straub
   - Edoardo Mancini  
-format: revealjs
+format: 
+  revealjs:
+    theme: solarized
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r}
@@ -26,61 +31,105 @@ img_center_size <- 300
 
 ```
 
+## Objectives
 
-## Objective
-
-- By the end of this workshop you will have developed an `ADSL` and `ADVS`
-dataset using pharmaverse packages and dataset specs???
+-   By the end of this workshop you will have:
+    -   Updated code for ADaMs `ADSL` and `ADVS` using `pharmaverse`
+        packages, `tidyverse` packages, base R and Pinnacle21-like
+        specs.
+    -   Gained an understanding of how to use `pharmaverse` packages
+    -   Gained an understanding of how to use resources for building
+        ADaMs in `R`.
 
 ## Play by Play
 
-10:00 - 10:10 Introductions and Setup
-10:10 - 10:20 Overview of different packages and functions - table?
-10:20 - 11:20 ADSL
-11:20 - 11:30 Break
-11:30 - 12:30 ADVS
-12:30 - 1:00 Questions/Wiggle Room/Resources
+🕙10:05 - 10:15 Introductions and Setup
 
-* Questions pushed into the Chat for Edoardo - (Edoardo can come off mute to address)
-* Feedback on Workshop versus Feedback on Packages
+🕙10:15 - 10:30 Overview of pharmaverse `packages` and functions
+
+🕥10:30 - 11:20 `ADSL`
+
+🕚11:20 - 11:30 Break
+
+🕦11:30 - 12:30 `ADVS`
+
+🕐12:30 - 1:00 Questions and Resources
+
+# Introductions and Setup
+
+🕙10:00 - 10:10
+
+## Who will help you achieve the objective!
+
+> > -   `Fanny Gautier` - presenting on ADVS
+> > -   `Ben Straub` - presenting on ADSL
+> > -   `Edoardo Mancini` - Chat Support
+> > -   `Sadchla Mascary` - Chat Support
+
+## Setting up Posit Environment
+
+-   Sign up for a free [Posit Account](https://posit.cloud/)
+
+-   Preferred - Share Link for R/Pharma: ADaM Workshop
+
+    -   Everything loaded and ready to go!
+
+-   Advanced Clone Repo and set up yourself
+
+## How we will "code" today
+
+-   Fanny and I will walk you through coding
+    -   Fill in the blank!
+-   For Questions please post into the Chat for Edoardo - (Edoardo can
+    come off mute to address)
+-   Feedback on Workshop versus Feedback on Packages
+
+# Overview of pharmaverse `packages` and functions
+
+🕥10:15 - 10:30\
 
 ## What's covered in the Workshop
 
-- How to use metacore/metatools and ADaM Specs for `ADSL` and `ADVS` 
-- How to use admiral and other packages to code `ADSL` and `ADVS`
-- Using Specs to create numeric variables and order and finalize dataset
-- Write out final datasets as xpts (lengths, types, labels) using specs using `xportr`
-- ???
-  
+-   How to use metacore/metatools and ADaM Specs for `ADSL` and `ADVS`
+-   How to use admiral and other packages to code `ADSL` and `ADVS`
+-   Using Specs to create numeric variables and order and finalize
+    dataset
+-   Write out final datasets as xpts (lengths, types, labels) using
+    specs using `xportr`
+-   ???
 
 ## Helpful Resources
 
-- admiraldiscovery
-- pgkdown sites for xportr, metatools, metacore and admiral
-- ?? TODO: link these out
-- pharmaverse slack
-- pharmaverse examples
-- Extension packages for admiral
+-   admiraldiscovery
+-   pgkdown sites for xportr, metatools, metacore and admiral
+-   ?? TODO: link these out
+-   pharmaverse slack
+-   pharmaverse examples
+-   Extension packages for admiral
 
 ## Some things to ponder...
 
-* Blanks versus NAs
-* Default Arguments and `NULL` Arguments
-* Viewing mini-datasets
-* How to find the functions (discovery versus package documentation)
-* Outline in the Code
+-   Blanks versus NAs
+-   Default Arguments and `NULL` Arguments
+-   Viewing mini-datasets
+-   How to find the functions (discovery versus package documentation)
+-   Outline in the Code
 
 ## Blanks in the code!
 
-* What to expect?
-* 
+-   What to expect?
+-   
 
 ## Packages Walkthrough - brief intro!
 
->> - `metacore` `r glue("<img src={metacore_img} height='{img_bullet_size}'/>")`
->> - `metatools` `r glue("<img src={metatools_img} height='{img_bullet_size}'/>")`
->> - `xportr` `r glue("<img src={xportr_img} height='{img_bullet_size}'/>")`
->> - `admiral` `r glue("<img src={admiral_img} height='{img_bullet_size}'/>")`
+> > -   `metacore`
+> >     `r glue("<img src={metacore_img} height='{img_bullet_size}'/>")`
+> > -   `metatools`
+> >     `r glue("<img src={metatools_img} height='{img_bullet_size}'/>")`
+> > -   `xportr`
+> >     `r glue("<img src={xportr_img} height='{img_bullet_size}'/>")`
+> > -   `admiral`
+> >     `r glue("<img src={admiral_img} height='{img_bullet_size}'/>")`
 
 ## Packages Walkthrough - metacore
 
@@ -92,13 +141,11 @@ dataset using pharmaverse packages and dataset specs???
 
 ## Packages Walkthrough - example usage
 
-
 ## ADSL Walkthrough
 
-- We are going to code ADSL 
-- Parts of the code are blank out and will require some quick research
-- Don't worry if you get lost we will get you back on track
-
+-   We are going to code ADSL
+-   Parts of the code are blank out and will require some quick research
+-   Don't worry if you get lost we will get you back on track
 
 ```{r}
 countdown(minutes = 50, seconds = 00, 
@@ -106,13 +153,13 @@ countdown(minutes = 50, seconds = 00,
           left = NULL, right = 0,
           margin = "10%",
           font_size = "2.5em")
-``` 
+```
 
 ## ADVS Walkthrough
 
-- We are going to code ADVS 
-- Parts of the code are blank out and will require some quick research
-- Don't worry if you get lost we will get you back on track
+-   We are going to code ADVS
+-   Parts of the code are blank out and will require some quick research
+-   Don't worry if you get lost we will get you back on track
 
 ```{r}
 countdown(minutes = 50, seconds = 00, 
@@ -120,11 +167,9 @@ countdown(minutes = 50, seconds = 00,
           left = NULL, right = 0,
           margin = "10%",
           font_size = "2.5em")
-``` 
-
+```
 
 ## `admiral` exercises `r glue("<img src={admiral_img} align='right' height='{img_right_size - 20}'/>")`
-
 
 ```{r}
 #| eval: false
@@ -147,12 +192,12 @@ ex <- convert_blanks_to_na(ex)
 ae <- convert_blanks_to_na(ae)
 ```
 
-
 ## `admiral` exercises - 1 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
 
-- Create a new dataset `ds_ext` with all of the `ds`, plus derive a numeric date version of `DS.DSSTDTC` without any imputation as `DSSTDT`.  
-*Hint: `derive_vars_dt()`*
-
+-   Create a new dataset `ds_ext` with all of the `ds`, plus derive a
+    numeric date version of `DS.DSSTDTC` without any imputation as
+    `DSSTDT`.\
+    *Hint: `derive_vars_dt()`*
 
 ```{r}
 countdown(minutes = 10, seconds = 00, 
@@ -160,13 +205,14 @@ countdown(minutes = 10, seconds = 00,
           left = NULL, right = 0,
           margin = "10%",
           font_size = "2.5em")
-```  
+```
 
 ## `admiral` exercises - 2 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
 
-- Create a new dataset `adsl_1` with all of `dm`, plus derive an end of study date (`EOSDT`) using the `DSSTDT` from `ds_ext` where `DSCAT == "DISPOSITION EVENT" & DSDECOD != "SCREEN FAILURE"`.  
-*Hint: `derive_vars_merged()`*
-
+-   Create a new dataset `adsl_1` with all of `dm`, plus derive an end
+    of study date (`EOSDT`) using the `DSSTDT` from `ds_ext` where
+    `DSCAT == "DISPOSITION EVENT" & DSDECOD != "SCREEN FAILURE"`.\
+    *Hint: `derive_vars_merged()`*
 
 ```{r}
 countdown(minutes = 10, seconds = 00, 
@@ -174,16 +220,19 @@ countdown(minutes = 10, seconds = 00,
           left = NULL, right = 0,
           margin = "10%",
           font_size = "2.5em")
-```  
+```
 
 ::: aside
-[Solution](https://pharmaverse.github.io/admiral/cran-release/articles/adsl.html#disposition ){.external target="_blank"} 
+[Solution](https://pharmaverse.github.io/admiral/cran-release/articles/adsl.html#disposition){.external
+target="_blank"}
 :::
 
 ## `admiral` exercises - 3 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
 
-- Create a new dataset `adsl_2` with all of `adsl_1`, plus derive a safety population flag (`SAFFL`) as `Y` for any patient from `ex` with a record where `EXDOSE > 0`.  
-*Hint: `derive_var_merged_exist_flag()`*
+-   Create a new dataset `adsl_2` with all of `adsl_1`, plus derive a
+    safety population flag (`SAFFL`) as `Y` for any patient from `ex`
+    with a record where `EXDOSE > 0`.\
+    *Hint: `derive_var_merged_exist_flag()`*
 
 ```{r}
 countdown(minutes = 10, seconds = 00, 
@@ -191,16 +240,20 @@ countdown(minutes = 10, seconds = 00,
           left = NULL, right = 0,
           margin = "10%",
           font_size = "2.5em")
-```  
+```
 
 ::: aside
-[Solution](https://pharmaverse.github.io/admiral/cran-release/articles/adsl.html#popflag){.external target="_blank"} 
+[Solution](https://pharmaverse.github.io/admiral/cran-release/articles/adsl.html#popflag){.external
+target="_blank"}
 :::
 
 ## `admiral` exercises - 4 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
 
-- Create a new dataset `adsl_3` with all of `adsl_2`, plus derive a last known alive date (`LSTALVDT`) as the latest date of the following variables from `ae`: `AESTDTC` and `AEENDTC`, imputing missing day and month to the first.  
-*Hint: `derive_var_extreme_dt()`*
+-   Create a new dataset `adsl_3` with all of `adsl_2`, plus derive a
+    last known alive date (`LSTALVDT`) as the latest date of the
+    following variables from `ae`: `AESTDTC` and `AEENDTC`, imputing
+    missing day and month to the first.\
+    *Hint: `derive_var_extreme_dt()`*
 
 ```{r}
 countdown(minutes = 10, seconds = 00, 
@@ -208,15 +261,18 @@ countdown(minutes = 10, seconds = 00,
           left = NULL, right = 0,
           margin = "10%",
           font_size = "2.5em")
-```  
+```
 
 ::: aside
-[Solution](https://pharmaverse.github.io/admiral/cran-release/articles/adsl.html#lstalvdt){.external target="_blank"} 
+[Solution](https://pharmaverse.github.io/admiral/cran-release/articles/adsl.html#lstalvdt){.external
+target="_blank"}
 :::
 
 ## `admiral` exercises - 5 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
 
-- If time permits, explore [higher order functions](https://pharmaverse.github.io/admiral/cran-release/articles/higher_order.html) that give greater flexibility to all `admiral` functions
+-   If time permits, explore [higher order
+    functions](https://pharmaverse.github.io/admiral/cran-release/articles/higher_order.html)
+    that give greater flexibility to all `admiral` functions
 
 ```{r}
 countdown(minutes = 10, seconds = 00, 
@@ -224,15 +280,17 @@ countdown(minutes = 10, seconds = 00,
           left = NULL, right = 0,
           margin = "10%",
           font_size = "2.5em")
-```  
+```
 
 ## Closing Thoughts {.smaller}
 
-> - Anyone can be become a `pharmaverse champion` as one of the criteria we look for in `pharmaverse` recommended packages is great user guides, as hopefully demonstrated wit the sites shown today
-> - We were only able to show a small number of pharmaverse packages today, but please delve deeper to explore the full breadth
-> - If you'd like to contribute to `pharmaverse`, check out options at [pharmaverse.org](https://pharmaverse.org/contribute/)
-> - Finally, be sure to join our community on [Slack!](https://join.slack.com/t/pharmaverse/shared_invite/zt-yv5atkr4-Np2ytJ6W_QKz_4Olo7Jo9A)
-
-
-
-
+> -   Anyone can be become a `pharmaverse champion` as one of the
+>     criteria we look for in `pharmaverse` recommended packages is
+>     great user guides, as hopefully demonstrated wit the sites shown
+>     today
+> -   We were only able to show a small number of pharmaverse packages
+>     today, but please delve deeper to explore the full breadth
+> -   If you'd like to contribute to `pharmaverse`, check out options at
+>     [pharmaverse.org](https://pharmaverse.org/contribute/)
+> -   Finally, be sure to join our community on
+>     [Slack!](https://join.slack.com/t/pharmaverse/shared_invite/zt-yv5atkr4-Np2ytJ6W_QKz_4Olo7Jo9A)
