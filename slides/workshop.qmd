@@ -1,9 +1,12 @@
 ---
 title: "R/Pharma ADaM Workshop"
 author: 
-  - Fanny Gautier
-  - Ben Straub
-  - Edoardo Mancini  
+  - Fanny Gautier Cytel
+  - Ben Straub GSK
+  - Edoardo Mancini Roche 
+  - Sadchla Mascary Gilead
+date: 2024-10-25
+date-format: full
 format: 
   revealjs:
     theme: solarized
@@ -16,6 +19,10 @@ editor:
 #| include: false
 library(glue)
 library(countdown)
+library(link)
+
+link::auto(keep_pkg_prefix = FALSE,
+           keep_braces = FALSE)
 
 # Package hexes
 metacore_img <- "https://raw.githubusercontent.com/atorus-research/metacore/master/man/figures/metacore.PNG"
@@ -23,6 +30,7 @@ metatools_img <- "https://raw.githubusercontent.com/pharmaverse/metatools/master
 xportr_img <- "https://raw.githubusercontent.com/atorus-research/xportr/master/man/figures/logo.png"
 admiral_img <- "https://raw.githubusercontent.com/pharmaverse/admiral/master/man/figures/logo.png"
 pharmaverse_img <- "https://raw.githubusercontent.com/pharmaverse/pharmaverse-pkg/master/man/figures/banner.png"
+dplyr_img <- "https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png"
 
 # Set image sizes
 img_bullet_size <- 80
@@ -61,42 +69,90 @@ img_center_size <- 300
 
 ## Who will help you achieve the objective!
 
-> > -   `Fanny Gautier` - presenting on ADVS
-> > -   `Ben Straub` - presenting on ADSL
-> > -   `Edoardo Mancini` - Chat Support
-> > -   `Sadchla Mascary` - Chat Support
+> > -   `Fanny Gautier` - `presenting on ADVS` 📣
+> > -   `Ben Straub` - `presenting on ADSL and pharmaverse packages` 📣
+> > -   `Edoardo Mancini` - `Chat Support` 💻
+> > -   `Sadchla Mascary` - `Chat Support` 💻
 
-## Setting up Posit Environment
+## Setting up your Workspace
 
--   Sign up for a free [Posit Account](https://posit.cloud/)
+-   **Preferred**:
 
--   Preferred - Share Link for R/Pharma: ADaM Workshop
+    -   Sign up for a free [Posit Account](https://posit.cloud/)
 
-    -   Everything loaded and ready to go!
+    -   Share Link for R/Pharma: ADaM Workshop
 
--   Advanced Clone Repo and set up yourself
+        -   Everything loaded (data, packages, specs) and ready to go!
+
+-   **Advanced:**
+
+    -    Clone
+        [Repo](https://github.com/pharmaverse/rpharma-2024-ADaM-workshop)
+        and set up yourself
 
 ## How we will "code" today
 
--   Fanny and I will walk you through coding
+-   Fanny and I will walk you through coding `ADSL` and `ADVS`
+    -   Lite Discussion on each function
     -   Fill in the blank!
--   For Questions please post into the Chat for Edoardo - (Edoardo can
-    come off mute to address)
--   Feedback on Workshop versus Feedback on Packages
+    -   Occasional Zoom Poll
+-   Important to move along quickly
+    -   Please post questions to chat
+    -   Full scripts are available
 
-# Overview of pharmaverse `packages` and functions
+# Overview of pharmaverse packages and functions
 
 🕥10:15 - 10:30\
 
-## What's covered in the Workshop
+## The core pharmaverse packages
 
--   How to use metacore/metatools and ADaM Specs for `ADSL` and `ADVS`
--   How to use admiral and other packages to code `ADSL` and `ADVS`
--   Using Specs to create numeric variables and order and finalize
-    dataset
--   Write out final datasets as xpts (lengths, types, labels) using
-    specs using `xportr`
--   ???
+-   `metacore`
+    `r glue("<img src={metacore_img} height='{img_bullet_size}'/>")`
+-   `metatools`
+    `r glue("<img src={metatools_img} height='{img_bullet_size}'/>")`
+-   `xportr`
+    `r glue("<img src={xportr_img} height='{img_bullet_size}'/>")`
+-   `admiral`
+    `r glue("<img src={admiral_img} height='{img_bullet_size}'/>")`
+
+## The core tidyverse packages
+
+-   `dplyr`
+    `r glue("<img src={dplyr_img} height='{img_bullet_size}'/>")`
+-   `stringr`
+    `r glue("<img src={dplyr_img} height='{img_bullet_size}'/>")`
+-   `haven`
+    `r glue("<img src={dplyr_img} height='{img_bullet_size}'/>")`
+-   `lubridate`
+    `r glue("<img src={dplyr_img} height='{img_bullet_size}'/>")`
+
+## Hello pharmaverse Functions! {.smaller}
+
+| Package                     | Function                                                   | Purpose                                 |
+|------------------|--------------------------------|----------------------|
+| `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_merged()")`         | `left_join` on steroids                 |
+| `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_param_computed()")`      | Core function for wrappers used in ADVS |
+| `r link::to_pkg("admiral")` | `r link::to_call("admiral::convert_blanks_to_na()")`       | SAS blanks versus R `NAs`               |
+| `r link::to_pkg("admiral")` | `r link::to_call("metatools::combine_supp()")`             | Join Parent and Supplementary Datasets  |
+| `r link::to_pkg("admiral")` | `r link::to_call("metatools::create_var_from_codelist()")` | Create Numeric Variables from Spec      |
+
+## Hello pharmaverse Functions! {.smaller}
+
+| Package                       | Function                                              | Purpose                                 |
+|------------------|--------------------------------|----------------------|
+| `r link::to_pkg("metatools")` | `r link::to_call("admiral::derive_vars_dt()")`        | `left_join` on steroids                 |
+| `r link::to_pkg("metatools")` | `r link::to_call("admiral::derive_param_computed()")` | Core function for wrappers used in ADVS |
+| `r link::to_pkg("metatools")` | `r link::to_call("admiral::convert_blanks_to_na()")`  | SAS blanks versus R `NAs`               |
+| `r link::to_pkg("xportr")`    | `r link::to_call("metatools::combine_supp()")`        | Join Parent and Supplementary Datasets  |
+| `r link::to_pkg("xportr")`    | `r link::to_call("xportr::xportr_write()")`           | Create Numeric Variables from Spec      |
+
+## Hello Specs!
+
+-   
+
+# `ADSL`
+
+🕥10:30 - 11:20
 
 ## Helpful Resources
 

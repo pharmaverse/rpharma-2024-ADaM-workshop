@@ -2,7 +2,7 @@
 #
 # Label: Subject Level Analysis Dataset
 #
-# Input: dm, ds, ex, ae, lb, suppdm, rphrama_specs.xlsx
+# Input: dm, ds, ex, ae, suppdm, rphrama_specs.xlsx
 library(admiral)
 library(pharmaversesdtm) # Contains example datasets from the CDISC pilot project
 library(dplyr)
@@ -30,7 +30,6 @@ dm <- pharmaversesdtm::dm
 ds <- pharmaversesdtm::ds
 ex <- pharmaversesdtm::ex
 ae <- pharmaversesdtm::ae
-lb <- pharmaversesdtm::lb
 vs <- pharmaversesdtm::vs
 suppdm <- pharmaversesdtm::suppdm
 
@@ -42,7 +41,6 @@ dm <- convert_blanks_to_na(dm)
 ds <- convert_blanks_to_na(ds)
 ex <- convert_blanks_to_na(ex)
 ae <- convert_blanks_to_na(ae)
-lb <- convert_blanks_to_na(lb)
 vs <- convert_blanks_to_na(vs)
 suppdm <- convert_blanks_to_na(suppdm)
 
@@ -270,4 +268,4 @@ adsl <- adsl18 %>%
   xportr_label(metacore) %>%
   xportr_format(metacore, domain = "ADSL") %>%
   xportr_df_label(metacore, domain = "ADSL") %>%
-  xportr_write("datasets/adsl.xpt", metacore, domain = "ADSL")
+  xportr_write(path = "datasets/adsl.xpt", metadata = metacore, domain = "ADSL")
