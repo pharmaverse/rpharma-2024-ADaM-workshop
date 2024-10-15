@@ -101,27 +101,32 @@ advs_1 <- advs_0 %>%
     hr_code = NULL
   ) %>% 
   
-  ## Exercise ----
-  # Derive Body Surface Area
-  ## Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-  ## Which function could be used to derive "BSA" parameter ?
+  ## Exercise n1 ----
+
+  ### Derive Body Mass Index ----
+  ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ### Which function could be used to derive "BMI" parameter ? Hint: it starts with derive_param_c*******()
+  derive_param_computed(
+    by_vars = exprs(USUBJID, VISIT),
+    parameters = "WEIGHT",
+    set_values_to = exprs(
+      AVAL = AVAL.WEIGHT / (AVAL.HEIGHT / 100)^2,
+      PARAMCD = "BMI",
+      # PARAM = "Body Mass Index (kg/m^2)",
+      AVALU = "kg/m^2"
+    ),
+    constant_parameters = c("HEIGHT"),
+    constant_by_vars = exprs(USUBJID)
+  ) %>% 
+  ## Exercise n2 ----
+
+  ### Derive Body Surface Area ----
+  ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ### Which wrapper function could be used to derive "BSA" parameter ? 
   derive_param_bsa(
     by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM, AVALU),
     method = "Mosteller",
     set_values_to = exprs(PARAMCD = "BSA"),
-    get_unit_expr = VSSTRESU,
-    filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
-    constant_by_vars = exprs(USUBJID),
-    # Below arguments are default values and not necessary to add in our case
-    height_code = "HEIGHT",
-    weight_code = "WEIGHT"
-  ) %>%
-  # Derive Body Mass Index
-  ## Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-  ## Which function could be used to derive "BMI" parameter ?
-  derive_param_bmi(
-    by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM, AVALU),
-    set_values_to = exprs(PARAMCD = "BMI"),
     get_unit_expr = VSSTRESU,
     filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
     constant_by_vars = exprs(USUBJID),
@@ -171,9 +176,10 @@ advs_3 <- advs_2 %>%
 
 
 advs_4 <- advs_3 %>%
-  ## Calculate ONTRTFL ----
-  ## With the help of {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-  ## Which function could be used to derive ONTRTFL variable ?
+  ## Exercise n3 ----
+  ### Calculate ONTRTFL ----
+  ### With the help of {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ### Which function could be used to derive ONTRTFL variable ?
   derive_var_ontrtfl(
     start_date = ADT,
     ref_start_date = TRTSDT,
@@ -245,8 +251,10 @@ advs_7 <- advs_6 %>%
   ) %>%
   # Calculate CHG - Note that CHG is populated for both Baseline & Post-Baseline records
   derive_var_chg() %>%
-  ## Exercise ----
-  # Calculate PCHG - only for Post-Baseline records: which functions to use?
+  ## Exercise n4 ----
+
+  ### Calculate PCHG ----
+  ### only for Post-Baseline records: which functions to use?
   restrict_derivation(
     derivation = derive_var_pchg,
     filter = (ADT > TRTSDT)
@@ -272,23 +280,8 @@ advs_8 <- advs_7 %>%
 #View(advs_8 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL))  
 
 ## Get treatment information ----
-# See also the "Visit and Period Variables" vignette
-# (https://pharmaverse.github.io/admiral/articles/visits_periods.html#treatment_bds)
 advs_9 <- advs_8 %>%
   # Assign TRTA, TRTP
-  # Create End of Treatment Record
-  derive_extreme_records(
-    dataset_add = advs_8,
-    by_vars = exprs(STUDYID, USUBJID, PARAMCD, ATPTN),
-    order = exprs(ADT, AVISITN, AVAL),
-    mode = "last", # The last observation of each by group is added to the input dataset
-    filter_add = (4 < AVISITN & AVISITN <= 13 & ANL01FL == "Y" & is.na(DTYPE)),
-    set_values_to = exprs(
-      AVISIT = "End of Treatment",
-      AVISITN = 99,
-      DTYPE = "LOV"
-    )
-  ) %>%
   mutate(
     TRTP = TRT01P,
     TRTA = TRT01A
@@ -298,14 +291,15 @@ advs_9 <- advs_8 %>%
 
 ## Get ASEQ and AVALCATx and add PARAM/PARAMN ----
 advs_10 <- advs_9 %>%
-  ## Exercise ----
-  # Calculate ASEQ
+  ## Exercise n5----
+
+  ### Calculate ASEQ ----
   ## With the help of {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
   ## Which function could be used to derive ASEQ variable ?
   derive_var_obs_number(
     new_var = ASEQ,
     by_vars = exprs(STUDYID, USUBJID),
-    order = exprs(PARAMCD, ADT, AVISITN, VISITNUM, ATPTN, DTYPE),
+    order = exprs(PARAMCD, ADT, AVISITN, VISITNUM, VISIT, ATPTN, DTYPE),
     check_type = "error" # The specified message is issued if the observations of the input dataset are not unique with respect to the by variables and the order
   ) %>%
   # Derive AVALCA1N and AVALCAT1
@@ -350,7 +344,7 @@ advs <- advs_final %>%
   xportr_label(metacore) %>%
   xportr_format(metacore, domain = "ADVS") %>%
   xportr_df_label(metacore, domain = "ADVS") %>%
-  xportr_write("datasets/advs.xpt", metacore, domain = "ADVS")
+  xportr_write("datasets/advs.xpt", metadata = metacore, domain = "ADVS")
 
 
 # Save output ----
