@@ -86,7 +86,7 @@ img_center_size <- 300
 
 -   **Advanced:**
 
-    -    Clone
+    -   Clone
         [Repo](https://github.com/pharmaverse/rpharma-2024-ADaM-workshop)
         and set up yourself
 
@@ -129,17 +129,19 @@ img_center_size <- 300
 ## Hello pharmaverse Functions! {.smaller}
 
 | Package                     | Function                                                   | Purpose                                 |
-|------------------|--------------------------------|----------------------|
+|-------------------|--------------------------------|----------------------|
 | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_merged()")`         | `left_join` on steroids                 |
 | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_param_computed()")`      | Core function for wrappers used in ADVS |
 | `r link::to_pkg("admiral")` | `r link::to_call("admiral::convert_blanks_to_na()")`       | SAS blanks versus R `NAs`               |
 | `r link::to_pkg("admiral")` | `r link::to_call("metatools::combine_supp()")`             | Join Parent and Supplementary Datasets  |
 | `r link::to_pkg("admiral")` | `r link::to_call("metatools::create_var_from_codelist()")` | Create Numeric Variables from Spec      |
 
+* Advanced - derive_vars_extreme_event
+
 ## Hello pharmaverse Functions! {.smaller}
 
 | Package                       | Function                                              | Purpose                                 |
-|------------------|--------------------------------|----------------------|
+|-------------------|--------------------------------|----------------------|
 | `r link::to_pkg("metatools")` | `r link::to_call("admiral::derive_vars_dt()")`        | `left_join` on steroids                 |
 | `r link::to_pkg("metatools")` | `r link::to_call("admiral::derive_param_computed()")` | Core function for wrappers used in ADVS |
 | `r link::to_pkg("metatools")` | `r link::to_call("admiral::convert_blanks_to_na()")`  | SAS blanks versus R `NAs`               |
@@ -148,13 +150,33 @@ img_center_size <- 300
 
 ## Hello Specs!
 
--   
+-   Pinnacle21-like Specs
+
+-   Not fit for purpose - just a helpful guide
+
+-   What is in the the Specs:
+
+    -   Two datasets, dataset labels, Keys
+
+    -   Variables - labels, lengths, types, linked to method
+
+    -   Codelists
+
+    -   No VLMs
 
 # `ADSL`
 
 🕥10:30 - 11:20
 
-## Helpful Resources
+# Break
+
+🕦11:20 - 11:30
+
+# `ADVS` 
+
+🕦11:30 - 12:30
+
+## Questions and Resources
 
 -   admiraldiscovery
 -   pgkdown sites for xportr, metatools, metacore and admiral
@@ -163,180 +185,6 @@ img_center_size <- 300
 -   pharmaverse examples
 -   Extension packages for admiral
 
-## Some things to ponder...
-
--   Blanks versus NAs
--   Default Arguments and `NULL` Arguments
--   Viewing mini-datasets
--   How to find the functions (discovery versus package documentation)
--   Outline in the Code
-
-## Blanks in the code!
-
--   What to expect?
--   
-
-## Packages Walkthrough - brief intro!
-
-> > -   `metacore`
-> >     `r glue("<img src={metacore_img} height='{img_bullet_size}'/>")`
-> > -   `metatools`
-> >     `r glue("<img src={metatools_img} height='{img_bullet_size}'/>")`
-> > -   `xportr`
-> >     `r glue("<img src={xportr_img} height='{img_bullet_size}'/>")`
-> > -   `admiral`
-> >     `r glue("<img src={admiral_img} height='{img_bullet_size}'/>")`
-
-## Packages Walkthrough - metacore
-
-## Packages Walkthrough - metatools
-
-## Packages Walkthrough - xportr
-
-## Packages Walkthrough - admiral
-
-## Packages Walkthrough - example usage
-
-## ADSL Walkthrough
-
--   We are going to code ADSL
--   Parts of the code are blank out and will require some quick research
--   Don't worry if you get lost we will get you back on track
-
-```{r}
-countdown(minutes = 50, seconds = 00, 
-          top = NULL, bottom = 0,
-          left = NULL, right = 0,
-          margin = "10%",
-          font_size = "2.5em")
-```
-
-## ADVS Walkthrough
-
--   We are going to code ADVS
--   Parts of the code are blank out and will require some quick research
--   Don't worry if you get lost we will get you back on track
-
-```{r}
-countdown(minutes = 50, seconds = 00, 
-          top = NULL, bottom = 0,
-          left = NULL, right = 0,
-          margin = "10%",
-          font_size = "2.5em")
-```
-
-## `admiral` exercises `r glue("<img src={admiral_img} align='right' height='{img_right_size - 20}'/>")`
-
-```{r}
-#| eval: false
-#| echo: true
-
-library(admiral)
-library(dplyr, warn.conflicts = FALSE)
-library(pharmaversesdtm)
-library(lubridate)
-library(stringr)
-
-data("dm")
-data("ds")
-data("ex")
-data("ae")
-
-dm <- convert_blanks_to_na(dm)
-ds <- convert_blanks_to_na(ds)
-ex <- convert_blanks_to_na(ex)
-ae <- convert_blanks_to_na(ae)
-```
-
-## `admiral` exercises - 1 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
-
--   Create a new dataset `ds_ext` with all of the `ds`, plus derive a
-    numeric date version of `DS.DSSTDTC` without any imputation as
-    `DSSTDT`.\
-    *Hint: `derive_vars_dt()`*
-
-```{r}
-countdown(minutes = 10, seconds = 00, 
-          top = NULL, bottom = 0,
-          left = NULL, right = 0,
-          margin = "10%",
-          font_size = "2.5em")
-```
-
-## `admiral` exercises - 2 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
-
--   Create a new dataset `adsl_1` with all of `dm`, plus derive an end
-    of study date (`EOSDT`) using the `DSSTDT` from `ds_ext` where
-    `DSCAT == "DISPOSITION EVENT" & DSDECOD != "SCREEN FAILURE"`.\
-    *Hint: `derive_vars_merged()`*
-
-```{r}
-countdown(minutes = 10, seconds = 00, 
-          top = NULL, bottom = 0,
-          left = NULL, right = 0,
-          margin = "10%",
-          font_size = "2.5em")
-```
-
-::: aside
-[Solution](https://pharmaverse.github.io/admiral/cran-release/articles/adsl.html#disposition){.external
-target="_blank"}
-:::
-
-## `admiral` exercises - 3 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
-
--   Create a new dataset `adsl_2` with all of `adsl_1`, plus derive a
-    safety population flag (`SAFFL`) as `Y` for any patient from `ex`
-    with a record where `EXDOSE > 0`.\
-    *Hint: `derive_var_merged_exist_flag()`*
-
-```{r}
-countdown(minutes = 10, seconds = 00, 
-          top = NULL, bottom = 0,
-          left = NULL, right = 0,
-          margin = "10%",
-          font_size = "2.5em")
-```
-
-::: aside
-[Solution](https://pharmaverse.github.io/admiral/cran-release/articles/adsl.html#popflag){.external
-target="_blank"}
-:::
-
-## `admiral` exercises - 4 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
-
--   Create a new dataset `adsl_3` with all of `adsl_2`, plus derive a
-    last known alive date (`LSTALVDT`) as the latest date of the
-    following variables from `ae`: `AESTDTC` and `AEENDTC`, imputing
-    missing day and month to the first.\
-    *Hint: `derive_var_extreme_dt()`*
-
-```{r}
-countdown(minutes = 10, seconds = 00, 
-          top = NULL, bottom = 0,
-          left = NULL, right = 0,
-          margin = "10%",
-          font_size = "2.5em")
-```
-
-::: aside
-[Solution](https://pharmaverse.github.io/admiral/cran-release/articles/adsl.html#lstalvdt){.external
-target="_blank"}
-:::
-
-## `admiral` exercises - 5 `r glue("<img src={admiral_img} align='right' height='{img_right_size-20}'/>")` {.smaller}
-
--   If time permits, explore [higher order
-    functions](https://pharmaverse.github.io/admiral/cran-release/articles/higher_order.html)
-    that give greater flexibility to all `admiral` functions
-
-```{r}
-countdown(minutes = 10, seconds = 00, 
-          top = NULL, bottom = 0,
-          left = NULL, right = 0,
-          margin = "10%",
-          font_size = "2.5em")
-```
 
 ## Closing Thoughts {.smaller}
 

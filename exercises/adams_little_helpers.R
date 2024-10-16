@@ -40,10 +40,18 @@ format_eosstt <- function(x) {
   )
 }
 
-# Assign Randomization Flag
-
+# Assign Randomization Flag ----
 assign_randfl <- function(x) {
   if_else(!is.na(x), "Y", NA_character_)
+}
+
+# DTHCGR1 mapping
+format_dthcgr1 <- function(x, y){
+  case_when(
+  is.na(x) ~ NA_character_,
+  x == "AE" ~ "ADVERSE EVENT",
+  str_detect(y, "(PROGRESSIVE DISEASE|DISEASE RELAPSE)") ~ "PROGRESSIVE DISEASE",
+  TRUE ~ "OTHER")
 }
   
 # AVALCAT1N mapping ----  
