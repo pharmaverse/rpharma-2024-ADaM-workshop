@@ -17,7 +17,7 @@ metacore <- spec_to_metacore(
   path = "metadata/rpharma_specs.xlsx",
   where_sep_sheet = FALSE
 ) %>%
-  select_dataset("????")
+  select_dataset("ADSL")
 
 # ---- Load User-defined function ----
 source("exercises/adams_little_helpers.R")
@@ -53,13 +53,13 @@ ex_ext <- ex %>%
   derive_vars_dtm(
     dtc = EXSTDTC,
     new_vars_prefix = "EXST",
-    time_imputation = "????",
+    time_imputation = "last",
     flag_imputation = "time"
   ) %>%
   derive_vars_dtm(
     dtc = EXENDTC,
     new_vars_prefix = "EXEN",
-    time_imputation = "????",
+    time_imputation = "last",
     flag_imputation = "time"
   )
 
@@ -69,12 +69,12 @@ adsl01 <- dm_suppdm %>%
   derive_vars_merged(
     dataset_add = ex_ext,
     filter_add = (EXDOSE > 0 |
-      (EXDOSE == 0 &
-        str_detect(EXTRT, "PLACEBO"))) &
+                    (EXDOSE == 0 &
+                       str_detect(EXTRT, "PLACEBO"))) &
       !is.na(EXSTDTM),
     new_vars = exprs(TRTSDTM = EXSTDTM, TRTSTMF = EXSTTMF),
     order = exprs(EXSTDTM, EXSEQ),
-    mode = "????",
+    mode = "first",
     by_vars = exprs(STUDYID, USUBJID)
   )
 
@@ -85,11 +85,11 @@ adsl02 <- adsl01 %>%
   derive_vars_merged(
     dataset_add = ex_ext,
     filter_add = (EXDOSE > 0 |
-      (EXDOSE == 0 &
-        str_detect(EXTRT, "PLACEBO"))) & !is.na(EXENDTM),
+                    (EXDOSE == 0 &
+                       str_detect(EXTRT, "PLACEBO"))) & !is.na(EXENDTM),
     new_vars = exprs(TRTEDTM = EXENDTM, TRTETMF = EXENTMF),
     order = exprs(EXENDTM, EXSEQ),
-    mode = "????",
+    mode = "last",
     by_vars = exprs(STUDYID, USUBJID)
   )
 
@@ -107,7 +107,7 @@ adsl03 <- adsl02 %>%
 # Derive treatment start time (TRTSDTM) ----
 adsl04 <- adsl03 %>%
   derive_vars_dtm_to_tm(
-    source_vars = exprs()
+    source_vars = exprs(TRTSDTM)
   )
 
 # View(adsl04 %>% select(USUBJID, starts_with("TRT")))
@@ -116,8 +116,8 @@ adsl04 <- adsl03 %>%
 # Derive treatment duration (TRTDURD) ----
 adsl05 <- adsl04 %>%
   derive_var_trtdurd(
-    start_date =  ,
-    end_date =  
+    start_date = TRTSDT,
+    end_date = TRTEDT
   )
 
 # View(adsl05 %>% select(USUBJID, starts_with("TRT")))
@@ -135,7 +135,7 @@ adsl06 <- adsl05 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
-    new_vars = exprs(  =  ),
+    new_vars = exprs(SCRFDT = DSSTDT),
     filter_add = DSCAT == "DISPOSITION EVENT" & DSDECOD == "SCREEN FAILURE"
   )
 
@@ -146,7 +146,7 @@ adsl07 <- adsl06 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
-    new_vars = exprs(  =  ),
+    new_vars = exprs(EOSDT = DSSTDT),
     filter_add = DSCAT == "DISPOSITION EVENT" & DSDECOD != "SCREEN FAILURE"
   )
 
@@ -269,8 +269,8 @@ adsl16 <- adsl15 %>%
 # Numeric Variables are from Spec File ----
 ## (AGEGR1N, RACEN, RACEGR1N, REGION1N, TRT01PN, TRT01AN)
 adsl17 <- adsl16 %>%
-  create_var_from_codelist(metacore, input_var = AGEGR1, out_var =  ) %>%
-  create_var_from_codelist(metacore, input_var = RACE, out_var =  ) %>%
+  create_var_from_codelist(metacore, input_var = AGEGR1, out_var = AGEGR1N) %>%
+  create_var_from_codelist(metacore, input_var = RACE, out_var = RACEN) %>%
   create_var_from_codelist(metacore, input_var = RACEGR1, out_var = RACEGR1N) %>%
   create_var_from_codelist(metacore, input_var = REGION1, out_var = REGION1N) %>%
   create_var_from_codelist(metacore, input_var = TRT01P, out_var = TRT01PN) %>%
