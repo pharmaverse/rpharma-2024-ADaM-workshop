@@ -23,7 +23,7 @@ metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
 
 # ---- Load User-defined function & Lookup tables----
 
-source("exercises/formatters.R")
+source("exercises/adams_little_helpers.R")
 
 # Load source datasets ----
 
@@ -303,7 +303,7 @@ advs_10 <- advs_9 %>%
     check_type = "error" # The specified message is issued if the observations of the input dataset are not unique with respect to the by variables and the order
   ) %>%
   # Derive AVALCA1N and AVALCAT1
-  ## Using Format functions from source("exercises/formatters.R")
+  ## Using Format functions from source("exercises/adams_little_helpers.R")
   mutate(AVALCA1N = format_avalcat1n(param = PARAMCD, aval = AVAL)) %>%
   derive_vars_merged(
     dataset_add = avalcat_lookup,

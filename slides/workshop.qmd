@@ -192,3 +192,20 @@ img_center_size <- 300
 >     [pharmaverse.org](https://pharmaverse.org/contribute/)
 > -   Finally, be sure to join our community on
 >     [Slack!](https://join.slack.com/t/pharmaverse/shared_invite/zt-yv5atkr4-Np2ytJ6W_QKz_4Olo7Jo9A)
+
+## Pacakges and Session Information
+
+```{r}
+#| class-output: hscroll
+
+sessionInfo()
+```
+
+```{css, echo=FALSE}
+.hscroll {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+```
+
+

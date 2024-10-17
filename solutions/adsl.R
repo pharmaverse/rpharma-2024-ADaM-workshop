@@ -256,7 +256,7 @@ adsl15 <- adsl14 %>%
 
 
 # Pop Flag variables (RANDFL, ITTFL, SAFFL) ----
-## Using assign functions from source("exercises/formatters.R") ----
+## Using assign functions from source("exercises/adams_little_helpers.R") ----
 adsl16 <- adsl15 %>%
   mutate(
     RANDFL = assign_randfl(RANDDT)
