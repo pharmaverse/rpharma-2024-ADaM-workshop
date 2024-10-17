@@ -65,7 +65,7 @@ img_center_size <- 300
 
 # Introductions and Setup
 
-🕙10:00 - 10:10
+🕙10:05 - 10:15
 
 ## Who will help you achieve the objective!
 
