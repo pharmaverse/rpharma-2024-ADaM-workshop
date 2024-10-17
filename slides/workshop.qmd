@@ -160,7 +160,7 @@ img_center_size <- 300
 
     -   Variables - labels, lengths, types, linked to method
 
-    -   Codelists
+    -   Codelists!!
 
     -   No VLMs
 
@@ -178,20 +178,14 @@ img_center_size <- 300
 
 ## Questions and Resources
 
--   admiraldiscovery
--   pgkdown sites for xportr, metatools, metacore and admiral
--   ?? TODO: link these out
--   pharmaverse slack
--   pharmaverse examples
--   Extension packages for admiral
+> -   [admiraldiscovery](https://pharmaverse.github.io/admiraldiscovery/)
+> -   [pharmaverse examples](https://github.com/pharmaverse/examples)
+> -   pgkdown sites for xportr, metatools, metacore and admiral
+> -   Extension packages for admiral
 
 
 ## Closing Thoughts {.smaller}
 
-> -   Anyone can be become a `pharmaverse champion` as one of the
->     criteria we look for in `pharmaverse` recommended packages is
->     great user guides, as hopefully demonstrated wit the sites shown
->     today
 > -   We were only able to show a small number of pharmaverse packages
 >     today, but please delve deeper to explore the full breadth
 > -   If you'd like to contribute to `pharmaverse`, check out options at
