@@ -104,14 +104,14 @@ advs_1 <- advs_0 %>%
   
   ### Derive Body Mass Index ----
   ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-  ### Which function could be used to derive "BMI" parameter ? Hint: it starts with derive_param_c*******()
+  ### Which function could be used to derive "BMI" parameter?
   # ---- ??? ---- #
 
   ## Exercise n2 ----
   
   ### Derive Body Surface Area ----
   ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-  ### Which wrapper function could be used to derive "BSA" parameter ?
+  ### Which wrapper function could be used to derive "BSA" parameter?
   # ---- ??? ---- #
  
 #View(advs_1 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY,  PARAMCD, AVAL, AVALU))
@@ -159,7 +159,7 @@ advs_4 <- advs_3 %>%
 
   ### Calculate ONTRTFL ----
   ### With the help of {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-  ### Which function could be used to derive ONTRTFL variable ?
+  ### Which function could be used to derive ONTRTFL variable?
   # ---- ??? ---- #
 
 #View(advs_4 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE, ONTRTFL))
@@ -266,8 +266,8 @@ advs_10 <- advs_9 %>%
   ## Exercise n5 ----
 
   ### Calculate ASEQ ----
-  ## With the help of {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-  ## Which function could be used to derive ASEQ variable ?
+  ## With the help of the Reference page (https://pharmaverse.github.io/admiral/reference/)
+  ## Which function could be used to Number the Observations Within Each Group
   # ---- ??? ---- # %>%
 
   # Derive AVALCA1N and AVALCAT1
