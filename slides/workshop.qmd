@@ -176,6 +176,64 @@ img_center_size <- 300
 
 🕦11:30 - 12:30
 
+# `ADVS` Quizzes
+
+## Quizz n°1
+
+Have a look to [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
+Which admiral function could be used to derive "BMI" parameter at any time point?
+
+> > -   a) admiral::compute_bmi()
+> > -   b) admiral::derive_param_bmi()
+> > -   c) [derive_params_growth_age()](https://pharmaverse.github.io/admiralpeds/reference/derive_params_growth_age.html)
+
+> -   Correct answer:
+> -   **b) the wrapper function admiral::derive_param_bmi()**
+
+> -   We could also use `r link::to_call("admiral::derive_param_computed()")`
+
+## Quizz n°2
+
+Have a look to [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
+Which admiral wrapper function could be used to derive "BSA" parameter at any time point?
+
+> > -   a) admiral::derive_param_bsa()
+> > -   b) admiral::compute_bsa()
+
+> -   Correct answer:
+> -   **a) the wrapper function admiral::derive_param_bsa()**
+
+> -   We could also use `r link::to_call("admiral::derive_param_computed()")`
+
+## Quizz n°3
+
+With the help of [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
+Which admiral function could be used to derive ONTRTFL variable?
+
+> > -   a) admiral::derive_var_trtemfl()
+> > -   b) admiral::derive_var_trtdurd()
+> > -   c) admiral::derive_var_ontrtfl()
+
+> -   Correct answer:
+> -   **c) the function admiral::derive_var_ontrtfl()**
+
+## Quizz n°4
+
+Execute the derivation of PCHG on a subset of the input dataset: Post-baseline records only.
+Which admiral functions will you use ? Get some hints on the [Reference](https://pharmaverse.github.io/admiral/reference/) page
+
+> -   Correct answer:
+> -   **admiral::restrict_derivation()**
+> -   **admiral::derive_var_pchg()**
+
+## Quizz n°5
+
+With the help of the [Reference](https://pharmaverse.github.io/admiral/reference/) page:
+which function could be used to compute the Analysis Sequence (Numbering the Observations Within Each Group)?
+
+> -   Correct answer:
+> -   **admiral::derive_var_obs_number()**
+
 ## Questions and Resources
 
 > -   [admiraldiscovery](https://pharmaverse.github.io/admiraldiscovery/)
