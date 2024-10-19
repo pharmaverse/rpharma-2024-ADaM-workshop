@@ -32,6 +32,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="workshop_files/libs/revealjs/dist/theme/quarto.css">
   <link href="workshop_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -362,28 +427,34 @@ Sadchla Mascary Gilead
 </section>
 <section id="objectives" class="slide level2">
 <h2>Objectives</h2>
+<div>
 <ul>
-<li>By the end of this workshop you will have:
+<li class="fragment">By the end of this workshop you will have:
 <ul>
-<li>Updated code for ADaMs <code>ADSL</code> and <code>ADVS</code> using <code>pharmaverse</code> packages, <code>tidyverse</code> packages, base R and Pinnacle21-like specs.</li>
-<li>Gained an understanding of how to use <code>pharmaverse</code> packages</li>
-<li>Gained an understanding of how to use resources for building ADaMs in <code>R</code>.</li>
+<li class="fragment">Updated code for ADaMs <code>ADSL</code> and <code>ADVS</code> using <code>pharmaverse</code> packages, <code>tidyverse</code> packages, base R and Pinnacle21-like specs.</li>
+<li class="fragment">Gained an understanding of how to use <code>pharmaverse</code> packages</li>
+<li class="fragment">Gained an understanding of how to use resources for building ADaMs in <code>R</code>.</li>
 </ul></li>
 </ul>
+</div>
 </section>
 <section id="play-by-play" class="slide level2">
 <h2>Play by Play</h2>
-<p>🕙10:05 - 10:15 Introductions and Setup</p>
-<p>🕙10:15 - 10:30 Overview of pharmaverse <code>packages</code> and functions</p>
-<p>🕥10:30 - 11:20 <code>ADSL</code></p>
-<p>🕚11:20 - 11:30 Break</p>
-<p>🕦11:30 - 12:30 <code>ADVS</code></p>
-<p>🕐12:30 - 1:00 Questions and Resources</p>
+<div>
+<ul>
+<li class="fragment"><p>🕙10:05 - 10:15 Introductions and Setup</p></li>
+<li class="fragment"><p>🕙10:15 - 10:30 Overview of pharmaverse <code>packages</code> and functions</p></li>
+<li class="fragment"><p>🕥10:30 - 11:20 <code>ADSL</code></p></li>
+<li class="fragment"><p>🕚11:20 - 11:30 Break</p></li>
+<li class="fragment"><p>🕦11:30 - 12:30 <code>ADVS</code></p></li>
+<li class="fragment"><p>🕐12:30 - 1:00 Questions and Resources</p></li>
+</ul>
+</div>
 </section>
 <section>
 <section id="introductions-and-setup" class="title-slide slide level1 center">
 <h1>Introductions and Setup</h1>
-<p>🕙10:00 - 10:10</p>
+<p>🕙10:05 - 10:15</p>
 </section>
 <section id="who-will-help-you-achieve-the-objective" class="slide level2">
 <h2>Who will help you achieve the objective!</h2>
@@ -398,42 +469,45 @@ Sadchla Mascary Gilead
 </section>
 <section id="setting-up-your-workspace" class="slide level2">
 <h2>Setting up your Workspace</h2>
+<div>
 <ul>
-<li><p><strong>Preferred</strong>:</p>
+<li class="fragment"><p><strong>Preferred</strong>:</p>
 <ul>
-<li><p>Sign up for a free <a href="https://posit.cloud/">Posit Account</a></p></li>
-<li><p>Share Link for R/Pharma: ADaM Workshop</p>
+<li class="fragment"><p>Sign up for a free <a href="https://posit.cloud/">Posit Account</a></p></li>
+<li class="fragment"><p>Share Link for R/Pharma: ADaM Workshop</p>
 <ul>
-<li>Everything loaded (data, packages, specs) and ready to go!</li>
+<li class="fragment">Everything loaded (data, packages, specs) and ready to go!</li>
 </ul></li>
 </ul></li>
-<li><p><strong>Advanced:</strong></p>
+<li class="fragment"><p><strong>Advanced:</strong></p>
 <ul>
-<li>Clone <a href="https://github.com/pharmaverse/rpharma-2024-ADaM-workshop">Repo</a> and set up yourself</li>
+<li class="fragment">Clone <a href="https://github.com/pharmaverse/rpharma-2024-ADaM-workshop">Repo</a> and set up yourself</li>
 </ul></li>
 </ul>
+</div>
 </section>
 <section id="how-we-will-code-today" class="slide level2">
 <h2>How we will “code” today</h2>
+<div>
 <ul>
-<li>Fanny and I will walk you through coding <code>ADSL</code> and <code>ADVS</code>
+<li class="fragment">Fanny and I will walk you through coding <code>ADSL</code> and <code>ADVS</code>
 <ul>
-<li>Lite Discussion on each function</li>
-<li>Fill in the blank!</li>
-<li>Occasional Zoom Poll</li>
+<li class="fragment">Lite Discussion on each function</li>
+<li class="fragment">Fill in the blank!</li>
+<li class="fragment">Occasional Zoom Poll</li>
 </ul></li>
-<li>Important to move along quickly
+<li class="fragment">Important to move along quickly
 <ul>
-<li>Please post questions to chat</li>
-<li>Full scripts are available</li>
+<li class="fragment">Please post questions to chat</li>
+<li class="fragment">Full scripts are available</li>
 </ul></li>
 </ul>
+</div>
 </section></section>
 <section>
 <section id="overview-of-pharmaverse-packages-and-functions" class="title-slide slide level1 center">
 <h1>Overview of pharmaverse packages and functions</h1>
-<p>🕥10:15 - 10:30<br>
-</p>
+<p>🕥10:15 - 10:30</p>
 </section>
 <section id="the-core-pharmaverse-packages" class="slide level2">
 <h2>The core pharmaverse packages</h2>
@@ -448,14 +522,17 @@ Sadchla Mascary Gilead
 <h2>The core tidyverse packages</h2>
 <ul>
 <li><code>dplyr</code> <img src="https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png" height="80"></li>
-<li><code>stringr</code> <img src="https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png" height="80"></li>
-<li><code>haven</code> <img src="https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png" height="80"></li>
-<li><code>lubridate</code> <img src="https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png" height="80"></li>
+<li><code>stringr</code> <img src="https://raw.githubusercontent.com/tidyverse/stringr/master/man/figures/logo.png" height="80"></li>
+<li><code>haven</code> <img src="https://raw.githubusercontent.com/tidyverse/haven/master/man/figures/logo.png" height="80"></li>
+<li><code>lubridate</code> <img src="https://raw.githubusercontent.com/tidyverse/lubridate/master/man/figures/logo.png" height="80"></li>
 </ul>
 </section>
 <section id="hello-pharmaverse-functions" class="slide level2 smaller">
 <h2>Hello pharmaverse Functions!</h2>
-<table class="caption-top" style="width:100%;">
+</section>
+<section id="hello-pharmaverse-functions-1" class="slide level2 smaller">
+<h2>Hello pharmaverse Functions!</h2>
+<table class="caption-top">
 <colgroup>
 <col style="width: 26%">
 <col style="width: 43%">
@@ -486,23 +563,25 @@ Sadchla Mascary Gilead
 </tr>
 <tr class="even">
 <td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>ADaM in R Asset Library • admiral</template> <a href="https://pharmaverse.github.io/admiral/" class="r-link-pkg" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>ADaM in R Asset Library • admiral</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/" class="r-link-pkg" target="_blank">admiral</a> </bslib-tooltip> </td>
-<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Combine the Domain and Supplemental Qualifier — combine_supp • metatools</template> <a href="https://pharmaverse.github.io/metatools/reference/combine_supp.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Combine the Domain and Supplemental Qualifier — combine_supp • metatools</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/metatools/reference/combine_supp.html" class="r-link-call" target="_blank">combine_supp()</a> </bslib-tooltip> </td>
-<td>Join Parent and Supplementary Datasets</td>
+<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Derive/Impute a Datetime from a Date Character Vector — derive_vars_dtm • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_vars_dtm.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Derive/Impute a Datetime from a Date Character Vector — derive_vars_dtm • admiral</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/reference/derive_vars_dtm.html" class="r-link-call" target="_blank">derive_vars_dtm()</a> </bslib-tooltip> </td>
+<td>Take a <code>---DTC</code> variable and turn it into a <code>---DTM</code> variable</td>
 </tr>
 <tr class="odd">
 <td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>ADaM in R Asset Library • admiral</template> <a href="https://pharmaverse.github.io/admiral/" class="r-link-pkg" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>ADaM in R Asset Library • admiral</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/" class="r-link-pkg" target="_blank">admiral</a> </bslib-tooltip> </td>
-<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Create Variable from Codelist — create_var_from_codelist • metatools</template> <a href="https://pharmaverse.github.io/metatools/reference/create_var_from_codelist.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Create Variable from Codelist — create_var_from_codelist • metatools</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/metatools/reference/create_var_from_codelist.html" class="r-link-call" target="_blank">create_var_from_codelist()</a> </bslib-tooltip> </td>
-<td>Create Numeric Variables from Spec</td>
+<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Derive Duration — derive_vars_duration • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_vars_duration.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Derive Duration — derive_vars_duration • admiral</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/reference/derive_vars_duration.html" class="r-link-call" target="_blank">derive_vars_duration()</a> </bslib-tooltip> </td>
+<td>Duration between timepoints</td>
+</tr>
+<tr class="even">
+<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>ADaM in R Asset Library • admiral</template> <a href="https://pharmaverse.github.io/admiral/" class="r-link-pkg" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>ADaM in R Asset Library • admiral</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/" class="r-link-pkg" target="_blank">admiral</a> </bslib-tooltip> </td>
+<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Add the Worst or Best Observation for Each By Group as New Variables — derive_vars_extreme_event • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_vars_extreme_event.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Add the Worst or Best Observation for Each By Group as New Variables — derive_vars_extreme_event • admiral</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/reference/derive_vars_extreme_event.html" class="r-link-call" target="_blank">derive_vars_extreme_event()</a> </bslib-tooltip> </td>
+<td>🤯</td>
 </tr>
 </tbody>
 </table>
-<ul>
-<li>Advanced - derive_vars_extreme_event</li>
-</ul>
 </section>
-<section id="hello-pharmaverse-functions-1" class="slide level2 smaller">
+<section id="hello-pharmaverse-functions-2" class="slide level2 smaller">
 <h2>Hello pharmaverse Functions!</h2>
-<table class="caption-top" style="width:100%;">
+<table class="caption-top">
 <colgroup>
 <col style="width: 26%">
 <col style="width: 43%">
@@ -518,28 +597,28 @@ Sadchla Mascary Gilead
 <tbody>
 <tr class="odd">
 <td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>GitHub - pharmaverse/metatools</template> <a href="https://github.com/pharmaverse/metatools" class="r-link-pkg" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>GitHub - pharmaverse/metatools</template>   </bslib-tooltip></a><a href="https://github.com/pharmaverse/metatools" class="r-link-pkg" target="_blank">metatools</a> </bslib-tooltip> </td>
-<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Derive/Impute a Date from a Date Character Vector — derive_vars_dt • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_vars_dt.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Derive/Impute a Date from a Date Character Vector — derive_vars_dt • admiral</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/reference/derive_vars_dt.html" class="r-link-call" target="_blank">derive_vars_dt()</a> </bslib-tooltip> </td>
-<td><code>left_join</code> on steroids</td>
+<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Combine the Domain and Supplemental Qualifier — combine_supp • metatools</template> <a href="https://pharmaverse.github.io/metatools/reference/combine_supp.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Combine the Domain and Supplemental Qualifier — combine_supp • metatools</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/metatools/reference/combine_supp.html" class="r-link-call" target="_blank">combine_supp()</a> </bslib-tooltip> </td>
+<td>Join Parent and Supplementary Datasets</td>
 </tr>
 <tr class="even">
 <td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>GitHub - pharmaverse/metatools</template> <a href="https://github.com/pharmaverse/metatools" class="r-link-pkg" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>GitHub - pharmaverse/metatools</template>   </bslib-tooltip></a><a href="https://github.com/pharmaverse/metatools" class="r-link-pkg" target="_blank">metatools</a> </bslib-tooltip> </td>
-<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Parameter Computed from the Analysis Value of Other Parameters — derive_param_computed • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_param_computed.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Adds a Parameter Computed from the Analysis Value of Other Parameters — derive_param_computed • admiral</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/reference/derive_param_computed.html" class="r-link-call" target="_blank">derive_param_computed()</a> </bslib-tooltip> </td>
-<td>Core function for wrappers used in ADVS</td>
+<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Create Variable from Codelist — create_var_from_codelist • metatools</template> <a href="https://pharmaverse.github.io/metatools/reference/create_var_from_codelist.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Create Variable from Codelist — create_var_from_codelist • metatools</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/metatools/reference/create_var_from_codelist.html" class="r-link-call" target="_blank">create_var_from_codelist()</a> </bslib-tooltip> </td>
+<td>Numeric Vars from Specs!</td>
 </tr>
 <tr class="odd">
 <td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>GitHub - pharmaverse/metatools</template> <a href="https://github.com/pharmaverse/metatools" class="r-link-pkg" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>GitHub - pharmaverse/metatools</template>   </bslib-tooltip></a><a href="https://github.com/pharmaverse/metatools" class="r-link-pkg" target="_blank">metatools</a> </bslib-tooltip> </td>
-<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Convert Blank Strings Into NAs — convert_blanks_to_na • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/convert_blanks_to_na.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Convert Blank Strings Into NAs — convert_blanks_to_na • admiral</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/reference/convert_blanks_to_na.html" class="r-link-call" target="_blank">convert_blanks_to_na()</a> </bslib-tooltip> </td>
-<td>SAS blanks versus R <code>NAs</code></td>
+<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Drop Unspecified Variables — drop_unspec_vars • metatools</template> <a href="https://pharmaverse.github.io/metatools/reference/drop_unspec_vars.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Drop Unspecified Variables — drop_unspec_vars • metatools</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/metatools/reference/drop_unspec_vars.html" class="r-link-call" target="_blank">drop_unspec_vars()</a> </bslib-tooltip> </td>
+<td>Easily drop variables not in Spec</td>
 </tr>
 <tr class="even">
 <td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Utilities to Output CDISC SDTM/ADaM XPT Files • xportr</template> <a href="https://atorus-research.github.io/xportr/" class="r-link-pkg" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Utilities to Output CDISC SDTM/ADaM XPT Files • xportr</template>   </bslib-tooltip></a><a href="https://atorus-research.github.io/xportr/" class="r-link-pkg" target="_blank">xportr</a> </bslib-tooltip> </td>
-<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Combine the Domain and Supplemental Qualifier — combine_supp • metatools</template> <a href="https://pharmaverse.github.io/metatools/reference/combine_supp.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Combine the Domain and Supplemental Qualifier — combine_supp • metatools</template>   </bslib-tooltip></a><a href="https://pharmaverse.github.io/metatools/reference/combine_supp.html" class="r-link-call" target="_blank">combine_supp()</a> </bslib-tooltip> </td>
-<td>Join Parent and Supplementary Datasets</td>
+<td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Assign Variable Label — xportr_label • xportr</template> <a href="https://atorus-research.github.io/xportr/reference/xportr_label.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Assign Variable Label — xportr_label • xportr</template>   </bslib-tooltip></a><a href="https://atorus-research.github.io/xportr/reference/xportr_label.html" class="r-link-call" target="_blank">xportr_label()</a> </bslib-tooltip> </td>
+<td>Apply labels from Spec</td>
 </tr>
 <tr class="odd">
 <td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Utilities to Output CDISC SDTM/ADaM XPT Files • xportr</template> <a href="https://atorus-research.github.io/xportr/" class="r-link-pkg" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Utilities to Output CDISC SDTM/ADaM XPT Files • xportr</template>   </bslib-tooltip></a><a href="https://atorus-research.github.io/xportr/" class="r-link-pkg" target="_blank">xportr</a> </bslib-tooltip> </td>
 <td><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Write xpt v5 transport file — xportr_write • xportr</template> <a href="https://atorus-research.github.io/xportr/reference/xportr_write.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">   <template>Write xpt v5 transport file — xportr_write • xportr</template>   </bslib-tooltip></a><a href="https://atorus-research.github.io/xportr/reference/xportr_write.html" class="r-link-call" target="_blank">xportr_write()</a> </bslib-tooltip> </td>
-<td>Create Numeric Variables from Spec</td>
+<td>Write out an xpt file</td>
 </tr>
 </tbody>
 </table>
@@ -563,15 +642,152 @@ Sadchla Mascary Gilead
 <p>🕥10:30 - 11:20</p>
 </section>
 
+<section>
+<section id="adsl-quizzes" class="title-slide slide level1 center">
+<h1><code>ADSL</code> Quizzes</h1>
+
+</section>
+<section id="check-in-1" class="slide level2">
+<h2>Check-in 1</h2>
+<p>Which <code>admiral</code> function can be used to turn a <code>---DTC</code> variable into a <code>---DTM</code> variable</p>
+<div>
+<ol type="a">
+<li class="fragment"><code>derive_vars_dtc()</code></li>
+<li class="fragment"><code>derive_var_trtdurd()</code></li>
+<li class="fragment"><code>derive_vars_dtm()</code></li>
+<li class="fragment"><code>derive_vars_exsdtc()</code></li>
+</ol>
+</div>
+<p>Correct Answer: c) <code>derive_vars_dtm()</code></p>
+</section>
+<section id="check-in-2" class="slide level2">
+<h2>Check-in 2</h2>
+<p>How many arguments does <code>derive_vars_merged()</code> have?</p>
+<p>Hint: Go to the documentation ?fcn_name or F1</p>
+<ol type="a">
+<li>15 arguments</li>
+<li>4 argruments</li>
+<li>1 argrument</li>
+<li>10 arguments</li>
+</ol>
+</section>
+<section id="check-in-3" class="slide level2">
+<h2>Check-in 3</h2>
+<p>Which function did I use to load the <code>adams_little_helpers.R</code>?</p>
+<ol type="a">
+<li><code>load_all()</code></li>
+<li><code>install.functions()</code></li>
+<li><code>source()</code></li>
+<li><code>callr()</code></li>
+</ol>
+</section>
+<section id="check-in-4" class="slide level2">
+<h2>Check-in 4</h2>
+<p>How many packages did I load using <code>library()</code> to create <code>ADSL</code> today?</p>
+<ol type="a">
+<li>15</li>
+<li>4</li>
+<li>6</li>
+<li>10</li>
+</ol>
+</section></section>
 <section id="break" class="title-slide slide level1 center">
 <h1>Break</h1>
 <p>🕦11:20 - 11:30</p>
 </section>
 
-<section>
 <section id="advs" class="title-slide slide level1 center">
 <h1><code>ADVS</code></h1>
 <p>🕦11:30 - 12:30</p>
+</section>
+
+<section>
+<section id="advs-quizzes" class="title-slide slide level1 center">
+<h1><code>ADVS</code> Quizzes</h1>
+
+</section>
+<section id="check-in-1-1" class="slide level2">
+<h2>Check-in 1</h2>
+<p>Have a look to <a href="https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html"><span class="r-link-pkg-error">admiraldiscovery</span></a>: Which admiral function could be used to derive “BMI” parameter at any time point?</p>
+<blockquote>
+<ul>
+<li class="fragment"><ol type="a">
+<li class="fragment"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Compute Body Mass Index (BMI) — compute_bmi • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/compute_bmi.html" class="r-link-call" target="_blank">compute_bmi()</a> </bslib-tooltip></li>
+</ol></li>
+<li class="fragment"><ol start="2" type="a">
+<li class="fragment"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Parameter for BMI — derive_param_bmi • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_param_bmi.html" class="r-link-call" target="_blank">derive_param_bmi()</a> </bslib-tooltip></li>
+</ol></li>
+<li class="fragment"><ol start="3" type="a">
+<li class="fragment"><a href="https://pharmaverse.github.io/admiralpeds/reference/derive_params_growth_age.html">derive_params_growth_age()</a></li>
+</ol></li>
+</ul>
+</blockquote>
+<ul>
+<li class="fragment">Correct answer:</li>
+<li class="fragment"><strong>b) the wrapper function <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Parameter for BMI — derive_param_bmi • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_param_bmi.html" class="r-link-call" target="_blank">derive_param_bmi()</a> </bslib-tooltip></strong></li>
+</ul>
+<ul>
+<li class="fragment">We could also use <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Parameter Computed from the Analysis Value of Other Parameters — derive_param_computed • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_param_computed.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Parameter Computed from the Analysis Value of Other Parameters — derive_param_computed • admiral</template> </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/reference/derive_param_computed.html" class="r-link-call" target="_blank">derive_param_computed()</a> </bslib-tooltip> </li>
+</ul>
+</section>
+<section id="check-in-2-1" class="slide level2">
+<h2>Check-in 2</h2>
+<p>Have a look to <a href="https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html"><span class="r-link-pkg-error">admiraldiscovery</span></a>: Which admiral wrapper function could be used to derive “BSA” parameter at any time point?</p>
+<blockquote>
+<ul>
+<li class="fragment"><ol type="a">
+<li class="fragment"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Parameter for BSA (Body Surface Area) Using the Specified Method — derive_param_bsa • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_param_bsa.html" class="r-link-call" target="_blank">derive_param_bsa()</a> </bslib-tooltip></li>
+</ol></li>
+<li class="fragment"><ol start="2" type="a">
+<li class="fragment"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Compute Body Surface Area (BSA) — compute_bsa • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/compute_bsa.html" class="r-link-call" target="_blank">compute_bsa()</a> </bslib-tooltip></li>
+</ol></li>
+</ul>
+</blockquote>
+<ul>
+<li class="fragment">Correct answer:</li>
+<li class="fragment"><strong>a) the wrapper function <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Parameter for BSA (Body Surface Area) Using the Specified Method — derive_param_bsa • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_param_bsa.html" class="r-link-call" target="_blank">derive_param_bsa()</a> </bslib-tooltip></strong></li>
+</ul>
+<ul>
+<li class="fragment">We could also use <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Parameter Computed from the Analysis Value of Other Parameters — derive_param_computed • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_param_computed.html" class="r-link-call" target="_blank"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Parameter Computed from the Analysis Value of Other Parameters — derive_param_computed • admiral</template> </bslib-tooltip></a><a href="https://pharmaverse.github.io/admiral/reference/derive_param_computed.html" class="r-link-call" target="_blank">derive_param_computed()</a> </bslib-tooltip> </li>
+</ul>
+</section>
+<section id="check-in-3-1" class="slide level2">
+<h2>Check-in 3</h2>
+<p>With the help of <a href="https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html"><span class="r-link-pkg-error">admiraldiscovery</span></a>: Which admiral function could be used to derive ONTRTFL variable?</p>
+<blockquote>
+<ul>
+<li class="fragment"><ol type="a">
+<li class="fragment"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Derive Treatment-emergent Flag — derive_var_trtemfl • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_var_trtemfl.html" class="r-link-call" target="_blank">derive_var_trtemfl()</a> </bslib-tooltip></li>
+</ol></li>
+<li class="fragment"><ol start="2" type="a">
+<li class="fragment"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Derive Total Treatment Duration (Days) — derive_var_trtdurd • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_var_trtdurd.html" class="r-link-call" target="_blank">derive_var_trtdurd()</a> </bslib-tooltip></li>
+</ol></li>
+<li class="fragment"><ol start="3" type="a">
+<li class="fragment"><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Derive On-Treatment Flag Variable — derive_var_ontrtfl • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_var_ontrtfl.html" class="r-link-call" target="_blank">derive_var_ontrtfl()</a> </bslib-tooltip></li>
+</ol></li>
+</ul>
+</blockquote>
+<ul>
+<li class="fragment">Correct answer:</li>
+<li class="fragment"><strong>c) the function <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Derive On-Treatment Flag Variable — derive_var_ontrtfl • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_var_ontrtfl.html" class="r-link-call" target="_blank">derive_var_ontrtfl()</a> </bslib-tooltip></strong></li>
+</ul>
+</section>
+<section id="check-in-4-1" class="slide level2">
+<h2>Check-in 4</h2>
+<p>Execute the derivation of PCHG on a subset of the input dataset: Post-baseline records only. Which admiral functions will you use ? Get some hints on the <a href="https://pharmaverse.github.io/admiral/reference/">Reference</a> page</p>
+<ul>
+<li class="fragment">Correct answer:</li>
+<li class="fragment"><strong><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Execute a Derivation on a Subset of the Input Dataset — restrict_derivation • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/restrict_derivation.html" class="r-link-call" target="_blank">restrict_derivation()</a> </bslib-tooltip></strong></li>
+<li class="fragment"><strong><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Derive Percent Change from Baseline — derive_var_pchg • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_var_pchg.html" class="r-link-call" target="_blank">derive_var_pchg()</a> </bslib-tooltip></strong></li>
+</ul>
+</section>
+<section id="check-in-5" class="slide level2">
+<h2>Check-in 5</h2>
+<p>With the help of the <a href="https://pharmaverse.github.io/admiral/reference/">Reference</a> page: which function could be used to compute the Analysis Sequence (Numbering the Observations Within Each Group)?</p>
+<ul>
+<li class="fragment">Correct answer:</li>
+<li class="fragment"><strong><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()"> <template>Adds a Variable Numbering the Observations Within Each By Group — derive_var_obs_number • admiral</template> <a href="https://pharmaverse.github.io/admiral/reference/derive_var_obs_number.html" class="r-link-call" target="_blank">derive_var_obs_number()</a> </bslib-tooltip></strong></li>
+</ul>
 </section>
 <section id="questions-and-resources" class="slide level2">
 <h2>Questions and Resources</h2>
@@ -589,6 +805,59 @@ Sadchla Mascary Gilead
 <li class="fragment">If you’d like to contribute to <code>pharmaverse</code>, check out options at <a href="https://pharmaverse.org/contribute/">pharmaverse.org</a></li>
 <li class="fragment">Finally, be sure to join our community on <a href="https://join.slack.com/t/pharmaverse/shared_invite/zt-yv5atkr4-Np2ytJ6W_QKz_4Olo7Jo9A">Slack!</a></li>
 </ul>
+</section>
+<section id="pacakges-and-session-information" class="slide level2">
+<h2>Pacakges and Session Information</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource hscroll number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>R version 4.4.1 (2024-06-14)</span>
+<span id="cb1-2"><a href=""></a>Platform: x86_64-pc-linux-gnu</span>
+<span id="cb1-3"><a href=""></a>Running under: Ubuntu 20.04.6 LTS</span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a>Matrix products: default</span>
+<span id="cb1-6"><a href=""></a>BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so;  LAPACK version 3.9.0</span>
+<span id="cb1-7"><a href=""></a></span>
+<span id="cb1-8"><a href=""></a>locale:</span>
+<span id="cb1-9"><a href=""></a> [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       </span>
+<span id="cb1-10"><a href=""></a> [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   </span>
+<span id="cb1-11"><a href=""></a> [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          </span>
+<span id="cb1-12"><a href=""></a>[10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   </span>
+<span id="cb1-13"><a href=""></a></span>
+<span id="cb1-14"><a href=""></a>time zone: UTC</span>
+<span id="cb1-15"><a href=""></a>tzcode source: system (glibc)</span>
+<span id="cb1-16"><a href=""></a></span>
+<span id="cb1-17"><a href=""></a>attached base packages:</span>
+<span id="cb1-18"><a href=""></a>[1] stats     graphics  grDevices utils     datasets  methods   base     </span>
+<span id="cb1-19"><a href=""></a></span>
+<span id="cb1-20"><a href=""></a>other attached packages:</span>
+<span id="cb1-21"><a href=""></a>[1] link_2024.4.0   countdown_0.4.0 glue_1.7.0     </span>
+<span id="cb1-22"><a href=""></a></span>
+<span id="cb1-23"><a href=""></a>loaded via a namespace (and not attached):</span>
+<span id="cb1-24"><a href=""></a> [1] rappdirs_0.3.3    sass_0.4.9        utf8_1.2.4        generics_0.1.3   </span>
+<span id="cb1-25"><a href=""></a> [5] tidyr_1.3.1       xml2_1.3.6        stringi_1.8.4     hms_1.1.3        </span>
+<span id="cb1-26"><a href=""></a> [9] digest_0.6.37     magrittr_2.0.3    evaluate_1.0.0    timechange_0.3.0 </span>
+<span id="cb1-27"><a href=""></a>[13] fastmap_1.2.0     cellranger_1.1.0  jsonlite_1.8.9    backports_1.5.0  </span>
+<span id="cb1-28"><a href=""></a>[17] admiraldev_1.1.0  purrr_1.0.2       fansi_1.0.6       xportr_0.4.0     </span>
+<span id="cb1-29"><a href=""></a>[21] httr2_1.0.5       jquerylib_0.1.4   cli_3.6.3         rlang_1.1.4      </span>
+<span id="cb1-30"><a href=""></a>[25] withr_3.0.1       cachem_1.1.0      yaml_2.3.10       tools_4.4.1      </span>
+<span id="cb1-31"><a href=""></a>[29] tzdb_0.4.0        memoise_2.0.1     checkmate_2.3.2   dplyr_1.1.4      </span>
+<span id="cb1-32"><a href=""></a>[33] forcats_1.0.0     curl_5.2.3        vctrs_0.6.5       R6_2.5.1         </span>
+<span id="cb1-33"><a href=""></a>[37] lifecycle_1.0.4   metacore_0.1.3    lubridate_1.9.3   stringr_1.5.1    </span>
+<span id="cb1-34"><a href=""></a>[41] pkgconfig_2.0.3   admiral_1.1.1     pillar_1.9.0      bslib_0.8.0      </span>
+<span id="cb1-35"><a href=""></a>[45] metatools_0.1.6   haven_2.5.4       xfun_0.47         tibble_3.2.1     </span>
+<span id="cb1-36"><a href=""></a>[49] tidyselect_1.2.1  rstudioapi_0.16.0 knitr_1.48        htmltools_0.5.8.1</span>
+<span id="cb1-37"><a href=""></a>[53] rmarkdown_2.28    readr_2.1.5       compiler_4.4.1    downlit_0.4.4    </span>
+<span id="cb1-38"><a href=""></a>[57] readxl_1.4.3     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell">
+<style type="text/css">
+.hscroll {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+</style>
+</div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
