@@ -124,9 +124,10 @@ advs_1 <- advs_0 %>%
   ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
   ### Which wrapper function could be used to derive "BSA" parameter? 
   derive_param_bsa(
-    by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM, AVALU),
+    by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM),
     method = "Mosteller",
-    set_values_to = exprs(PARAMCD = "BSA"),
+    set_values_to = exprs(PARAMCD = "BSA",
+                          AVALU = "m^2"),
     get_unit_expr = VSSTRESU,
     filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
     constant_by_vars = exprs(USUBJID),
