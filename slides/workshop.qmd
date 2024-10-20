@@ -25,12 +25,16 @@ link::auto(keep_pkg_prefix = FALSE,
            keep_braces = FALSE)
 
 # Package hexes
+# Package hexes
 metacore_img <- "https://raw.githubusercontent.com/atorus-research/metacore/master/man/figures/metacore.PNG"
 metatools_img <- "https://raw.githubusercontent.com/pharmaverse/metatools/master/man/figures/metatools.png"
 xportr_img <- "https://raw.githubusercontent.com/atorus-research/xportr/master/man/figures/logo.png"
 admiral_img <- "https://raw.githubusercontent.com/pharmaverse/admiral/master/man/figures/logo.png"
 pharmaverse_img <- "https://raw.githubusercontent.com/pharmaverse/pharmaverse-pkg/master/man/figures/banner.png"
 dplyr_img <- "https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png"
+str_img <- "https://raw.githubusercontent.com/tidyverse/stringr/master/man/figures/logo.png"
+haven_img <- "https://raw.githubusercontent.com/tidyverse/haven/master/man/figures/logo.png"
+lub_img <- "https://raw.githubusercontent.com/tidyverse/lubridate/master/man/figures/logo.png"
 
 # Set image sizes
 img_bullet_size <- 80
@@ -41,6 +45,7 @@ img_center_size <- 300
 
 ## Objectives
 
+::: incremental
 -   By the end of this workshop you will have:
     -   Updated code for ADaMs `ADSL` and `ADVS` using `pharmaverse`
         packages, `tidyverse` packages, base R and Pinnacle21-like
@@ -48,20 +53,24 @@ img_center_size <- 300
     -   Gained an understanding of how to use `pharmaverse` packages
     -   Gained an understanding of how to use resources for building
         ADaMs in `R`.
+:::
 
 ## Play by Play
 
-🕙10:05 - 10:15 Introductions and Setup
+::: incremental
+- 🕙10:05 - 10:15 Introductions and Setup
 
-🕙10:15 - 10:30 Overview of pharmaverse `packages` and functions
+- 🕙10:15 - 10:30 Overview of pharmaverse `packages` and functions
 
-🕥10:30 - 11:20 `ADSL`
+- 🕥10:30 - 11:20 `ADSL`
 
-🕚11:20 - 11:30 Break
+- 🕚11:20 - 11:30 Break
 
-🕦11:30 - 12:30 `ADVS`
+- 🕦11:30 - 12:30 `ADVS`
 
-🕐12:30 - 1:00 Questions and Resources
+- 🕐12:30 - 1:00 Questions and Resources
+
+:::
 
 # Introductions and Setup
 
@@ -76,6 +85,7 @@ img_center_size <- 300
 
 ## Setting up your Workspace
 
+::: incremental
 -   **Preferred**:
 
     -   Sign up for a free [Posit Account](https://posit.cloud/)
@@ -89,9 +99,11 @@ img_center_size <- 300
     -   Clone
         [Repo](https://github.com/pharmaverse/rpharma-2024-ADaM-workshop)
         and set up yourself
+:::
 
 ## How we will "code" today
 
+::: incremental
 -   Fanny and I will walk you through coding `ADSL` and `ADVS`
     -   Lite Discussion on each function
     -   Fill in the blank!
@@ -99,10 +111,11 @@ img_center_size <- 300
 -   Important to move along quickly
     -   Please post questions to chat
     -   Full scripts are available
+:::
 
 # Overview of pharmaverse packages and functions
 
-🕥10:15 - 10:30\
+🕥10:15 - 10:30
 
 ## The core pharmaverse packages
 
@@ -120,33 +133,34 @@ img_center_size <- 300
 -   `dplyr`
     `r glue("<img src={dplyr_img} height='{img_bullet_size}'/>")`
 -   `stringr`
-    `r glue("<img src={dplyr_img} height='{img_bullet_size}'/>")`
+    `r glue("<img src={str_img} height='{img_bullet_size}'/>")`
 -   `haven`
-    `r glue("<img src={dplyr_img} height='{img_bullet_size}'/>")`
+    `r glue("<img src={haven_img} height='{img_bullet_size}'/>")`
 -   `lubridate`
-    `r glue("<img src={dplyr_img} height='{img_bullet_size}'/>")`
+    `r glue("<img src={lub_img} height='{img_bullet_size}'/>")`
 
 ## Hello pharmaverse Functions! {.smaller}
 
-| Package                     | Function                                                   | Purpose                                 |
-|-------------------|--------------------------------|----------------------|
-| `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_merged()")`         | `left_join` on steroids                 |
-| `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_param_computed()")`      | Core function for wrappers used in ADVS |
-| `r link::to_pkg("admiral")` | `r link::to_call("admiral::convert_blanks_to_na()")`       | SAS blanks versus R `NAs`               |
-| `r link::to_pkg("admiral")` | `r link::to_call("metatools::combine_supp()")`             | Join Parent and Supplementary Datasets  |
-| `r link::to_pkg("admiral")` | `r link::to_call("metatools::create_var_from_codelist()")` | Create Numeric Variables from Spec      |
-
-* Advanced - derive_vars_extreme_event
-
 ## Hello pharmaverse Functions! {.smaller}
 
-| Package                       | Function                                              | Purpose                                 |
-|-------------------|--------------------------------|----------------------|
-| `r link::to_pkg("metatools")` | `r link::to_call("admiral::derive_vars_dt()")`        | `left_join` on steroids                 |
-| `r link::to_pkg("metatools")` | `r link::to_call("admiral::derive_param_computed()")` | Core function for wrappers used in ADVS |
-| `r link::to_pkg("metatools")` | `r link::to_call("admiral::convert_blanks_to_na()")`  | SAS blanks versus R `NAs`               |
-| `r link::to_pkg("xportr")`    | `r link::to_call("metatools::combine_supp()")`        | Join Parent and Supplementary Datasets  |
-| `r link::to_pkg("xportr")`    | `r link::to_call("xportr::xportr_write()")`           | Create Numeric Variables from Spec      |
+| Package                     | Function                                                  | Purpose                                                       |
+  |-------------------|-------------------------------|----------------------|
+  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_merged()")`        | `left_join` on steroids                                       |
+  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_param_computed()")`     | Core function for wrappers used in ADVS                       |
+  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::convert_blanks_to_na()")`      | SAS blanks versus R `NAs`                                     |
+  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_dtm()")`           | Take a `---DTC` variable and turn it into a `---DTM` variable |
+  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_duration()")`      | Duration between timepoints                                   |
+  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_extreme_event()")` | 🤯                                                            |
+  
+## Hello pharmaverse Functions! {.smaller}
+  
+  | Package                       | Function                                                   | Purpose                                 |
+  |-------------------|-------------------------------|----------------------|
+  | `r link::to_pkg("metatools")` | `r link::to_call("metatools::combine_supp()")`             | Join Parent and Supplementary Datasets  |
+  | `r link::to_pkg("metatools")` | `r link::to_call("metatools::create_var_from_codelist()")` | Numeric Vars from Specs!                |
+  | `r link::to_pkg("metatools")` | `r link::to_call("metatools::drop_unspec_vars()")`         | Easily drop variables not in Spec       |
+  | `r link::to_pkg("xportr")`    | `r link::to_call("xportr::xportr_label()")`                | Apply labels from Spec                  |
+  | `r link::to_pkg("xportr")`    | `r link::to_call("xportr::xportr_write()")`                | Write out an xpt file                   |
 
 ## Hello Specs!
 
@@ -168,6 +182,50 @@ img_center_size <- 300
 
 🕥10:30 - 11:20
 
+# `ADSL` Quizzes
+
+## Check-in 1
+
+Which `admiral` function can be used to turn a `---DTC` variable into a `---DTM` variable
+
+::: incremental
+a) `derive_vars_dtc()`
+b) `derive_var_trtdurd()`
+c) `derive_vars_dtm()`
+d) `derive_vars_exsdtc()`
+:::
+
+Correct Answer: c) `derive_vars_dtm()`
+
+## Check-in 2
+
+How many arguments does `derive_vars_merged()` have?
+
+Hint: Go to the documentation ?fcn_name or F1
+
+a) 15 arguments
+b) 4 argruments
+c) 1 argrument
+d) 10 arguments
+
+## Check-in 3
+
+Which function did I use to load the `adams_little_helpers.R`?
+
+a) `load_all()`
+b) `install.functions()`
+c) `source()`
+d) `callr()`
+
+## Check-in 4
+
+How many packages did I load using `library()` to create `ADSL` today?
+
+a) 15
+b) 4
+c) 6
+d) 10
+
 # Break
 
 🕦11:20 - 11:30
@@ -178,7 +236,7 @@ img_center_size <- 300
 
 # `ADVS` Quizzes
 
-## Quizz n°1
+## Check-in 1
 
 Have a look to [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
 Which admiral function could be used to derive "BMI" parameter at any time point?
@@ -192,7 +250,7 @@ Which admiral function could be used to derive "BMI" parameter at any time point
 
 > -   We could also use `r link::to_call("admiral::derive_param_computed()")`
 
-## Quizz n°2
+## Check-in 2
 
 Have a look to [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
 Which admiral wrapper function could be used to derive "BSA" parameter at any time point?
@@ -205,7 +263,7 @@ Which admiral wrapper function could be used to derive "BSA" parameter at any ti
 
 > -   We could also use `r link::to_call("admiral::derive_param_computed()")`
 
-## Quizz n°3
+## Check-in 3
 
 With the help of [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
 Which admiral function could be used to derive ONTRTFL variable?
@@ -217,7 +275,7 @@ Which admiral function could be used to derive ONTRTFL variable?
 > -   Correct answer:
 > -   **c) the function admiral::derive_var_ontrtfl()**
 
-## Quizz n°4
+## Check-in 4
 
 Execute the derivation of PCHG on a subset of the input dataset: Post-baseline records only.
 Which admiral functions will you use ? Get some hints on the [Reference](https://pharmaverse.github.io/admiral/reference/) page
@@ -226,7 +284,7 @@ Which admiral functions will you use ? Get some hints on the [Reference](https:/
 > -   **admiral::restrict_derivation()**
 > -   **admiral::derive_var_pchg()**
 
-## Quizz n°5
+## Check-in 5
 
 With the help of the [Reference](https://pharmaverse.github.io/admiral/reference/) page:
 which function could be used to compute the Analysis Sequence (Numbering the Observations Within Each Group)?
