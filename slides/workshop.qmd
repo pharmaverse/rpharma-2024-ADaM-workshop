@@ -287,7 +287,7 @@ Which admiral functions will you use ? Get some hints on the [Reference](https:/
 ## Check-in 5
 
 With the help of the [Reference](https://pharmaverse.github.io/admiral/reference/) page:
-which function could be used to compute the Analysis Sequence (Numbering the Observations Within Each Group)?
+which function could be used to compute the Analysis Sequence Number (Numbering the Observations Within Each Group)?
 
 > -   Correct answer:
 > -   **admiral::derive_var_obs_number()**
