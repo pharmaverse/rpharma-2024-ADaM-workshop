@@ -188,7 +188,7 @@ advs_4 <- advs_3 %>%
     filter_pre_timepoint = AVISIT == "Baseline" # Observations as not on-treatment
   )
 
-#View(advs_4 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE, ONTRTFL))
+#View(advs_4 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSSTAT, PARAMCD, DTYPE, AVAL, AVALU, AVISIT, AVISITN, ADT, ADY, TRTSDT, TRTEDT, ONTRTFL))
 
 ## Calculate ANRIND : requires the reference ranges ANRLO, ANRHI ----
 # Also accommodates the ranges A1LO, A1HI
