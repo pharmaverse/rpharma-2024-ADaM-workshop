@@ -36,7 +36,7 @@ source("exercises/adams_little_helpers.R")
 # For illustration purposes read in admiral test data
 
 vs <- pharmaversesdtm::vs
-#If you missed previous ADSL ADaM development, just load the XPT file
+# If you missed previous ADSL ADaM development, just load the XPT file
 adsl <- haven::read_xpt("datasets/adsl.xpt")
 
 # When SAS datasets are imported into R using haven::read_sas(), missing
@@ -71,7 +71,7 @@ advs_0 <- vs %>%
     source_vars = exprs(ADT)
   )
 
-#View(advs_0 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSDTC, !!!adsl_vars, ADT, ADY))
+# View(advs_0 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSDTC, !!!adsl_vars, ADT, ADY))
 
 advs_1 <- advs_0 %>%
   ## Add PARAMCD only - add PARAM etc later ----
@@ -103,8 +103,7 @@ advs_1 <- advs_0 %>%
     sysbp_code = "SYSBP",
     diabp_code = "DIABP",
     hr_code = NULL
-  ) %>% 
-  
+  ) %>%
   ## Exercise n1 ----
 
   ### Derive Body Mass Index ----
@@ -121,17 +120,19 @@ advs_1 <- advs_0 %>%
     ),
     constant_parameters = c("HEIGHT"),
     constant_by_vars = exprs(USUBJID)
-  ) %>% 
+  ) %>%
   ## Exercise n2 ----
 
   ### Derive Body Surface Area ----
   ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-  ### Which wrapper function could be used to derive "BSA" parameter? 
+  ### Which wrapper function could be used to derive "BSA" parameter?
   derive_param_bsa(
     by_vars = exprs(STUDYID, USUBJID, !!!adsl_vars, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM),
     method = "Mosteller",
-    set_values_to = exprs(PARAMCD = "BSA",
-                          AVALU = "m^2"),
+    set_values_to = exprs(
+      PARAMCD = "BSA",
+      AVALU = "m^2"
+    ),
     get_unit_expr = VSSTRESU,
     filter = VSSTAT != "NOT DONE" | is.na(VSSTAT),
     constant_by_vars = exprs(USUBJID),
@@ -140,7 +141,7 @@ advs_1 <- advs_0 %>%
     weight_code = "WEIGHT"
   )
 
-#View(advs_1 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY,  PARAMCD, AVAL, AVALU))
+# View(advs_1 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY,  PARAMCD, AVAL, AVALU))
 
 ## Get visit info ----
 # See also the "Visit and Period Variables" vignette
@@ -162,7 +163,7 @@ advs_2 <- advs_1 %>%
     ))
   )
 
-#View(advs_2 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN))
+# View(advs_2 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN))
 
 ## Derive a new record as a summary record (e.g. mean of the triplicates at each time point) ----
 # e.g. subject ="01-701-1015", PARAMCD ="DIABP", AVISIT = "Baseline", ADT="2014-01-02" -> Mean = 56
@@ -177,7 +178,7 @@ advs_3 <- advs_2 %>%
     )
   )
 
-#View(advs_3 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE))
+# View(advs_3 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE))
 
 
 advs_4 <- advs_3 %>%
@@ -192,7 +193,7 @@ advs_4 <- advs_3 %>%
     filter_pre_timepoint = AVISIT == "Baseline" # Observations as not on-treatment
   )
 
-#View(advs_4 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSSTAT, PARAMCD, DTYPE, AVAL, AVALU, AVISIT, AVISITN, ADT, ADY, TRTSDT, TRTEDT, ONTRTFL))
+# View(advs_4 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSSTAT, PARAMCD, DTYPE, AVAL, AVALU, AVISIT, AVISITN, ADT, ADY, TRTSDT, TRTEDT, ONTRTFL))
 
 ## Calculate ANRIND : requires the reference ranges ANRLO, ANRHI ----
 # Also accommodates the ranges A1LO, A1HI
@@ -208,7 +209,7 @@ advs_5 <- advs_4 %>%
     # use_a1hia1lo = FALSE
   )
 
-#View(advs_5 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE, ANRLO, ANRHI, A1LO, A1HI, ANRIND))
+# View(advs_5 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE, ANRLO, ANRHI, A1LO, A1HI, ANRIND))
 
 ## Derive baseline flags ----
 advs_6 <- advs_5 %>%
@@ -236,7 +237,7 @@ advs_6 <- advs_5 %>%
       ADT <= TRTSDT & !is.na(BASETYPE) & is.na(DTYPE))
   )
 
-#View(advs_6 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL))
+# View(advs_6 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL))
 
 ## Derive baseline information ----
 advs_7 <- advs_6 %>%
@@ -265,7 +266,7 @@ advs_7 <- advs_6 %>%
     filter = (ADT > TRTSDT)
   )
 
-#View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))  
+# View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))
 
 ## ANL01FL: Flag last result within an AVISIT and ATPT for post-baseline records ----
 advs_8 <- advs_7 %>%
@@ -282,7 +283,7 @@ advs_8 <- advs_7 %>%
     filter = !is.na(AVISITN) & ONTRTFL == "Y"
   )
 
-#View(advs_8 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL))  
+# View(advs_8 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL))
 
 ## Get treatment information ----
 advs_9 <- advs_8 %>%
@@ -292,7 +293,7 @@ advs_9 <- advs_8 %>%
     TRTA = TRT01A
   )
 
-#View(advs_9 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL, TRTP, TRTA))  
+# View(advs_9 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL, TRTP, TRTA))
 
 ## Get ASEQ and AVALCATx and add PARAM/PARAMN ----
 advs_10 <- advs_9 %>%
@@ -322,14 +323,14 @@ advs_10 <- advs_9 %>%
   create_var_from_codelist(metacore,
     input_var = PARAMCD,
     out_var = PARAM,
-    decode_to_code = FALSE #input_var is the code column of the codelist
+    decode_to_code = FALSE # input_var is the code column of the codelist
   ) %>%
   create_var_from_codelist(metacore,
     input_var = PARAMCD,
     out_var = PARAMN
   )
 
-#View(advs_10 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL, TRTP, TRTA, AVALCAT1, AVALCA1N, PARAMCD, PARAM, PARAMN, ASEQ))  
+# View(advs_10 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, AVAL, AVALU, AVISIT, AVISITN, ATPT, DTYPE, ONTRTFL, ABLFL, ANL01FL, TRTP, TRTA, AVALCAT1, AVALCA1N, PARAMCD, PARAM, PARAMN, ASEQ))
 
 # Add all ADSL variables
 advs_final <- advs_10 %>%

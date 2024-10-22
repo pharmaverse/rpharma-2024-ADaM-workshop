@@ -55,21 +55,31 @@ img_center_size <- 300
         ADaMs in `R`.
 :::
 
+## Assumptions
+
+::: incremental
+-   Basic knowledge of CDISC Standards (ADaM and SDTM Domains)
+-   Basic background in R and its packages
+-   Basic familiarity with RStudio IDE (So much Pane!!)
+-   `%>%` chaining functions together
+-   🦺 But even lacking all this we still think you will gain some good
+    knowledge! 🦺
+:::
+
 ## Play by Play
 
 ::: incremental
-- 🕙10:05 - 10:15 Introductions and Setup
+-   🕙10:05 - 10:15 Introductions and Setup
 
-- 🕙10:15 - 10:30 Overview of pharmaverse `packages` and functions
+-   🕙10:15 - 10:30 Overview of `pharmaverse` packages and functions
 
-- 🕥10:30 - 11:20 `ADSL`
+-   🕥10:30 - 11:20 `ADSL`
 
-- 🕚11:20 - 11:30 Break
+-   🕚11:20 - 11:30 Break
 
-- 🕦11:30 - 12:30 `ADVS`
+-   🕦11:30 - 12:30 `ADVS`
 
-- 🕐12:30 - 1:00 Questions and Resources
-
+-   🕐12:30 - 1:00 Questions and Resources
 :::
 
 # Introductions and Setup
@@ -83,35 +93,33 @@ img_center_size <- 300
 > > -   `Edoardo Mancini` - `Chat Support` 💻
 > > -   `Sadchla Mascary` - `Chat Support` 💻
 
-## Setting up your Workspace
+## Setting up your Workspace {.smaller}
 
 ::: incremental
 -   **Preferred**:
-
     -   Sign up for a free [Posit Account](https://posit.cloud/)
-
     -   Share Link for R/Pharma: ADaM Workshop
-
         -   Everything loaded (data, packages, specs) and ready to go!
-
+-   **Quick and Dirty**
+    -   Grab files from
+        [Repo](https://github.com/pharmaverse/rpharma-2024-ADaM-workshop)
+    -   Files are in `exercises`, `metadata` and `solutions` folders
 -   **Advanced:**
     -   Clone
         [Repo](https://github.com/pharmaverse/rpharma-2024-ADaM-workshop)
         and set up yourself
-    -   install.packages(c(admiral, xportr, metatools, ...))
-    
 :::
 
 ## How we will "code" today
 
 ::: incremental
 -   Fanny and I will walk you through coding `ADSL` and `ADVS`
-    -   Lite Discussion on each function
-    -   Fill in the blank!
-    -   Occasional Zoom Poll
+    -   Lite Discussion on each function and function arguments
+    -   A few fill in the blanks!
+    -   Occasional Check-in Poll
 -   Important to move along quickly
     -   Please post questions to chat
-    -   Full scripts are available
+    -   Full scripts are available in `solutions` folder
 :::
 
 # Overview of pharmaverse packages and functions
@@ -144,24 +152,24 @@ img_center_size <- 300
 
 ## Hello pharmaverse Functions! {.smaller}
 
-| Package                     | Function                                                  | Purpose                                                       |
-  |-------------------|-------------------------------|----------------------|
-  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_merged()")`        | `left_join` on steroids                                       |
-  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_param_computed()")`     | Core function for wrappers used in ADVS                       |
-  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::convert_blanks_to_na()")`      | SAS blanks versus R `NAs`                                     |
-  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_dtm()")`           | Take a `---DTC` variable and turn it into a `---DTM` variable |
-  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_duration()")`      | Duration between timepoints                                   |
-  | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_extreme_event()")` | 🤯                                                            |
-  
+| Package | Function | Purpose |
+|-------------------|-------------------------------|----------------------|
+| `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_merged()")` | `left_join` on steroids |
+| `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_param_computed()")` | Core function for wrappers used in ADVS |
+| `r link::to_pkg("admiral")` | `r link::to_call("admiral::convert_blanks_to_na()")` | SAS blanks versus R `NAs` |
+| `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_dtm()")` | Take a `---DTC` variable and turn it into a `---DTM` variable |
+| `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_duration()")` | Duration between timepoints |
+| `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_extreme_event()")` | 🤯 |
+
 ## Hello pharmaverse Functions! {.smaller}
-  
-  | Package                       | Function                                                   | Purpose                                 |
-  |-------------------|-------------------------------|----------------------|
-  | `r link::to_pkg("metatools")` | `r link::to_call("metatools::combine_supp()")`             | Join Parent and Supplementary Datasets  |
-  | `r link::to_pkg("metatools")` | `r link::to_call("metatools::create_var_from_codelist()")` | Numeric Vars from Specs!                |
-  | `r link::to_pkg("metatools")` | `r link::to_call("metatools::drop_unspec_vars()")`         | Easily drop variables not in Spec       |
-  | `r link::to_pkg("xportr")`    | `r link::to_call("xportr::xportr_label()")`                | Apply labels from Spec                  |
-  | `r link::to_pkg("xportr")`    | `r link::to_call("xportr::xportr_write()")`                | Write out an xpt file                   |
+
+| Package | Function | Purpose |
+|-------------------|-------------------------------|----------------------|
+| `r link::to_pkg("metatools")` | `r link::to_call("metatools::combine_supp()")` | Join Parent and Supplementary Datasets |
+| `r link::to_pkg("metatools")` | `r link::to_call("metatools::create_var_from_codelist()")` | Numeric Vars from Specs! |
+| `r link::to_pkg("metatools")` | `r link::to_call("metatools::drop_unspec_vars()")` | Easily drop variables not in Spec |
+| `r link::to_pkg("xportr")` | `r link::to_call("xportr::xportr_label()")` | Apply labels from Spec |
+| `r link::to_pkg("xportr")` | `r link::to_call("xportr::xportr_write()")` | Write out an xpt file |
 
 ## Hello Specs!
 
@@ -171,12 +179,9 @@ img_center_size <- 300
 
 -   What is in the the Specs:
 
-    -   Two datasets, dataset labels, Keys
-
+    -   Two datasets, dataset labels and variable keys
     -   Variables - labels, lengths, types, linked to method
-
     -   Codelists!!
-
     -   No VLMs
 
 # `ADSL`
@@ -187,16 +192,17 @@ img_center_size <- 300
 
 ## Check-in 1
 
-Which `admiral` function can be used to turn a `---DTC` variable into a `---DTM` variable
+Which `admiral` function can be used to turn a `---DTC` variable into a
+`---DTM` variable
 
 ::: incremental
-a) `derive_vars_dtc()`
-b) `derive_var_trtdurd()`
-c) `derive_vars_dtm()`
-d) `derive_vars_exsdtc()`
-:::
+a)  `derive_vars_dtc()`
+b)  `derive_var_trtdurd()`
+c)  `derive_vars_dtm()`
+d)  `derive_vars_exsdtc()`
 
-Correct Answer: c) `derive_vars_dtm()`
+-   Correct Answer: c) `derive_vars_dtm()`
+:::
 
 ## Check-in 2
 
@@ -204,34 +210,52 @@ How many arguments does `derive_vars_merged()` have?
 
 Hint: Go to the documentation ?fcn_name or F1
 
-a) 15 arguments
-b) 4 argruments
-c) 1 argrument
-d) 10 arguments
+::: incremental
+a)  15 arguments
+b)  4 argruments
+c)  1 argrument
+d)  10 arguments
+:::
+
+::: incremental
+- Correct Answer: a)  15 arguments
+:::
 
 ## Check-in 3
 
 Which function did I use to load the `adams_little_helpers.R`?
 
-a) `load_all()`
-b) `install.functions()`
-c) `source()`
-d) `callr()`
+::: incremental
+a)  `load_all()`
+b)  `install.functions()`
+c)  `source()`
+d)  `callr()`
+:::
+
+::: incremental
+-   Correct Answer: c) `source()`
+:::
 
 ## Check-in 4
 
 How many packages did I load using `library()` to create `ADSL` today?
 
-a) 15
-b) 4
-c) 6
-d) 10
+::: incremental
+a)  15
+b)  4
+c)  8
+d)  10
+:::
+
+::: incremental
+-   Correct Answer: c) 8
+:::
 
 # Break
 
 🕦11:20 - 11:30
 
-# `ADVS` 
+# `ADVS`
 
 🕦11:30 - 12:30
 
@@ -239,47 +263,77 @@ d) 10
 
 ## Check-in 1
 
-Have a look to [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
-Which admiral function could be used to derive "BMI" parameter at any time point?
+Have a look to
+[{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
+Which admiral function could be used to derive "BMI" parameter at any
+time point?
 
-> > -   a) admiral::compute_bmi()
-> > -   b) admiral::derive_param_bmi()
-> > -   c) [derive_params_growth_age()](https://pharmaverse.github.io/admiralpeds/reference/derive_params_growth_age.html)
+> > -   
+> >
+> >     a)  admiral::compute_bmi()
+> >
+> > -   
+> >
+> >     b)  admiral::derive_param_bmi()
+> >
+> > -   
+> >
+> >     c)  [derive_params_growth_age()](https://pharmaverse.github.io/admiralpeds/reference/derive_params_growth_age.html)
 
 > -   Correct answer:
 > -   **b) the wrapper function admiral::derive_param_bmi()**
 
-> -   We could also use `r link::to_call("admiral::derive_param_computed()")`
+> -   We could also use
+>     `r link::to_call("admiral::derive_param_computed()")`
 
 ## Check-in 2
 
-Have a look to [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
-Which admiral wrapper function could be used to derive "BSA" parameter at any time point?
+Have a look to
+[{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
+Which admiral wrapper function could be used to derive "BSA" parameter
+at any time point?
 
-> > -   a) admiral::derive_param_bsa()
-> > -   b) admiral::compute_bsa()
+> > -   
+> >
+> >     a)  admiral::derive_param_bsa()
+> >
+> > -   
+> >
+> >     b)  admiral::compute_bsa()
 
 > -   Correct answer:
 > -   **a) the wrapper function admiral::derive_param_bsa()**
 
-> -   We could also use `r link::to_call("admiral::derive_param_computed()")`
+> -   We could also use
+>     `r link::to_call("admiral::derive_param_computed()")`
 
 ## Check-in 3
 
-With the help of [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
+With the help of
+[{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
 Which admiral function could be used to derive ONTRTFL variable?
 
-> > -   a) admiral::derive_var_trtemfl()
-> > -   b) admiral::derive_var_trtdurd()
-> > -   c) admiral::derive_var_ontrtfl()
+> > -   
+> >
+> >     a)  admiral::derive_var_trtemfl()
+> >
+> > -   
+> >
+> >     b)  admiral::derive_var_trtdurd()
+> >
+> > -   
+> >
+> >     c)  admiral::derive_var_ontrtfl()
 
 > -   Correct answer:
 > -   **c) the function admiral::derive_var_ontrtfl()**
 
 ## Check-in 4
 
-Execute the derivation of PCHG on a subset of the input dataset: Post-baseline records only.
-Which admiral functions will you use ? Get some hints on the [Reference](https://pharmaverse.github.io/admiral/reference/) page
+Execute the derivation of PCHG on a subset of the input dataset:
+Post-baseline records only. Which admiral functions will you use ? Get
+some hints on the
+[Reference](https://pharmaverse.github.io/admiral/reference/) page
 
 > -   Correct answer:
 > -   **admiral::restrict_derivation()**
@@ -287,8 +341,10 @@ Which admiral functions will you use ? Get some hints on the [Reference](https:/
 
 ## Check-in 5
 
-With the help of the [Reference](https://pharmaverse.github.io/admiral/reference/) page:
-which function could be used to compute the Analysis Sequence Number (Numbering the Observations Within Each Group)?
+With the help of the
+[Reference](https://pharmaverse.github.io/admiral/reference/) page:
+which function could be used to compute the Analysis Sequence Number
+(Numbering the Observations Within Each Group)?
 
 > -   Correct answer:
 > -   **admiral::derive_var_obs_number()**
@@ -299,7 +355,6 @@ which function could be used to compute the Analysis Sequence Number (Numbering 
 > -   [pharmaverse examples](https://github.com/pharmaverse/examples)
 > -   pgkdown sites for xportr, metatools, metacore and admiral
 > -   Extension packages for admiral
-
 
 ## Closing Thoughts {.smaller}
 

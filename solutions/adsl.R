@@ -8,7 +8,7 @@
 #
 # Input: dm, ds, ex, ae, suppdm, rphrama_specs.xlsx
 library(admiral)
-library(pharmaversesdtm) 
+library(pharmaversesdtm)
 library(dplyr)
 library(lubridate)
 library(stringr)
@@ -19,7 +19,8 @@ library(xportr)
 # ---- Load Specs for Metacore ----
 metacore <- spec_to_metacore(
   path = "metadata/rpharma_specs.xlsx",
-  where_sep_sheet = FALSE
+  where_sep_sheet = FALSE,
+  quite = TRUE
 ) %>%
   select_dataset("ADSL")
 
@@ -72,14 +73,14 @@ adsl01 <- dm_suppdm %>%
   mutate(TRT01P = ARM, TRT01A = ACTARM) %>%
   derive_vars_merged(
     dataset_add = ex_ext,
-    filter_add = (EXDOSE > 0 |
-                    (EXDOSE == 0 &
-                       str_detect(EXTRT, "PLACEBO"))) &
-      !is.na(EXSTDTM),
-    new_vars = exprs(TRTSDTM = EXSTDTM, TRTSTMF = EXSTTMF),
+    by_vars = exprs(STUDYID, USUBJID),
     order = exprs(EXSTDTM, EXSEQ),
+    new_vars = exprs(TRTSDTM = EXSTDTM, TRTSTMF = EXSTTMF),
+    filter_add = (EXDOSE > 0 |
+      (EXDOSE == 0 &
+        str_detect(EXTRT, "PLACEBO"))) &
+      !is.na(EXSTDTM),
     mode = "first",
-    by_vars = exprs(STUDYID, USUBJID)
   )
 
 # View(adsl01 %>% select(USUBJID, starts_with("TRT")))
@@ -88,13 +89,13 @@ adsl01 <- dm_suppdm %>%
 adsl02 <- adsl01 %>%
   derive_vars_merged(
     dataset_add = ex_ext,
-    filter_add = (EXDOSE > 0 |
-                    (EXDOSE == 0 &
-                       str_detect(EXTRT, "PLACEBO"))) & !is.na(EXENDTM),
-    new_vars = exprs(TRTEDTM = EXENDTM, TRTETMF = EXENTMF),
+    by_vars = exprs(STUDYID, USUBJID),
     order = exprs(EXENDTM, EXSEQ),
+    new_vars = exprs(TRTEDTM = EXENDTM, TRTETMF = EXENTMF),
+    filter_add = (EXDOSE > 0 |
+      (EXDOSE == 0 &
+        str_detect(EXTRT, "PLACEBO"))) & !is.na(EXENDTM),
     mode = "last",
-    by_vars = exprs(STUDYID, USUBJID)
   )
 
 # View(adsl02 %>% select(USUBJID, starts_with("TRT")))
@@ -108,7 +109,7 @@ adsl03 <- adsl02 %>%
 # View(adsl03 %>% select(USUBJID, starts_with("TRT")))
 
 
-# Derive treatment start time (TRTSDTM) ----
+# Derive treatment start time (TRTSTM) ----
 adsl04 <- adsl03 %>%
   derive_vars_dtm_to_tm(
     source_vars = exprs(TRTSDTM)
@@ -162,8 +163,8 @@ adsl08 <- adsl07 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
     by_vars = exprs(STUDYID, USUBJID),
-    filter_add = DSCAT == "DISPOSITION EVENT",
     new_vars = exprs(EOSSTT = format_eosstt(DSDECOD)),
+    filter_add = DSCAT == "DISPOSITION EVENT",
     missing_values = exprs(EOSSTT = "ONGOING")
   )
 
@@ -282,6 +283,8 @@ adsl17 <- adsl16 %>%
 
 # View(adsl17 %>% select(USUBJID, ends_with("N")))
 
+# Final Preparation ----
+## Ordering, Sorting by Key, Labels, Types, Lengths, XPT ----
 adsl <- adsl17 %>%
   drop_unspec_vars(metacore) %>% # Drop unspecified variables from specs
   check_variables(metacore, dataset_name = "ADSL") %>% # Check all variables specified are present and no more
@@ -293,5 +296,3 @@ adsl <- adsl17 %>%
   xportr_format(metacore, domain = "ADSL") %>%
   xportr_df_label(metacore, domain = "ADSL") %>%
   xportr_write(path = "datasets/adsl.xpt", metadata = metacore, domain = "ADSL")
-
-
