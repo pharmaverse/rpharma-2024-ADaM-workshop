@@ -2,6 +2,10 @@
 #
 # Label: Vital Signs Analysis Dataset
 #
+#
+# If not using posit.cloud - run this script to install packages
+# source("exercises/setup.R")
+#
 # Input: adsl, vs
 library(admiral)
 library(pharmaversesdtm) # Contains example datasets from the CDISC pilot project

@@ -95,10 +95,11 @@ img_center_size <- 300
         -   Everything loaded (data, packages, specs) and ready to go!
 
 -   **Advanced:**
-
     -   Clone
         [Repo](https://github.com/pharmaverse/rpharma-2024-ADaM-workshop)
         and set up yourself
+    -   install.packages(c(admiral, xportr, metatools, ...))
+    
 :::
 
 ## How we will "code" today

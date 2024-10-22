@@ -2,6 +2,10 @@
 #
 # Label: Subject Level Analysis Dataset
 #
+#
+# If not using posit.cloud - run this script to install packages
+# source("exercises/setup.R")
+#
 # Input: dm, ds, ex, ae, suppdm, rphrama_specs.xlsx
 library(admiral)
 library(pharmaversesdtm) 
