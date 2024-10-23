@@ -348,17 +348,5 @@ advs <- advs_final %>%
   xportr_type(metacore) %>%
   xportr_length(metacore) %>%
   xportr_label(metacore) %>%
-  xportr_format(metacore, domain = "ADVS") %>%
   xportr_df_label(metacore, domain = "ADVS") %>%
   xportr_write("datasets/advs.xpt", metadata = metacore, domain = "ADVS")
-
-
-# Save output ----
-
-# Change to whichever directory you want to save the dataset in
-dir <- tools::R_user_dir("admiral_templates_data", which = "cache")
-if (!file.exists(dir)) {
-  # Create the folder
-  dir.create(dir, recursive = TRUE, showWarnings = FALSE)
-}
-save(advs, file = file.path(dir, "advs.rda"), compress = "bzip2")
