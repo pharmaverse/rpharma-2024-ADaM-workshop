@@ -103,19 +103,19 @@ advs_1 <- advs_0 %>%
     diabp_code = "DIABP",
     hr_code = NULL
   )
-## Exercise n1 ----
+  ## Exercise n1 ----
+  
+  ### Derive Body Mass Index ----
+  ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ### Which function could be used to derive "BMI" parameter?
+  # ---- ??? ---- #
 
-### Derive Body Mass Index ----
-### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-### Which function could be used to derive "BMI" parameter?
-# ---- ??? ---- #
-
-## Exercise n2 ----
-
-### Derive Body Surface Area ----
-### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-### Which wrapper function could be used to derive "BSA" parameter?
-# ---- ??? ---- #
+  ## Exercise n2 ----
+  
+  ### Derive Body Surface Area ----
+  ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ### Which wrapper function could be used to derive "BSA" parameter?
+  # ---- ??? ---- #
 
 # View(advs_1 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY,  PARAMCD, AVAL, AVALU))
 
