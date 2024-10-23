@@ -156,7 +156,6 @@ advs_3 <- advs_2 %>%
 
 # View(advs_3 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, ATPTN, ATPT, AVISIT, AVISITN, DTYPE))
 
-
 advs_4 <- advs_3 %>%
   ## Exercise n3 ----
 
@@ -169,7 +168,7 @@ advs_4 <- advs_3 %>%
 
   ## Calculate ANRIND : requires the reference ranges ANRLO, ANRHI ----
   # Also accommodates the ranges A1LO, A1HI
-  advs_5() <- advs_4 %>%
+  advs_5 <- advs_4 %>%
   derive_vars_merged(
     dataset_add = range_lookup, # derive_vars_merged() already used in previous steps
     by_vars = exprs(PARAMCD)
@@ -235,10 +234,10 @@ advs_7 <- advs_6 %>%
   ### only for Post-Baseline records: which functions to use?
   # ---- ??? ---- #
 
-  # View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))
+# View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))
 
-  ## ANL01FL: Flag last result within an AVISIT and ATPT for post-baseline records ----
-  advs_8() <- advs_7 %>%
+## ANL01FL: Flag last result within an AVISIT and ATPT for post-baseline records ----
+advs_8 <- advs_7 %>%
   restrict_derivation(
     derivation = derive_var_extreme_flag,
     args = params(
