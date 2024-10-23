@@ -10,6 +10,8 @@ date-format: full
 format: 
   revealjs:
     theme: solarized
+    transition: convex
+    background-transition: fade
 editor: 
   markdown: 
     wrap: 72
@@ -25,7 +27,6 @@ link::auto(keep_pkg_prefix = FALSE,
            keep_braces = FALSE)
 
 # Package hexes
-# Package hexes
 metacore_img <- "https://raw.githubusercontent.com/atorus-research/metacore/master/man/figures/metacore.PNG"
 metatools_img <- "https://raw.githubusercontent.com/pharmaverse/metatools/master/man/figures/metatools.png"
 xportr_img <- "https://raw.githubusercontent.com/atorus-research/xportr/master/man/figures/logo.png"
@@ -40,7 +41,6 @@ lub_img <- "https://raw.githubusercontent.com/tidyverse/lubridate/master/man/fig
 img_bullet_size <- 80
 img_right_size <- 150
 img_center_size <- 300
-
 ```
 
 ## Objectives
@@ -86,7 +86,7 @@ img_center_size <- 300
 
 🕙10:05 - 10:15
 
-## Who will help you achieve the objective!
+## Who will help you achieve the workshop's objectives!
 
 > > -   `Fanny Gautier` - `presenting on ADVS` 📣
 > > -   `Ben Straub` - `presenting on ADSL and pharmaverse packages` 📣
@@ -147,8 +147,6 @@ img_center_size <- 300
     `r glue("<img src={haven_img} height='{img_bullet_size}'/>")`
 -   `lubridate`
     `r glue("<img src={lub_img} height='{img_bullet_size}'/>")`
-
-## Hello pharmaverse Functions! {.smaller}
 
 ## Hello pharmaverse Functions! {.smaller}
 
@@ -356,9 +354,9 @@ which function could be used to compute the Analysis Sequence Number
 > -   pgkdown sites for xportr, metatools, metacore and admiral
 > -   Extension packages for admiral
 
-## Closing Thoughts {.smaller}
+## Closing Thoughts 
 
-> -   We were only able to show a small number of pharmaverse packages
+> -   We were only able to show a small number of pharmaverse packages and functions
 >     today, but please delve deeper to explore the full breadth
 > -   If you'd like to contribute to `pharmaverse`, check out options at
 >     [pharmaverse.org](https://pharmaverse.org/contribute/)
@@ -379,3 +377,9 @@ sessionInfo()
   white-space: nowrap;
 }
 ```
+
+## R/Pharma ADaM Workshop Starting at 10:02 US EST  
+
+![](waiting.jpg){.center}
+
+

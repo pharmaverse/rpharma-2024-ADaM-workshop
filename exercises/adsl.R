@@ -108,7 +108,6 @@ adsl03 <- adsl02 %>%
 
 # View(adsl03 %>% select(USUBJID, starts_with("TRT")))
 
-
 # Derive treatment start time (TRTSTM) ----
 adsl04 <- adsl03 %>%
   derive_vars_dtm_to_tm(
@@ -116,7 +115,6 @@ adsl04 <- adsl03 %>%
   )
 
 # View(adsl04 %>% select(USUBJID, starts_with("TRT")))
-
 
 # Derive treatment duration (TRTDURD) ----
 adsl05 <- adsl04 %>%
@@ -157,7 +155,6 @@ adsl07 <- adsl06 %>%
 
 # View(adsl07 %>% select(USUBJID, TRT01P, ends_with("DT")))
 
-
 # End of Study Status (EOSSTT) ----
 adsl08 <- adsl07 %>%
   derive_vars_merged(
@@ -170,7 +167,6 @@ adsl08 <- adsl07 %>%
 
 # View(adsl08 %>% select(USUBJID, TRT01P, ends_with(c("DT", "TT"))))
 
-
 # Last Retrieval Date (FRVDT) ----
 adsl09 <- adsl08 %>%
   derive_vars_merged(
@@ -181,7 +177,6 @@ adsl09 <- adsl08 %>%
   )
 
 # View(adsl09 %>% select(USUBJID, TRT01P, ends_with(c("DT", "TT"))))
-
 
 # Derive Randomization Date (RANDDT) ----
 adsl10 <- adsl09 %>%
@@ -247,6 +242,7 @@ adsl14 <- adsl13 %>%
   )
 
 # View(adsl14 %>% select(USUBJID, TRT01P, TRTSDT, DTHDT, DTHCAUS, DTHDOM))
+# Check-in 3 ----
 
 # Grouping variables (RACEGR1, AGEGR1, REGION1, DTHCGR1) ----
 ## Using Format functions are from source("exercises/adams_little_helpers.R") ----
