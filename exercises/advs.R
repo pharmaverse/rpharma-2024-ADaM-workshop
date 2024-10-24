@@ -24,7 +24,6 @@ metacore <- spec_to_metacore(
 ) %>%
   select_dataset("ADVS")
 
-
 # ---- Load User-defined function & Lookup tables----
 
 source("exercises/adams_little_helpers.R")
@@ -104,19 +103,19 @@ advs_1 <- advs_0 %>%
     diabp_code = "DIABP",
     hr_code = NULL
   )
-## Exercise n1 ----
+  ## Exercise n1 ----
 
-### Derive Body Mass Index ----
-### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-### Which function could be used to derive "BMI" parameter?
-# ---- ??? ---- #
+  ### Derive Body Mass Index ----
+  ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ### Which function could be used to derive "BMI" parameter?
+  # ---- ??? ---- #
 
-## Exercise n2 ----
+  ## Exercise n2 ----
 
-### Derive Body Surface Area ----
-### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
-### Which wrapper function could be used to derive "BSA" parameter?
-# ---- ??? ---- #
+  ### Derive Body Surface Area ----
+  ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
+  ### Which wrapper function could be used to derive "BSA" parameter?
+  # ---- ??? ---- #
 
 # View(advs_1 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY,  PARAMCD, AVAL, AVALU))
 
@@ -235,10 +234,10 @@ advs_7 <- advs_6 %>%
   ### only for Post-Baseline records: which functions to use?
   # ---- ??? ---- #
 
-  # View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))
+# View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))
 
-  ## ANL01FL: Flag last result within an AVISIT and ATPT for post-baseline records ----
-  advs_8 <- advs_7 %>%
+## ANL01FL: Flag last result within an AVISIT and ATPT for post-baseline records ----
+advs_8 <- advs_7 %>%
   restrict_derivation(
     derivation = derive_var_extreme_flag,
     args = params(
