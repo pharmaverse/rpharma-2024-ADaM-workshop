@@ -20,7 +20,7 @@ library(xportr)
 metacore <- spec_to_metacore(
   path = "metadata/rpharma_specs.xlsx",
   where_sep_sheet = FALSE,
-  quite = TRUE
+  quiet = TRUE
 ) %>%
   select_dataset("ADSL")
 

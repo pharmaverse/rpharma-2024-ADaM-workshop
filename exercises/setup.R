@@ -15,5 +15,5 @@ check_and_install <- function(packages) {
 # Use the function
 check_and_install(c(
   "dplyr", "lubridate", "stringr", "metacore", "metatools",
-  "xportr", "pharmaversesdtm", "xportr", "admiral"
+  "xportr", "pharmaversesdtm", "admiral"
 ))

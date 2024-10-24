@@ -62,6 +62,7 @@ img_center_size <- 300
 -   Basic background in R and its packages
 -   Basic familiarity with RStudio IDE (So much Pane!!)
 -   `%>%` chaining functions together
+-   Dual Screens - Workshop and "Coding along"
 -   🦺 But even lacking all this we still think you will gain some good
     knowledge! 🦺
 :::
@@ -351,12 +352,12 @@ which function could be used to compute the Analysis Sequence Number
 
 > -   [admiraldiscovery](https://pharmaverse.github.io/admiraldiscovery/)
 > -   [pharmaverse examples](https://github.com/pharmaverse/examples)
-> -   pgkdown sites for xportr, metatools, metacore and admiral
-> -   Extension packages for admiral
+> -   pgkdown sites for [xportr](https://atorus-research.github.io/xportr/), [metatools](https://pharmaverse.github.io/metatools/), [metacore](https://atorus-research.github.io/metacore/) and [admiral](https://pharmaverse.github.io/admiral/)
+> -   Extension packages for admiral: [admiralophtha](https://pharmaverse.github.io/admiralophtha/), [admiralonco](https://pharmaverse.github.io/admiralonco/), [admiralpeds](https://github.com/pharmaverse/admiralpeds)
 
 ## Closing Thoughts 
 
-> -   We were only able to show a small number of pharmaverse packages and functions
+> -   We were only able to show a small number of `pharmaverse` packages and functions
 >     today, but please delve deeper to explore the full breadth
 > -   If you'd like to contribute to `pharmaverse`, check out options at
 >     [pharmaverse.org](https://pharmaverse.org/contribute/)

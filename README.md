@@ -1,17 +1,5 @@
-# rpharma-phriday-workshop
-Repo for the pharmaverse Friday workshop (First session - pharmaverse champion) at R/pharma 2023
+# R/Pharma Workshop
 
-In this repo you'll find:
+* Conducted Workshop on October 25th, 2024 at [R/Pharma](https://rinpharma.com/)
 
-- The slides used
-- The exercised used
-- The solutions used
-
-Note that the renv.lock in this repo pertains to the environment the slides were built in and not then ones the exercises/solutions need.  
-The best approach would be start Rstudio with R >= 4.3.1 and install the latest packages of:
-
-- admiral
-- pharmaversesdtm
-- dplyr
-- lubridate 
-- stringr
+* Check out the slide deck for [session information and packages versions](https://pharmaverse.github.io/rpharma-2024-ADaM-workshop/#/pacakges-and-session-information)
