@@ -289,7 +289,6 @@ adsl <- adsl17 %>%
   xportr_type(metacore) %>%
   xportr_length(metacore) %>%
   xportr_label(metacore) %>%
-  xportr_format(metacore, domain = "ADSL") %>%
   xportr_df_label(metacore, domain = "ADSL") %>%
   xportr_write(path = "datasets/adsl.xpt", metadata = metacore, domain = "ADSL")
 
