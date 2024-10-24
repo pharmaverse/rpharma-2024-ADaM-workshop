@@ -312,5 +312,6 @@ advs <- advs_final %>%
   xportr_type(metacore) %>%
   xportr_length(metacore) %>%
   xportr_label(metacore) %>%
+  xportr_format(metacore, domain = "ADVS") %>%
   xportr_df_label(metacore, domain = "ADVS") %>%
   xportr_write("datasets/advs.xpt", metadata = metacore, domain = "ADVS")
