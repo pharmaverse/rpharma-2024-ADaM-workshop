@@ -164,11 +164,11 @@ advs_4 <- advs_3 %>%
   ### Which function could be used to derive ONTRTFL variable?
   # ---- ??? ---- #
 
-  # View(advs_4 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSSTAT, PARAMCD, DTYPE, AVAL, AVALU, AVISIT, AVISITN, ADT, ADY, TRTSDT, TRTEDT, ONTRTFL))
+# View(advs_4 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSSTAT, PARAMCD, DTYPE, AVAL, AVALU, AVISIT, AVISITN, ADT, ADY, TRTSDT, TRTEDT, ONTRTFL))
 
-  ## Calculate ANRIND : requires the reference ranges ANRLO, ANRHI ----
-  # Also accommodates the ranges A1LO, A1HI
-  advs_5 <- advs_4 %>%
+## Calculate ANRIND : requires the reference ranges ANRLO, ANRHI ----
+# Also accommodates the ranges A1LO, A1HI
+advs_5 <- advs_4 %>%
   derive_vars_merged(
     dataset_add = range_lookup, # derive_vars_merged() already used in previous steps
     by_vars = exprs(PARAMCD)
