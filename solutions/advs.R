@@ -65,7 +65,7 @@ advs_0 <- vs %>%
     dtc = VSDTC,
     # Below arguments are default values and not necessary to add in our case
     highest_imputation = "n", # means no imputation is performed on partial/missing dates
-    flag_imputation = "auto", # To automatically create ADTF variable when highest_imputation is "Y", "M" or "D"
+    flag_imputation = "auto" # To automatically create ADTF variable when highest_imputation is "Y", "M" or "D"
   ) %>%
   derive_vars_dy(
     reference_date = TRTSDT,
