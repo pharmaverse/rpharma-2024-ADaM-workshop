@@ -93,7 +93,8 @@ adsl02 <- adsl01 %>%
     new_vars = exprs(TRTEDTM = EXENDTM, TRTETMF = EXENTMF),
     filter_add = (EXDOSE > 0 |
       (EXDOSE == 0 &
-        str_detect(EXTRT, "PLACEBO"))) & !is.na(EXENDTM),
+        str_detect(EXTRT, "PLACEBO"))) & 
+      !is.na(EXENDTM),
     mode = "????",
   )
 
@@ -182,9 +183,9 @@ adsl09 <- adsl08 %>%
 adsl10 <- adsl09 %>%
   derive_vars_merged(
     dataset_add = ds_ext,
-    filter_add = DSDECOD == "RANDOMIZED",
     by_vars = exprs(STUDYID, USUBJID),
-    new_vars = exprs(RANDDT = DSSTDT)
+    new_vars = exprs(RANDDT = DSSTDT),
+    filter_add = DSDECOD == "RANDOMIZED",
   )
 
 # View(adsl10 %>% select(USUBJID, TRT01P, ends_with(c("DT", "TT"))))
@@ -289,7 +290,8 @@ adsl <- adsl17 %>%
   xportr_type(metacore) %>%
   xportr_length(metacore) %>%
   xportr_label(metacore) %>%
-  xportr_df_label(metacore, domain = "ADSL") %>%
+  xportr_format(metacore) %>%
+  xportr_df_label(metacore) %>%
   xportr_write(path = "datasets/adsl.xpt", metadata = metacore, domain = "ADSL")
 
 

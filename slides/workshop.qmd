@@ -94,7 +94,7 @@ img_center_size <- 300
 > > -   `Edoardo Mancini` - `Chat Support` 💻
 > > -   `Sadchla Mascary` - `Chat Support` 💻
 
-## Setting up your Workspace {.smaller}
+## Setting up your Workspace to "code" {.smaller}
 
 ::: incremental
 -   **Preferred**:
@@ -109,6 +109,8 @@ img_center_size <- 300
     -   Clone
         [Repo](https://github.com/pharmaverse/rpharma-2024-ADaM-workshop)
         and set up yourself
+-   **Sit back and Relax**
+    -   🏖️🏖️🍷🍷
 :::
 
 ## How we will "code" today
@@ -152,7 +154,7 @@ img_center_size <- 300
 ## Hello pharmaverse Functions! {.smaller}
 
 | Package | Function | Purpose |
-|-------------------|-------------------------------|----------------------|
+|----|----|----|
 | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_vars_merged()")` | `left_join` on steroids |
 | `r link::to_pkg("admiral")` | `r link::to_call("admiral::derive_param_computed()")` | Core function for wrappers used in ADVS |
 | `r link::to_pkg("admiral")` | `r link::to_call("admiral::convert_blanks_to_na()")` | SAS blanks versus R `NAs` |
@@ -163,7 +165,7 @@ img_center_size <- 300
 ## Hello pharmaverse Functions! {.smaller}
 
 | Package | Function | Purpose |
-|-------------------|-------------------------------|----------------------|
+|----|----|----|
 | `r link::to_pkg("metatools")` | `r link::to_call("metatools::combine_supp()")` | Join Parent and Supplementary Datasets |
 | `r link::to_pkg("metatools")` | `r link::to_call("metatools::create_var_from_codelist()")` | Numeric Vars from Specs! |
 | `r link::to_pkg("metatools")` | `r link::to_call("metatools::drop_unspec_vars()")` | Easily drop variables not in Spec |
@@ -217,7 +219,7 @@ d)  10 arguments
 :::
 
 ::: incremental
-- Correct Answer: a)  15 arguments
+-   Correct Answer: a) 15 arguments
 :::
 
 ## Check-in 3
@@ -342,8 +344,8 @@ some hints on the
 
 With the help of the
 [Reference](https://pharmaverse.github.io/admiral/reference/) page:
-which `admiral` function could be used to compute the Analysis Sequence Number
-(Numbering the Observations Within Each Group)?
+which `admiral` function could be used to compute the Analysis Sequence
+Number (Numbering the Observations Within Each Group)?
 
 > -   Correct answer:
 > -   **admiral::derive_var_obs_number()**
@@ -352,13 +354,21 @@ which `admiral` function could be used to compute the Analysis Sequence Number
 
 > -   [admiraldiscovery](https://pharmaverse.github.io/admiraldiscovery/)
 > -   [pharmaverse examples](https://github.com/pharmaverse/examples)
-> -   pgkdown sites for [xportr](https://atorus-research.github.io/xportr/), [metatools](https://pharmaverse.github.io/metatools/), [metacore](https://atorus-research.github.io/metacore/) and [admiral](https://pharmaverse.github.io/admiral/)
-> -   Extension packages for admiral: [admiralophtha](https://pharmaverse.github.io/admiralophtha/), [admiralonco](https://pharmaverse.github.io/admiralonco/), [admiralpeds](https://github.com/pharmaverse/admiralpeds)
+> -   pgkdown sites for
+>     [xportr](https://atorus-research.github.io/xportr/),
+>     [metatools](https://pharmaverse.github.io/metatools/),
+>     [metacore](https://atorus-research.github.io/metacore/) and
+>     [admiral](https://pharmaverse.github.io/admiral/)
+> -   Extension packages for admiral:
+>     [admiralophtha](https://pharmaverse.github.io/admiralophtha/),
+>     [admiralonco](https://pharmaverse.github.io/admiralonco/),
+>     [admiralpeds](https://github.com/pharmaverse/admiralpeds)
 
-## Closing Thoughts 
+## Closing Thoughts
 
-> -   We were only able to show a small number of `pharmaverse` packages and functions
->     today, but please delve deeper to explore the full breadth
+> -   We were only able to show a small number of `pharmaverse` packages
+>     and functions today, but please delve deeper to explore the full
+>     breadth
 > -   If you'd like to contribute to `pharmaverse`, check out options at
 >     [pharmaverse.org](https://pharmaverse.org/contribute/)
 > -   Finally, be sure to join our community on
@@ -379,8 +389,6 @@ sessionInfo()
 }
 ```
 
-## R/Pharma ADaM Workshop Starting at 10:02 US EST  
+## R/Pharma ADaM Workshop Starting at 10:02 US EST
 
 ![](waiting.jpg){.center}
-
-
