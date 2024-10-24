@@ -267,7 +267,7 @@ advs_7 <- advs_6 %>%
     filter = (ADT > TRTSDT)
   )
 
-# View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))
+# View(advs_7 %>% select(STUDYID, USUBJID, VISIT, VISITNUM, VSTESTCD, VSTEST, VSSTRESN, VSSTRESU, VSDTC, VSSTAT, ADT, ADY, TRTSDT, PARAMCD, AVAL, AVALU, AVISIT, AVISITN, DTYPE, ONTRTFL, BASETYPE, ABLFL, ANRIND, BNRIND, BASE, CHG, PCHG))
 
 ## ANL01FL: Flag last result within an AVISIT and ATPT for post-baseline records ----
 advs_8 <- advs_7 %>%
@@ -349,5 +349,6 @@ advs <- advs_final %>%
   xportr_type(metacore) %>%
   xportr_length(metacore) %>%
   xportr_label(metacore) %>%
+  xportr_format(metacore, domain = "ADVS") %>%
   xportr_df_label(metacore, domain = "ADVS") %>%
   xportr_write("datasets/advs.xpt", metadata = metacore, domain = "ADVS")
