@@ -264,7 +264,7 @@ d)  10
 
 Have a look to
 [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
-Which admiral function could be used to derive "BMI" parameter at any
+Which `admiral` function could be used to derive "BMI" parameter at any
 time point?
 
 > > -   
@@ -289,7 +289,7 @@ time point?
 
 Have a look to
 [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
-Which admiral wrapper function could be used to derive "BSA" parameter
+Which `admiral` wrapper function could be used to derive "BSA" parameter
 at any time point?
 
 > > -   
@@ -310,7 +310,7 @@ at any time point?
 
 With the help of
 [{admiraldiscovery}](https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html):
-Which admiral function could be used to derive ONTRTFL variable?
+Which `admiral` function could be used to derive ONTRTFL variable?
 
 > > -   
 > >
@@ -330,7 +330,7 @@ Which admiral function could be used to derive ONTRTFL variable?
 ## Check-in 4
 
 Execute the derivation of PCHG on a subset of the input dataset:
-Post-baseline records only. Which admiral functions will you use ? Get
+Post-baseline records only. Which `admiral` functions will you use? Get
 some hints on the
 [Reference](https://pharmaverse.github.io/admiral/reference/) page
 
@@ -342,7 +342,7 @@ some hints on the
 
 With the help of the
 [Reference](https://pharmaverse.github.io/admiral/reference/) page:
-which function could be used to compute the Analysis Sequence Number
+which `admiral` function could be used to compute the Analysis Sequence Number
 (Numbering the Observations Within Each Group)?
 
 > -   Correct answer:
