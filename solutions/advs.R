@@ -18,9 +18,10 @@ library(xportr)
 
 # ---- Load Specs for Metacore ----
 
-metacore <- spec_to_metacore("metadata/rpharma_specs.xlsx",
-  where_sep_sheet = FALSE
-  # , quiet = TRUE #To suppress warnings messages
+metacore <- spec_to_metacore(
+  path = "metadata/rpharma_specs.xlsx",
+  where_sep_sheet = FALSE,
+  quiet = TRUE
 ) %>%
   select_dataset("ADVS")
 
@@ -110,7 +111,7 @@ advs_1 <- advs_0 %>%
   ### Have a look to {admiraldiscovery}(https://pharmaverse.github.io/admiraldiscovery/articles/reactable.html)
   ### Which function could be used to derive "BMI" parameter?
   derive_param_computed(
-    by_vars = exprs(USUBJID, VISIT),
+    by_vars = exprs(STUDYID, USUBJID, VISIT, VISITNUM, ADT, ADY, VSTPT, VSTPTNUM),
     parameters = "WEIGHT",
     set_values_to = exprs(
       AVAL = AVAL.WEIGHT / (AVAL.HEIGHT / 100)^2,
