@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+datasets/advs.xpt
+slides/workshop.html
+slides/workshop_files/*
