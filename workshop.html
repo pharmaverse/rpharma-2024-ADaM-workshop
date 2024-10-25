@@ -389,9 +389,13 @@
     }
   </style>
   <script src="workshop_files/libs/bslib-component-js-0.8.0/components.min.js"></script>
+
   <script src="workshop_files/libs/bslib-component-js-0.8.0/web-components.min.js" type="module"></script>
+
   <link href="workshop_files/libs/bslib-component-css-0.8.0/components.css" rel="stylesheet">
+
   <script src="workshop_files/libs/bslib-tag-require-0.8.0/tag-require.js"></script>
+
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -480,8 +484,8 @@ Sadchla Mascary Gilead
 </ul>
 </blockquote>
 </section>
-<section id="setting-up-your-workspace" class="slide level2 smaller">
-<h2>Setting up your Workspace</h2>
+<section id="setting-up-your-workspace-to-code" class="slide level2 smaller">
+<h2>Setting up your Workspace to “code”</h2>
 <div>
 <ul>
 <li class="fragment"><strong>Preferred</strong>:
@@ -500,6 +504,10 @@ Sadchla Mascary Gilead
 <li class="fragment"><strong>Advanced:</strong>
 <ul>
 <li class="fragment">Clone <a href="https://github.com/pharmaverse/rpharma-2024-ADaM-workshop">Repo</a> and set up yourself</li>
+</ul></li>
+<li class="fragment"><strong>Sit back and Relax</strong>
+<ul>
+<li class="fragment">🏖️🏖️🍷🍷</li>
 </ul></li>
 </ul>
 </div>
@@ -549,9 +557,9 @@ Sadchla Mascary Gilead
 <h2>Hello pharmaverse Functions!</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 43%">
-<col style="width: 30%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -598,9 +606,9 @@ Sadchla Mascary Gilead
 <h2>Hello pharmaverse Functions!</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 43%">
-<col style="width: 30%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -848,43 +856,45 @@ Sadchla Mascary Gilead
 <h2>Pacakges and Session Information</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource hscroll number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>R version 4.4.1 (2024-06-14)</span>
-<span id="cb1-2"><a href=""></a>Platform: x86_64-pc-linux-gnu</span>
-<span id="cb1-3"><a href=""></a>Running under: Ubuntu 20.04.6 LTS</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource hscroll number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>R version 4.3.3 (2024-02-29 ucrt)</span>
+<span id="cb1-2"><a href=""></a>Platform: x86_64-w64-mingw32/x64 (64-bit)</span>
+<span id="cb1-3"><a href=""></a>Running under: Windows 10 x64 (build 19045)</span>
 <span id="cb1-4"><a href=""></a></span>
 <span id="cb1-5"><a href=""></a>Matrix products: default</span>
-<span id="cb1-6"><a href=""></a>BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so;  LAPACK version 3.9.0</span>
+<span id="cb1-6"><a href=""></a></span>
 <span id="cb1-7"><a href=""></a></span>
 <span id="cb1-8"><a href=""></a>locale:</span>
-<span id="cb1-9"><a href=""></a> [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       </span>
-<span id="cb1-10"><a href=""></a> [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   </span>
-<span id="cb1-11"><a href=""></a> [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          </span>
-<span id="cb1-12"><a href=""></a>[10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   </span>
-<span id="cb1-13"><a href=""></a></span>
-<span id="cb1-14"><a href=""></a>time zone: UTC</span>
-<span id="cb1-15"><a href=""></a>tzcode source: system (glibc)</span>
-<span id="cb1-16"><a href=""></a></span>
-<span id="cb1-17"><a href=""></a>attached base packages:</span>
-<span id="cb1-18"><a href=""></a>[1] stats     graphics  grDevices utils     datasets  methods   base     </span>
-<span id="cb1-19"><a href=""></a></span>
-<span id="cb1-20"><a href=""></a>other attached packages:</span>
-<span id="cb1-21"><a href=""></a>[1] link_2024.4.0   countdown_0.4.0 glue_1.8.0     </span>
-<span id="cb1-22"><a href=""></a></span>
-<span id="cb1-23"><a href=""></a>loaded via a namespace (and not attached):</span>
-<span id="cb1-24"><a href=""></a> [1] rappdirs_0.3.3    sass_0.4.9        utf8_1.2.4        generics_0.1.3   </span>
-<span id="cb1-25"><a href=""></a> [5] tidyr_1.3.1       xml2_1.3.6        stringi_1.8.4     hms_1.1.3        </span>
-<span id="cb1-26"><a href=""></a> [9] digest_0.6.37     magrittr_2.0.3    evaluate_1.0.1    timechange_0.3.0 </span>
-<span id="cb1-27"><a href=""></a>[13] fastmap_1.2.0     cellranger_1.1.0  jsonlite_1.8.9    backports_1.5.0  </span>
-<span id="cb1-28"><a href=""></a>[17] admiraldev_1.1.0  purrr_1.0.2       fansi_1.0.6       xportr_0.4.1     </span>
-<span id="cb1-29"><a href=""></a>[21] httr2_1.0.5       jquerylib_0.1.4   cli_3.6.3         rlang_1.1.4      </span>
-<span id="cb1-30"><a href=""></a>[25] withr_3.0.1       cachem_1.1.0      yaml_2.3.10       tools_4.4.1      </span>
-<span id="cb1-31"><a href=""></a>[29] tzdb_0.4.0        memoise_2.0.1     checkmate_2.3.2   dplyr_1.1.4      </span>
-<span id="cb1-32"><a href=""></a>[33] forcats_1.0.0     curl_5.2.3        vctrs_0.6.5       R6_2.5.1         </span>
-<span id="cb1-33"><a href=""></a>[37] lifecycle_1.0.4   metacore_0.1.3    lubridate_1.9.3   stringr_1.5.1    </span>
-<span id="cb1-34"><a href=""></a>[41] pkgconfig_2.0.3   admiral_1.1.1     pillar_1.9.0      bslib_0.8.0      </span>
-<span id="cb1-35"><a href=""></a>[45] metatools_0.1.6   haven_2.5.4       xfun_0.48         tibble_3.2.1     </span>
-<span id="cb1-36"><a href=""></a>[49] tidyselect_1.2.1  knitr_1.48        htmltools_0.5.8.1 rmarkdown_2.28   </span>
-<span id="cb1-37"><a href=""></a>[53] readr_2.1.5       compiler_4.4.1    downlit_0.4.4     readxl_1.4.3     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href=""></a>[1] LC_COLLATE=English_United Kingdom.utf8 </span>
+<span id="cb1-10"><a href=""></a>[2] LC_CTYPE=English_United Kingdom.utf8   </span>
+<span id="cb1-11"><a href=""></a>[3] LC_MONETARY=English_United Kingdom.utf8</span>
+<span id="cb1-12"><a href=""></a>[4] LC_NUMERIC=C                           </span>
+<span id="cb1-13"><a href=""></a>[5] LC_TIME=English_United Kingdom.utf8    </span>
+<span id="cb1-14"><a href=""></a></span>
+<span id="cb1-15"><a href=""></a>time zone: America/New_York</span>
+<span id="cb1-16"><a href=""></a>tzcode source: internal</span>
+<span id="cb1-17"><a href=""></a></span>
+<span id="cb1-18"><a href=""></a>attached base packages:</span>
+<span id="cb1-19"><a href=""></a>[1] stats     graphics  grDevices utils     datasets  methods   base     </span>
+<span id="cb1-20"><a href=""></a></span>
+<span id="cb1-21"><a href=""></a>other attached packages:</span>
+<span id="cb1-22"><a href=""></a>[1] link_2024.4.0   countdown_0.4.0 glue_1.8.0     </span>
+<span id="cb1-23"><a href=""></a></span>
+<span id="cb1-24"><a href=""></a>loaded via a namespace (and not attached):</span>
+<span id="cb1-25"><a href=""></a> [1] rappdirs_0.3.3    sass_0.4.9        utf8_1.2.4        generics_0.1.3   </span>
+<span id="cb1-26"><a href=""></a> [5] tidyr_1.3.1       xml2_1.3.6        stringi_1.8.4     hms_1.1.3        </span>
+<span id="cb1-27"><a href=""></a> [9] digest_0.6.37     magrittr_2.0.3    evaluate_1.0.1    timechange_0.3.0 </span>
+<span id="cb1-28"><a href=""></a>[13] fastmap_1.2.0     cellranger_1.1.0  jsonlite_1.8.9    backports_1.5.0  </span>
+<span id="cb1-29"><a href=""></a>[17] admiraldev_1.1.0  purrr_1.0.2       fansi_1.0.6       xportr_0.4.1     </span>
+<span id="cb1-30"><a href=""></a>[21] httr2_1.0.5       jquerylib_0.1.4   cli_3.6.3         rlang_1.1.4      </span>
+<span id="cb1-31"><a href=""></a>[25] withr_3.0.1       cachem_1.1.0      yaml_2.3.10       tools_4.3.3      </span>
+<span id="cb1-32"><a href=""></a>[29] tzdb_0.4.0        memoise_2.0.1     checkmate_2.3.2   dplyr_1.1.4      </span>
+<span id="cb1-33"><a href=""></a>[33] forcats_1.0.0     curl_5.2.3        vctrs_0.6.5       R6_2.5.1         </span>
+<span id="cb1-34"><a href=""></a>[37] lifecycle_1.0.4   metacore_0.1.3    lubridate_1.9.3   stringr_1.5.1    </span>
+<span id="cb1-35"><a href=""></a>[41] pkgconfig_2.0.3   admiral_1.1.1     pillar_1.9.0      bslib_0.8.0      </span>
+<span id="cb1-36"><a href=""></a>[45] metatools_0.1.6   haven_2.5.4       xfun_0.48         tibble_3.2.1     </span>
+<span id="cb1-37"><a href=""></a>[49] tidyselect_1.2.1  rstudioapi_0.17.0 knitr_1.48        htmltools_0.5.8.1</span>
+<span id="cb1-38"><a href=""></a>[53] rmarkdown_2.28    readr_2.1.5       compiler_4.3.3    downlit_0.4.4    </span>
+<span id="cb1-39"><a href=""></a>[57] readxl_1.4.3     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="cell">
@@ -1116,42 +1126,80 @@ Sadchla Mascary Gilead
       });
     </script>
     
+
     <script>
+
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
       // slide changes (different for each slide format).
+
       (function () {
+
         // dispatch for htmlwidgets
+
         function fireSlideEnter() {
+
           const event = window.document.createEvent("Event");
+
           event.initEvent("slideenter", true, true);
+
           window.document.dispatchEvent(event);
+
         }
+
+    
 
         function fireSlideChanged(previousSlide, currentSlide) {
+
           fireSlideEnter();
 
+    
+
           // dispatch for shiny
+
           if (window.jQuery) {
+
             if (previousSlide) {
+
               window.jQuery(previousSlide).trigger("hidden");
+
             }
+
             if (currentSlide) {
+
               window.jQuery(currentSlide).trigger("shown");
+
             }
+
           }
+
         }
+
+    
 
         // hookup for slidy
+
         if (window.w3c_slidy) {
+
           window.w3c_slidy.add_observer(function (slide_num) {
+
             // slide_num starts at position 1
+
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
           });
+
         }
 
+    
+
       })();
+
     </script>
+
+    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
